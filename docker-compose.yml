@@ -1,0 +1,111 @@
+version: "3.8"
+services:
+  db:
+    image: "postgres:15.4"
+    restart: "on-failure"
+    ports:
+     - "5432:5432"
+    environment:
+      POSTGRES_HOST: "${POSTGRES_HOST}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    volumes:
+     - ./backend/db/.pgdata:/var/lib/postgresql/data/
+
+  redis:
+    image: "redis:7.2.0"
+    command: >
+      --requirepass ${REDIS_PASSWORD}
+    restart: "on-failure"
+    environment:
+      REDIS_PASSWORD: "${REDIS_PASSWORD}"
+
+  migrate:
+    build: "./backend"
+    command: "python manage.py migrate"
+    restart: "on-failure"
+    depends_on:
+      - db
+    # container_name prevents scaling the migrate container beyond 1
+    container_name: "${COMPOSE_PROJECT_NAME}_migrate"
+    environment:
+      DJANGO_SETTINGS_MODULE: "${DJANGO_SETTINGS_MODULE}"
+      DJANGO_SECRET_KEY: "${DJANGO_SECRET_KEY}"
+      POSTGRES_HOST: "${POSTGRES_HOST}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      REDIS_URL: "${REDIS_URL}"
+    volumes:
+      - ./backend:/app
+
+  backend:
+    build: ./backend
+    restart: "on-failure"
+    ports:
+     - "8000:8000"
+    depends_on:
+      - db
+      - redis
+      - migrate
+    environment:
+      DJANGO_SETTINGS_MODULE: "${DJANGO_SETTINGS_MODULE}"
+      DJANGO_SECRET_KEY: "${DJANGO_SECRET_KEY}"
+      POSTGRES_HOST: "${POSTGRES_HOST}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      REDIS_URL: "${REDIS_URL}"
+    volumes:
+     - ./backend:/app
+
+
+  celeryworker:
+    image: "celery:latest"
+    build: ./backend
+    command: "python manage.py runcelery"
+    restart: "on-failure"
+    depends_on:
+      - db
+      - redis
+      - migrate
+    environment:
+      DJANGO_SETTINGS_MODULE: "${DJANGO_SETTINGS_MODULE}"
+      DJANGO_SECRET_KEY: "${DJANGO_SECRET_KEY}"
+      POSTGRES_HOST: "${POSTGRES_HOST}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      REDIS_URL: "${REDIS_URL}"
+    volumes:
+     - ./backend:/app
+
+  # celerybeat:
+  #   image: "celerybeat:latest"
+  #   build: ./backend
+  #   command: "python manage.py runcelerybeat"
+  #   restart: "on-failure"
+  #   depends_on:
+  #     - celeryworker
+  #   environment:
+  #     DJANGO_SETTINGS_MODULE: "${DJANGO_SETTINGS_MODULE}"
+  #     DJANGO_SECRET_KEY: "${DJANGO_SECRET_KEY}"
+  #     POSTGRES_HOST: "${POSTGRES_HOST}"
+  #     POSTGRES_DB: "${POSTGRES_DB}"
+  #     POSTGRES_USER: "${POSTGRES_USER}"
+  #     POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+  #     REDIS_URL: "${REDIS_URL}"
+  #   volumes:
+  #    - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+    env_file: .env
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend

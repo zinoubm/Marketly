@@ -1,0 +1,51 @@
+[project]
+name = "marketly"
+version = "0.0.1"
+description = ""
+authors = [
+    {name = "Michal Nakoneczny", email = "michal@nakoneczny.pl"},
+]
+dependencies = [
+    "django==5.0.3",
+    "celery==5.3.6",
+    "django-celery-beat==2.6.0",
+    "gunicorn==21.2.0",
+    "kombu==5.3.5",
+    "psycopg2==2.9.8",
+    "redis==5.0.2",
+]
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[project.urls]
+homepage = ""
+
+[project.optional-dependencies]
+dev = [
+    "black==24.2.0",
+    "mypy==1.9.0",
+    "pytest-cov==4.1.0",
+    "pytest==8.1.1",
+]
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool.mypy]
+files = "marketly/**/*.py,tests/**/*.py"
+exclude = "__pypackages__/"
+ignore_missing_imports = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unreachable = true
+
+[tool.coverage.run]
+data_file = "/tmp/.marketly.coverage"
+omit = ["tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 92
