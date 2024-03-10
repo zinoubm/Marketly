@@ -1,0 +1,83 @@
+Title: Make an Order
+
+Primary Actor: User
+Secondary actors : order and payment verification system and order management system
+Date : 10/03/2023
+Version : 1.0
+Goal: The user wants to successfully place an order for products on the e-commerce website.
+
+Preconditions:
+
+The user must be logged in to their account.
+The user must have selected one or more products to purchase by adding them to the shopping cart.
+The user must have provided necessary shipping informations and chose a payment method.
+The product must be available and not out of stock
+
+Main Success Scenario:
+
+The user checks shopping cart.
+The system displays a summary of the selected products, along with the total price and shipping details.
+The system validates the order details and confirms that all required information is provided.
+The system processes the payment using the provided payment method.
+The user confirms the order by clicking a button. 
+
+Postconditions:
+
+An order is placed
+Seller is notified with all the order informations
+The user gets redirected the orders page where he can track the order's status and sees an order successfully placed message
+The payment is processed successfully.
+
+Alternate Flows:
+
+If the user is not logged in, they are prompted to log in or create an account before being able to select products.
+If the payment fails, the system notifies the user and prompts them to retry with a different payment method.
+If any of the required information is missing or invalid, the system prompts the user to provide the necessary details before proceeding with the order.
+If the selected products are out of stock or unavailable, the system notifies the user and prompts them to remove the unavailable items or choose alternatives.
+
+Exceptions:
+
+Incorrect order details lead to delivery issues or cancellation of the order.
+
+-----------------------------------------------------------------------------------------------------
+
+Title: List a Product (seller)
+
+Primary Actor: User (seller)
+
+Secondary Actors: Admin and product management system
+
+Date: 10/03/2023
+
+Version: 1.0
+
+Goal: The user, acting as a seller, wants to list a product for sale on the e-commerce platform.
+
+Preconditions:
+
+The user must be logged in to their account.
+The user must switch to the seller role.
+Provide product details and images.
+The product must be accepted by the admin or uless user is marked as verified
+
+Main Success Scenario:
+
+The user switches to the seller role within their account settings.
+The user clicks a button to add product.
+The system prompts the user to input the product details.
+The user submits the product listing for review.
+The system notifies the admin about the new product listing awaiting review.
+The admin reviews the product listing, checking for compliance with platform policies and standards.
+If the seller is marked as verified, the system automatically approves the product listing.
+Upon approval, the product becomes visible for purchase on the platform.
+
+Postconditions:
+
+The product is listed on the platform and available for purchase.
+The user receives notification of the product's approval status.
+Buyers can view and purchase the listed product.
+
+Alternate Flows:
+
+If any of the required information is missing or invalid, the system prompts the user to provide the necessary details before proceeding with the proccess.
+If the product listing does not meet platform policies or standards, the admin rejects the listing and provides feedback to the seller for revisions.
