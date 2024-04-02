@@ -1,0 +1,6 @@
+sequence diagram
+
+client achter produit
+seller sell product
+admin manage account
+
