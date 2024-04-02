@@ -18,8 +18,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        "primary-dark": "#0C1C0F",
-        "primary-semi-dark": "#123318",
+        "primary-dark": "#000000",
+        "primary-semi-dark": "#303030",
         "primary-light": "#E60012",
         "primary-light-hover": "#E60012",
         border: "hsl(var(--border))",

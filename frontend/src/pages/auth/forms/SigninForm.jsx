@@ -53,7 +53,7 @@ const SigninForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col align-middle space-y-4"
+          className="flex flex-col align-middle space-y-4 w-3/5 xl:w-2/5"
         >
           <FormField
             control={form.control}

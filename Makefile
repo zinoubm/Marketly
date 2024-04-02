@@ -13,6 +13,9 @@ db:
 down:
 	docker compose down
 
+schema:
+	python manage.py spectacular --file schema.yml
+
 test:
 	docker compose run backend python -m pytest --reuse-db
 

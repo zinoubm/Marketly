@@ -55,9 +55,9 @@ const SignUpForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col align-middle space-y-4"
+          className="flex flex-col align-middle space-y-4 w-3/5 xl:w-2/5"
         >
-          <div className="flex flex-row space-x-2">
+          <div className="flex flex-col xl:flex-row space-y-2 xl:space-x-2 xl:space-y-0">
             <FormField
               control={form.control}
               name="firstName"
@@ -116,7 +116,7 @@ const SignUpForm = () => {
           />
 
           <Button
-            className="bg-primary-dark focus:bg-primary-semi-dark focus:text-white hover:bg-primary-light-hover hover:text-primary-dark"
+            className="bg-primary-dark focus:bg-primary-semi-dark focus:text-white hover:bg-primary-semi-dark"
             type="submit"
           >
             {isPending ? (

@@ -31,3 +31,7 @@ To push the optimised images to the registry do:
 
     make push VERSION=0.0.0
 
+Authentication Token should follow this structure:
+
+    Authorization: Token ${token}
+

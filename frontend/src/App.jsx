@@ -24,7 +24,6 @@ const App = () => {
         <Route path="/about" element={<AboutPage />} />
 
         <Route element={<AuthLayout />}>
-          {/* <Route path="/google" element={<GoogleLoginForm />} /> */}
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
           <Route path="/verify-email" element={<VerifyEmail />} />

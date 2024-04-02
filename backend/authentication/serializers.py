@@ -1,5 +1,61 @@
-from rest_framework import serializers
+from django.conf import settings
+from django.contrib.auth import get_user_model
+
+from rest_framework import exceptions, serializers
+
+from google.oauth2 import id_token
+from google.auth.transport import requests
+
+UserModel = get_user_model()
 
 
 class GoogleLoginSerializer(serializers.Serializer):
-    token = serializers.CharField(required=True, max_length=500)
+    token = serializers.CharField(required=True, max_length=1500)
+
+    def get_or_create_auth_user(self, email, full_name):
+        if email:
+            try:
+                user = UserModel.objects.get(email__iexact=email)
+
+            except UserModel.DoesNotExist:
+                user = UserModel.objects.create_user(username=email, email=email)
+                if full_name:
+                    # assuming last names are single words at the end,
+                    # the remaining words will be the first name
+                    full_name_split = full_name.split()
+                    user.first_name = " ".join(full_name_split[:-1])
+                    user.last_name = full_name_split[-1]
+                user.save()
+
+            return user
+
+        return None
+
+    @staticmethod
+    def validate_auth_user_status(user):
+        if not user.is_active:
+            raise exceptions.ValidationError("User account is disabled.")
+
+    def validate(self, attrs):
+        try:
+            CLIENT_ID = settings.GOOGLE_CLIENT_ID
+            token = attrs.get("token")
+
+            id_info = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            user_email = id_info["email"]
+            user_full_name = id_info["name"]
+
+        except ValueError:
+            raise exceptions.ValidationError("Invalid token")
+
+        user = self.get_or_create_auth_user(user_email, user_full_name)
+
+        if not user:
+            raise exceptions.ValidationError(
+                "Unable to log in with provided credentials."
+            )
+
+        self.validate_auth_user_status(user)
+
+        attrs["user"] = user
+        return attrs

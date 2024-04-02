@@ -36,12 +36,13 @@ INSTALLED_APPS = [
     "authentication.apps.AuthenticationConfig",
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_spectacular",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "dj_rest_auth",
-    "dj_rest_auth.registration",
+    # "dj_rest_auth.registration",
     "django_celery_beat",
     "marketly.common",
 ]
@@ -131,28 +132,20 @@ CELERY_TIMEZONE = "Europe/London"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_TASK_SERIALIZER = "json"
 
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
-    ]
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAdminUser",
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Marketly",
 }
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-            "secret": os.getenv("GOOGLE_SECRET"),
-            "key": "",  # not required for google
-        },
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
-        "VERIFIED_EMAIL": True,
-    },
-}
