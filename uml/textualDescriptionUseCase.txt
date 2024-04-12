@@ -1,7 +1,7 @@
 Title: Make an Order
 
 Primary Actor: User
-Secondary actors : order and payment verification system and order management system
+Secondary actors : payment gate and order management system
 Date : 10/03/2023
 Version : 1.0
 Goal: The user wants to successfully place an order for products on the e-commerce website.
@@ -10,20 +10,22 @@ Preconditions:
 
 The user must be logged in to their account.
 The user must have selected one or more products to purchase by adding them to the shopping cart.
-The user must have provided necessary shipping informations and chose a payment method.
+The user must have provided necessary shipping informations and choose a payment method.
 The product must be available and not out of stock
 
 Main Success Scenario:
 The user navigates through the products by searching , filtering ..etc
 The user checks the page of the product for more details 
 The user selects the products that interest him by adding them to the shopping cart
-The user checks the shopping
+The user checks the shopping cart
 The system displays a summary of the selected products, along with the total price.
 The user clicks a button to make the order
 The system displays a form where the user will add his shipping informations and other order details.
-The system validates the order details and confirms that all required informations are provided.
-The system processes the payment using the provided payment method.
 The user confirms the order by clicking a button. 
+The system validates the order details and confirms that all required informations are provided.
+The system redirects user to the payment gate
+The payment gate validates the payment and notifies the system
+The system notifies the seller about the order
 
 Postconditions:
 
@@ -31,6 +33,7 @@ The order is placed
 The seller is notified with all the order informations
 The user gets redirected to the orders page where he can track the order's status and the system shows a message to signal the success of the operation
 The payment is processed successfully.
+The money gets added to the seller's balance
 
 Alternate Flows:
 
@@ -61,11 +64,11 @@ Preconditions:
 
 The user must be logged in to their account.
 The user must switch to the seller role.
-Provide product details and images.
 
 Main Success Scenario:
 
 The user switches to the seller role within their account settings.
+The user enters the seller's dashboard
 The user clicks a button to add product.
 The system prompts the user to input the product details.
 The user submits the product listing for review by admin.
@@ -106,26 +109,24 @@ Product listings submitted by sellers must be pending approval.
 Main Success Scenario:
 
 The admin logs in to their admin account on the e-commerce platform.
-The admin navigates to the admin dashboar.
+The admin navigates to the admin dashboard.
 The admin views a list of pending product listings submitted by sellers.
 For each product listing:
 The admin reviews the product details, images, and other relevant information provided by the seller.
 The admin checks that the product complies to the platform policies and standards.
 The admin approves the product listing.
-If the admin finds the seller trust worthy he marks him as verified.
-If the product does not meet platform policies or standards:
-The admin rejects the product listing.
-The admin provides feedback to the seller regarding the reasons for rejection and necessary revisions.
+
 Postconditions:
 
 Approved products are listed on the platform and available for purchase.
-Seller accounts may be marked as verified for automatic approval of their future product listings.
 Sellers receive notifications regarding the approval status of their product listings.
 Buyers can view and purchase the approved products.
 
 Alternate Flows:
 
+If the admin finds the seller trust worthy he marks him as verified.
 If the product does not meet platform policies or standards, the admin rejects the product.
+The admin provides feedback to the seller regarding the reasons for rejection and necessary revisions through a notification.
 If the admin encounters any incomplete or inaccurate product information, the admin leaves a note for the seller and rejects the product waiting for another submit with full informations
 
 Exceptions: 
