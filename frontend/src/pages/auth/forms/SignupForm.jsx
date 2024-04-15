@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 
 import { SignUpValidationSchema } from "@/lib/validations";
-import { useRegister } from "@/lib/api/useAuth";
+// import { useRegister } from "@/lib/api/useAuth";
 import { GoogleLogin } from "@react-oauth/google";
 
 const SignUpForm = () => {

@@ -16,7 +16,7 @@ const SideBarLink = ({ to, label }) => {
       <NavLink
         className={`p-3 rounded-md text-black font-normal my-4 px-12  ${
           isActive && " bg-primary-dark text-white "
-        } hover:bg-primary-dark hover:text-white`}
+        } hover:bg-primary-dark transition-colors duration-5 ease-out hover:text-white`}
         to={to}
       >
         {label}
@@ -44,6 +44,7 @@ const DashboardLayout = () => {
               </Button>
             </span>
             <ul className="flex flex-col items-center gap-6 mt-12">
+              <SideBarLink to="/dashboard" label="Dashboard" />
               <SideBarLink to="/products" label="Products" />
               <SideBarLink to="/orders" label="Orders" />
             </ul>
@@ -65,12 +66,6 @@ const DashboardLayout = () => {
             </Toggle>
             <Logo className="xl:hidden" size={162} />
           </div>
-          <Button
-            className="bg-primary-dark w-24 hover:bg-primary-light-hover hover:text-primary-dark"
-            type="submit"
-          >
-            Upload
-          </Button>
         </div>
         <Outlet />
       </main>

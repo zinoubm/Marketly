@@ -21,11 +21,11 @@ const AccountManagement = () => {
     navigate("/");
   };
 
-  const plan = "free";
-  const status = true;
+  // const plan = "free";
+  // const status = true;
   return (
     <div className="mt-auto w-full">
-      <Button
+      {/* <Button
         className={`w-full font-light ${
           status ? "bg-primary-light" : "bg-red-500"
         }  text-primary-semi-dark hover:bg-primary-light-hover`}
@@ -34,7 +34,7 @@ const AccountManagement = () => {
           {plan.toUpperCase() + " " + "Plan"}
         </span>
         upgrade &#8594;
-      </Button>
+      </Button> */}
       <Separator className="my-1" />
 
       <Popover>

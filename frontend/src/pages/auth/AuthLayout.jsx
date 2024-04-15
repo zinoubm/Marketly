@@ -12,7 +12,7 @@ const AuthLayout = () => {
         <div className="flex h-screen">
           <aside className="hidden p-4 pt-8 xl:flex xl:flex-col justify-between bg-primary-light w-1/5 items-center">
             <Logo size={124} theme={"dark"} />
-
+            {/* spline here */}
             <a className="font-light text-white text-xs">Company, Inc</a>
           </aside>
           <section className="flex flex-1 flex-col items-center justify-center relative">

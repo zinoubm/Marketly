@@ -10,9 +10,11 @@ function useCookie() {
 
     return cookies.token;
   };
+
   const setToken = (token) => {
     setCookie("token", token, { path: "/" });
   };
+
   const deleteToken = () => {
     setCookie("token", null, { path: "/" });
   };
