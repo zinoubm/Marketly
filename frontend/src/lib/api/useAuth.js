@@ -10,6 +10,7 @@ const useAuth = () => {
   const navigate = useNavigate();
 
   const signUp = async () => {};
+// todo 
   const signIn = async () => {};
 
   const getCurrentUser = async () => {
