@@ -4,14 +4,14 @@ services:
     image: "postgres:15.4"
     restart: "on-failure"
     ports:
-     - "5432:5432"
+      - "5432:5432"
     environment:
       POSTGRES_HOST: "${POSTGRES_HOST}"
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     volumes:
-     - ./backend/db/.pgdata:/var/lib/postgresql/data/
+      - ./backend/db/.pgdata:/var/lib/postgresql/data/
 
   redis:
     image: "redis:7.2.0"
@@ -44,7 +44,7 @@ services:
     build: ./backend
     restart: "on-failure"
     ports:
-     - "8000:8000"
+      - "8000:8000"
     depends_on:
       - db
       - redis
@@ -58,8 +58,7 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       REDIS_URL: "${REDIS_URL}"
     volumes:
-     - ./backend:/app
-
+      - ./backend:/app
 
   celeryworker:
     image: "celery:latest"
@@ -79,7 +78,7 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       REDIS_URL: "${REDIS_URL}"
     volumes:
-     - ./backend:/app
+      - ./backend:/app
 
   # celerybeat:
   #   image: "celerybeat:latest"

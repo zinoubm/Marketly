@@ -152,6 +152,8 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
+AUTH_USER_MODEL = 'authentication.User'
+
 SPECTACULAR_SETTINGS = {
     "TITLE": "Marketly",
 }
