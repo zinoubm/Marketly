@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "dj_rest_auth",
     # "dj_rest_auth.registration",
     "django_celery_beat",
+    "marketly",
     "marketly.common",
     "corsheaders",
 ]
@@ -59,11 +60,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOW_ALL_HEADERS=False
+CORS_ALLOW_ALL_HEADERS = False
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',
+    "http://localhost:8080",
 ]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ROOT_URLCONF = "marketly.urls"
 
@@ -152,7 +155,7 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = "authentication.User"
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Marketly",
