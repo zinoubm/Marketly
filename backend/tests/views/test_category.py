@@ -7,7 +7,7 @@ from django.utils.text import slugify
 
 @pytest.mark.django_db
 def test_category_list_view(api_client):
-    url = "http://localhost:8000/api/category/"
+    url = "http://localhost:8000/api/categories/"
 
     user = UserFactory()
     api_client.force_authenticate(user=user)
