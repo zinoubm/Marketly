@@ -1,21 +1,73 @@
 import axios from "./axios";
 import useCookie from "./useCookie";
-import { useContext } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { AuthContext } from "@/context/authContext";
 
 const useAuth = () => {
-  const { setToken, getToken } = useCookie;
+  const { setToken, getToken } = useCookie();
   const navigate = useNavigate();
 
-  const signUp = async () => {};
-// todo 
-  const signIn = async () => {};
+  const signUp = async (user) => {
+    try {
+      const response = await axios.post(
+        "/auth/register/",
+        {
+          ...user,
+        },
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            "X-CSRFTOKEN":
+              "mAVUAZcBGxrnbTXbcZAO9t1v5DubrgDAIANxnLMfcXfaBG14KdHsJ6oJBpyWB5C3",
+          },
+        }
+      );
+      
+      if (response.status == 204) {
+        setToken(response.data.key);
+        navigate("/");
+      }
+    } catch (error) {
+      error.response.data.non_field_errors?.map((error)=>{
+        toast.error(error)
+
+      })
+      console.log(error.response.data);
+    }
+  };
+
+  const signIn = async (user) => {
+    try {
+      const response = await axios.post(
+        "/auth/login/",
+
+        {
+          ...user,
+        },
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            "X-CSRFTOKEN":
+              "mAVUAZcBGxrnbTXbcZAO9t1v5DubrgDAIANxnLMfcXfaBG14KdHsJ6oJBpyWB5C3",
+          },
+        }
+      );
+      if (response.status == 200) {
+        setToken(response.data.key);
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("wrong password or email !" )
+      
+    }
+  };
 
   const getCurrentUser = async () => {
     try {
-      token = getToken();
+      const token = getToken();
 
       const response = await axios.get("/auth/user/", {
         headers: {
@@ -46,9 +98,9 @@ const useAuth = () => {
         }
       );
 
-      console.log(response.data);
       setToken(response.data.key);
-      return response.data;
+      navigate('/')
+      // return response.data;
     } catch (err) {
       console.log("Something went wrong!", err);
     }

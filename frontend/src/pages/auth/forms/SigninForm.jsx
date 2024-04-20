@@ -17,9 +17,9 @@ import {
 import { LoginValidationSchema } from "@/lib/validations";
 // import { useSignIn } from "@/lib/api/useAuth";
 import { GoogleLogin } from "@react-oauth/google";
-
+import useAuth from "@/lib/api/useAuth";
 const SigninForm = () => {
-  // const { mutateAsync: SignInUser, isPending } = useSignIn();
+  const {signIn , googleSignIn} = useAuth()
   const isPending = false;
 
   const form = useForm({
@@ -30,8 +30,9 @@ const SigninForm = () => {
     },
   });
 
-  async function onSubmit(values) {
-    const user = await SignInUser({
+  async function onSubmit(values  ,event) {
+    event.preventDefault()
+    const user = await signIn({
       email: values.email,
       password: values.password,
     });
@@ -42,7 +43,9 @@ const SigninForm = () => {
       <h1 className="font-bold text-2xl m-4">Sign In</h1>
       <GoogleLogin
         onSuccess={async (credentialResponse) => {
-          console.log(credentialResponse.credential);
+          googleSignIn(credentialResponse.credential);
+
+
         }}
         onError={() => {
           toast.error("Something Went Wrong, Please Try Again!");

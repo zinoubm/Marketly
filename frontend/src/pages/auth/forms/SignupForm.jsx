@@ -14,27 +14,31 @@ import {
 } from "@/components/ui/form";
 
 import { SignUpValidationSchema } from "@/lib/validations";
-// import { useRegister } from "@/lib/api/useAuth";
+import useAuth from "@/lib/api/useAuth";
 import { GoogleLogin } from "@react-oauth/google";
 
 const SignUpForm = () => {
-  const { mutateAsync: RegisterUser, isPending } = useRegister();
+  const isPending = false; //todo
 
+  const { signUp  ,googleSignIn} = useAuth();
   const form = useForm({
     resolver: zodResolver(SignUpValidationSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
-      password: "",
+      password1: "",
+      password2: "",
     },
   });
 
   async function onSubmit(values) {
-    const user = await RegisterUser({
+    const user = await signUp({
+      first_name: values.firstName,
+      last_name: values.lastName,
       email: values.email,
-      password: values.password,
-      full_name: values.firstName + " " + values.lastName,
+      password1: values.password1,
+      password2: values.password2,
     });
   }
 
@@ -43,7 +47,7 @@ const SignUpForm = () => {
       <h1 className="font-bold text-2xl m-4">Sign Up</h1>
       <GoogleLogin
         onSuccess={async (credentialResponse) => {
-          console.log(credentialResponse.credential);
+          googleSignIn(credentialResponse.credential);
         }}
         onError={() => {
           toast.error("Something Went Wrong, Please Try Again!");
@@ -103,10 +107,23 @@ const SignUpForm = () => {
 
           <FormField
             control={form.control}
-            name="password"
+            name="password1"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="Password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password2"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm password</FormLabel>
                 <FormControl>
                   <Input type="password" placeholder="Password" {...field} />
                 </FormControl>
