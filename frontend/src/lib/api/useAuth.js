@@ -24,17 +24,13 @@ const useAuth = () => {
           },
         }
       );
-      
+
       if (response.status == 204) {
         setToken(response.data.key);
         navigate("/");
       }
     } catch (error) {
-      error.response.data.non_field_errors?.map((error)=>{
-        toast.error(error)
-
-      })
-      console.log(error.response.data);
+      toast.error(error.response.data.email);
     }
   };
 
@@ -60,8 +56,7 @@ const useAuth = () => {
         navigate("/");
       }
     } catch (error) {
-      toast.error("wrong password or email !" )
-      
+      toast.error("wrong password or email !");
     }
   };
 
@@ -99,7 +94,7 @@ const useAuth = () => {
       );
 
       setToken(response.data.key);
-      navigate('/')
+      navigate("/");
       // return response.data;
     } catch (err) {
       console.log("Something went wrong!", err);
