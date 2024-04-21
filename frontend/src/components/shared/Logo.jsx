@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Logo = ({ className, size, theme }) => {
   return (
-    <Link className={className} to="/">
+    <Link className={className} to="/"> 
       {theme === "dark" ? (
         <img src="/assets/logo-full-dark-bg.svg" width={size} />
       ) : (

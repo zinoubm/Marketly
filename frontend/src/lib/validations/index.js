@@ -4,7 +4,10 @@ export const SignUpValidationSchema = z.object({
   firstName: z.string().min(2).max(50),
   lastName: z.string().min(2).max(50),
   email: z.string().email(),
-  password: z
+  password1: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters!" }),
+    password2: z
     .string()
     .min(8, { message: "Password must be at least 8 characters!" }),
 });

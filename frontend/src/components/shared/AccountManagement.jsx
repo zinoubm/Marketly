@@ -4,15 +4,16 @@ import useCookie from "@/lib/api/useCookie";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { AuthContext } from "@/context/authContext";
+// import { AuthContext } from "@/context/authContext";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
+import {useAuthStore} from "@/context/authStore"
 const AccountManagement = () => {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  const user = useAuthStore()
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
 
