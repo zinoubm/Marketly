@@ -1,4 +1,4 @@
-from .cart import CartListCreateAPIView, CartRemoveAPIView
+from .cart import CartListCreateAPIView, CartRemoveAPIView, OrderFromCartAPIView
 from .category import CategoryListAPIView
 from .product import ProductListCreateAPIView
 from .product import ProductRetrieveUpdateDestroyAPIView

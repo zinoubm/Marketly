@@ -63,3 +63,13 @@ class TestCartListAPI:
 
         assert response.status_code == 404
         assert self.non_cart_order is not None
+
+    def test_making_orders_from_cart(self, api_client):
+        url = "http://localhost:8000/api/cart/order"
+        api_client.force_authenticate(user=self.buyer)
+        response = api_client.post(url)
+
+        self.order.refresh_from_db()
+
+        assert response.status_code == 200
+        assert self.order.status == OrderStatus.PENDING
