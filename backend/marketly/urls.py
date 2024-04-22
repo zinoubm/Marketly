@@ -5,8 +5,12 @@ from .views import (
     CategoryListAPIView,
     ProductListCreateAPIView,
     ProductRetrieveUpdateDestroyAPIView,
-    OrderListCreateAPIView,
-    RetrieveOrderView,
+    BuyerOrderListAPIView,
+    SellerOrderListAPIView,
+    OrderRetrieveView,
+    OrderCreateAPIView,
+    CartListCreateAPIView,
+    CartRemoveAPIView
 )
 
 urlpatterns = [
@@ -21,8 +25,21 @@ urlpatterns = [
     path(
         "api/products/<int:pk>/",
         ProductRetrieveUpdateDestroyAPIView.as_view(),
-        name="products-list",
+        name="products-view",
     ),
-    path("api/orders/", OrderListCreateAPIView.as_view(), name="orders-list"),
-    path("api/orders/<int:pk>/", RetrieveOrderView.as_view(), name="orders-list"),
+    path("api/orders/", OrderCreateAPIView.as_view(), name="orders-create"),
+    path(
+        "api/orders/buyer",
+        BuyerOrderListAPIView.as_view(),
+        name="buyer-orders-list",
+    ),
+    path(
+        "api/orders/seller",
+        SellerOrderListAPIView.as_view(),
+        name="seller-orders-list",
+    ),
+    path("api/orders/<int:pk>/", OrderRetrieveView.as_view(), name="orders-list"),
+    path("api/cart/", CartListCreateAPIView.as_view(), name="cart-view"),
+    path("api/cart/<int:pk>/", CartRemoveAPIView.as_view(), name="remove-from-cart-view"),
+
 ]

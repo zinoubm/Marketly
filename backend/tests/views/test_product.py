@@ -5,60 +5,70 @@ from tests.factories import UserFactory, ProductFactory, CategoryFactory
 
 
 @pytest.mark.django_db
-def test_product_list_create_api_view(api_client):
-    url = "http://localhost:8000/api/products/"
+class TestProductListCreateAPIView:
 
-    user = UserFactory()
-    api_client.force_authenticate(user=user)
+    def setup_method(self, method):
+        self.url = "http://localhost:8000/api/products/"
+        self.user = UserFactory()
 
-    category = CategoryFactory()
+    def test_create_product(self, api_client):
+        category = CategoryFactory()
 
-    data = {
-        "title": "some product",
-        "description": "some product description",
-        "inventory": 20,
-        "category": category.id,
-    }
+        data = {
+            "title": "some product",
+            "description": "some product description",
+            "inventory": 20,
+            "category": category.id,
+        }
 
-    # test create
-    response = api_client.post(url, data, format="json")
-    assert response.status_code == 201
+        api_client.force_authenticate(user=self.user)
+        response = api_client.post(self.url, data, format="json")
 
-    # test list
-    response = api_client.get(url)
-    assert response.status_code == 200
-    assert len(response.data) > 0
+        assert response.status_code == 201
+
+    def test_list_products(self, api_client):
+        product = ProductFactory()
+
+        api_client.force_authenticate(user=self.user)
+        response = api_client.get(self.url)
+
+        assert response.status_code == 200
+        assert len(response.data) == 1
 
 
 @pytest.mark.django_db
-def test_product_retrieve_update_destroy_api_view(api_client):
-    base_url = "http://localhost:8000/api/products"
+class TestProductAPIView:
+    def setup_method(self, method):
+        self.base_url = "http://localhost:8000/api/products"
+        self.user = UserFactory()
+        self.product = ProductFactory()
+        self.category = CategoryFactory()
+        self.url = f"{self.base_url}/{self.product.id}/"
 
-    user = UserFactory()
-    api_client.force_authenticate(user=user)
-    product = ProductFactory()
-    category = CategoryFactory()
+    def test_retrieve_product(self, api_client):
+        api_client.force_authenticate(user=self.user)
+        response = api_client.get(self.url)
 
-    url = f"{base_url}/{product.id}/"
+        assert response.status_code == 200
+        assert response.data["title"] == self.product.title
 
-    # test retrieve
-    response = api_client.get(url)
-    assert response.status_code == 200
-    assert response.data["title"] == product.title
+    def test_update_product(self, api_client):
+        new_title = "new title"
+        data = {
+            "title": new_title,
+            "description": "some product description",
+            "inventory": 20,
+            "category": self.category.id,
+        }
 
-    new_title = "new title"
-    data = {
-        "title": new_title,
-        "description": "some product description",
-        "inventory": 20,
-        "category": category.id,
-    }
+        api_client.force_authenticate(user=self.user)
+        response = api_client.put(self.url, data, format="json")
 
-    # test update
-    response = api_client.put(url, data, format="json")
-    assert response.status_code == 200
-    assert response.data["title"] == new_title
+        assert response.status_code == 200
+        assert response.data["title"] == new_title
 
-    # test delete
-    response = api_client.delete(url)
-    assert response.status_code == 204
+    def test_delete_product(self, api_client):
+        api_client.force_authenticate(user=self.user)
+        response = api_client.delete(self.url)
+
+        assert response.status_code == 204

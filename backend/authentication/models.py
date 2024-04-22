@@ -8,3 +8,4 @@ class User(AbstractUser):
     phone = models.TextField(max_length=255, blank=True)
     balance = models.PositiveIntegerField(default=0)
     billing_details = models.TextField(max_length=255, blank=True)
+    profile_picture_url = models.URLField(blank=True)
