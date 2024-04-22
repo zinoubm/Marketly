@@ -3,6 +3,8 @@ from authentication.models import User
 from marketly.models import Order
 
 
+# todo
+# remove
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     orders = models.ManyToManyField(Order)

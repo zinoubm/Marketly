@@ -40,6 +40,8 @@ class UserRegisterSerializer(RegisterSerializer):
         user.last_name = self.validated_data.get("last_name", "")
         user.save()
 
+    # todo
+    # remove this
     def create(self, validated_data):
         user = UserModel.objects.create_user(**validated_data)
         Cart.objects.create(user=user)

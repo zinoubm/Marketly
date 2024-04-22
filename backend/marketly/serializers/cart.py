@@ -3,6 +3,8 @@ from marketly.serializers import OrderSerializer
 from marketly.models import Cart
 
 
+# todo
+# remove this
 class CartSerializer(serializers.ModelSerializer):
     orders = OrderSerializer(many=True)
 
