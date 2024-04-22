@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import User
+from marketly.models import Product
 
 
-@admin.register(User)
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     pass
