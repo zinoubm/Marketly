@@ -12,7 +12,6 @@ UserModel = get_user_model()
 
 
 class UserRegisterSerializer(RegisterSerializer):
-    username = None
     first_name = serializers.CharField(
         max_length=255,
         min_length=2,
@@ -33,12 +32,6 @@ class UserRegisterSerializer(RegisterSerializer):
             "email": self.validated_data.get("email", ""),
         }
 
-    def custom_signup(self, request, user):
-        user.username = user.email
-        user.first_name = self.validated_data.get("first_name", "")
-        user.last_name = self.validated_data.get("last_name", "")
-        user.save()
-
 
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.CharField()
@@ -49,13 +42,17 @@ class UserLoginSerializer(serializers.Serializer):
         if not user.is_active:
             raise exceptions.ValidationError("User account is disabled.")
 
+    def get_cleaned_data(self):
+        return {
+            "email": self.validated_data.get("email", ""),
+            "password": self.validated_data.get("password", ""),
+        }
+
     def validate(self, attrs):
         email = attrs.get("email")
         password = attrs.get("password")
 
-        user_queryset = UserModel.objects.filter(
-            Q(email__iexact=email) | Q(username__iexact=email)
-        ).distinct()
+        user_queryset = UserModel.objects.filter(Q(email__iexact=email)).distinct()
 
         if user_queryset.exists() and user_queryset.count() == 1:
             user_set = user_queryset.first()
