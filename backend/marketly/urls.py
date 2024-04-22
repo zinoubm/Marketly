@@ -9,9 +9,13 @@ from .views import (
     SellerOrderListAPIView,
     OrderRetrieveView,
     OrderCreateAPIView,
+    OrderFromCartAPIView,
     CartListCreateAPIView,
-    CartRemoveAPIView
+    CartRemoveAPIView,
 )
+
+# todo
+# clean this mess with Include
 
 urlpatterns = [
     path("api/auth/", include("authentication.urls")),
@@ -40,6 +44,8 @@ urlpatterns = [
     ),
     path("api/orders/<int:pk>/", OrderRetrieveView.as_view(), name="orders-list"),
     path("api/cart/", CartListCreateAPIView.as_view(), name="cart-view"),
-    path("api/cart/<int:pk>/", CartRemoveAPIView.as_view(), name="remove-from-cart-view"),
-
+    path("api/cart/order", OrderFromCartAPIView.as_view(), name="order-from-cart-view"),
+    path(
+        "api/cart/<int:pk>/", CartRemoveAPIView.as_view(), name="remove-from-cart-view"
+    ),
 ]
