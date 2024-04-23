@@ -5,15 +5,14 @@ import useAuth from "@/lib/api/useAuth";
 import { toast } from "sonner";
 import useCookie from "@/lib/api/useCookie";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthStore } from "@/context/authStore";
 const HomePage = () => {
   const { googleSignIn, getCurrentUser } = useAuth();
   const navigate = useNavigate();
   const { isAuthenticated } = useCookie();
-
+  const { setFirstName , setLastName  , first_name} =useAuthStore()
   useGoogleOneTapLogin({
     onSuccess: (credentialResponse) => {
-      console.log(credentialResponse.credential);
       googleSignIn(credentialResponse.credential);
     },
     onError: () => {
@@ -25,10 +24,13 @@ const HomePage = () => {
   useEffect(() => {
     (async () => {
       const currentUser = await getCurrentUser();
-
+      setFirstName(currentUser.first_name)
+      setLastName(currentUser.last_name)
+      
       // use this later to save user Info
       console.log(currentUser);
     })();
+
   }, []);
 
   // console.log("is auth", isAuthenticated());
