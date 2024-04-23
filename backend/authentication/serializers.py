@@ -1,8 +1,15 @@
+import os
+import urllib
+from urllib.parse import urlparse
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+
 from rest_framework import exceptions, serializers
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from dj_rest_auth.serializers import UserDetailsSerializer
 
 from google.oauth2 import id_token
 from google.auth.transport import requests
@@ -77,19 +84,22 @@ class UserLoginSerializer(serializers.Serializer):
 class GoogleLoginSerializer(serializers.Serializer):
     token = serializers.CharField(required=True, max_length=1500)
 
-    def get_or_create_auth_user(self, email, full_name):
+    def get_or_create_auth_user(self, email, full_name, user_picture_url):
         if email:
             try:
                 user = UserModel.objects.get(email__iexact=email)
 
             except UserModel.DoesNotExist:
-                user = UserModel.objects.create_user(username=email, email=email)
+                user = UserModel.objects.create_user(
+                    username=email, email=email, google_profile_image=user_picture_url
+                )
                 if full_name:
                     # assuming last names are single words at the end,
                     # the remaining words will be the first name
                     full_name_split = full_name.split()
                     user.first_name = " ".join(full_name_split[:-1])
                     user.last_name = full_name_split[-1]
+
                 user.save()
 
             return user
@@ -109,11 +119,14 @@ class GoogleLoginSerializer(serializers.Serializer):
             id_info = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             user_email = id_info["email"]
             user_full_name = id_info["name"]
+            user_picture_url = id_info["picture"]
 
         except ValueError:
             raise exceptions.ValidationError("Invalid token")
 
-        user = self.get_or_create_auth_user(user_email, user_full_name)
+        user = self.get_or_create_auth_user(
+            user_email, user_full_name, user_picture_url
+        )
 
         if not user:
             raise exceptions.ValidationError(
@@ -124,3 +137,33 @@ class GoogleLoginSerializer(serializers.Serializer):
 
         attrs["user"] = user
         return attrs
+
+
+class CustomUserDetailsSerializer(UserDetailsSerializer):
+    profile_image = serializers.ImageField(write_only=True)
+
+    class Meta(UserDetailsSerializer.Meta):
+        extra_fields = UserDetailsSerializer.Meta.extra_fields + [
+            "profile_image",
+            "image",
+        ]
+
+        fields = ("pk", *extra_fields)
+        read_only_fields = ["image"]
+
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     print("representation", representation)
+
+    #     # if representation["profile_image"] is None:
+    #     #     representation["profile_image"] = representation["google_profile_image"]
+
+    #     return representation
+
+    # def update(self, instance, validated_data):
+    #     profile_image = validated_data.pop("profile_image", None)
+    #     user = super().update(instance, validated_data)
+    #     if profile_image:
+    #         user.profile_image = profile_image
+    #         user.save()
+    #     return user

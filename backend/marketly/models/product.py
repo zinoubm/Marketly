@@ -11,7 +11,7 @@ class Product(models.Model):
     price = models.PositiveIntegerField(default=5)
     is_approved = models.BooleanField(default=False)
     inventory = models.PositiveIntegerField(default=0)
-    product_picture_url = models.URLField(blank=True)
+    product_image = models.ImageField(upload_to="images/", blank=True)
 
     def __str__(self):
         return self.title

@@ -2,6 +2,7 @@ import pytest
 from tests.fixtures import api_client
 
 from tests.factories import UserFactory, ProductFactory, CategoryFactory
+from tests.static import mouse_image
 
 
 @pytest.mark.django_db
@@ -15,14 +16,27 @@ class TestProductListCreateAPIView:
         category = CategoryFactory()
 
         data = {
-            "title": "some product",
-            "description": "some product description",
-            "inventory": 20,
+            "title": "gaming mouse",
+            "description": "fast gaming mouse",
+            "price": "25",
+            "inventory": "24",
             "category": category.id,
+        }
+        files = {
+            "product_image": (
+                "mouse-2.jpg",
+                mouse_image,
+                "image/png",
+            ),
         }
 
         api_client.force_authenticate(user=self.user)
-        response = api_client.post(self.url, data, format="json")
+        response = api_client.post(
+            self.url,
+            data,
+            files=files,
+            format="multipart",
+        )
 
         assert response.status_code == 201
 
@@ -53,16 +67,32 @@ class TestProductAPIView:
         assert response.data["title"] == self.product.title
 
     def test_update_product(self, api_client):
+        category = CategoryFactory()
         new_title = "new title"
+
         data = {
             "title": new_title,
-            "description": "some product description",
-            "inventory": 20,
-            "category": self.category.id,
+            "description": "fast gaming mouse",
+            "price": "25",
+            "inventory": "24",
+            "category": category.id,
+        }
+
+        files = {
+            "product_image": (
+                "mouse-2.jpg",
+                mouse_image,
+                "image/png",
+            ),
         }
 
         api_client.force_authenticate(user=self.user)
-        response = api_client.put(self.url, data, format="json")
+        response = api_client.put(
+            self.url,
+            data,
+            files=files,
+            format="multipart",
+        )
 
         assert response.status_code == 200
         assert response.data["title"] == new_title
