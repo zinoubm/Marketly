@@ -70,7 +70,6 @@ const useAuth = () => {
           Authorization: "Token " + token,
         },
       });
-
       return response.data;
     } catch (err) {
       console.log("Something went wrong!", err);
