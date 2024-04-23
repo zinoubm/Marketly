@@ -2,7 +2,6 @@ from rest_framework import exceptions, serializers
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from marketly.models import Cart
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
 from google.oauth2 import id_token
@@ -39,11 +38,6 @@ class UserRegisterSerializer(RegisterSerializer):
         user.first_name = self.validated_data.get("first_name", "")
         user.last_name = self.validated_data.get("last_name", "")
         user.save()
-
-    def create(self, validated_data):
-        user = UserModel.objects.create_user(**validated_data)
-        Cart.objects.create(user=user)
-        return user
 
 
 class UserLoginSerializer(serializers.Serializer):
