@@ -42,12 +42,6 @@ class UserLoginSerializer(serializers.Serializer):
         if not user.is_active:
             raise exceptions.ValidationError("User account is disabled.")
 
-    def get_cleaned_data(self):
-        return {
-            "email": self.validated_data.get("email", ""),
-            "password": self.validated_data.get("password", ""),
-        }
-
     def validate(self, attrs):
         email = attrs.get("email")
         password = attrs.get("password")
