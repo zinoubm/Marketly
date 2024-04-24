@@ -26,11 +26,20 @@ const useAuth = () => {
       );
 
       if (response.status == 204) {
-        setToken(response.data.key);
-        navigate("/");
+        //todo fix this when they update the server
+        signIn({email:user.email , password: user.password1})
       }
     } catch (error) {
-      toast.error(error.response.data.email);
+      if (error.response.data.non_field_errors) {
+      toast.error(error.response.data.non_field_errors[0]);
+        
+      }else if(error.response.data.email){
+
+        toast.error(error.response.data.email);
+      }else{
+        toast.error(error.response.data.password1);
+      }
+      console.log(error);
     }
   };
 
