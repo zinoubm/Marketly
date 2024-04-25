@@ -11,7 +11,6 @@ import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -20,11 +19,6 @@ import {
 import useCookie from "@/lib/api/useCookie";
 import { useAuthStore } from "@/context/authStore";
 import { useNavigate } from "react-router-dom";
-import {
-  DropdownMenuArrow,
-  DropdownMenuSeparator,
-} from "@radix-ui/react-dropdown-menu";
-
 const TopBar = () => {
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
@@ -73,9 +67,11 @@ const TopBar = () => {
               {first_name} {last_name}
             </DropdownMenuLabel>
             <hr className="sm:hidden flex" />
-            <DropdownMenuItem className="flex gap-2">
-              <MdOutlineDashboardCustomize size={20} />
-              dashboard
+            <DropdownMenuItem>
+              <Link to={"dashboard"} className="flex gap-2">
+                <MdOutlineDashboardCustomize size={20} />
+                dashboard
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="md:hidden flex  gap-2">
               <LuShoppingCart size={20} />

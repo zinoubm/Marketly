@@ -14,6 +14,7 @@ import Orders from "./pages/dashboard/Orders";
 
 import "./globals.css";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
+import Account from "./pages/dashboard/Account";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/account" element={<Account />} />
         </Route>
       </Routes>
     </main>

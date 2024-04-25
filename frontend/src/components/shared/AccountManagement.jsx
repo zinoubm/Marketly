@@ -13,7 +13,8 @@ import {
 import {useAuthStore} from "@/context/authStore"
 const AccountManagement = () => {
   // const { user } = useContext(AuthContext);
-  const user = useAuthStore()
+  const {first_name , last_name} = useAuthStore()
+  
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
 
@@ -43,12 +44,12 @@ const AccountManagement = () => {
           <span>
             <Avatar className="w-6 h-6 mx-2">
               <AvatarFallback className="text-primary-semi-dark text-xs font-light bg-primary-light">
-                {user?.full_name[0]}
+                {/* {first_name} */}
               </AvatarFallback>
             </Avatar>
           </span>
 
-          {user?.full_name}
+          {first_name} {last_name}
         </PopoverTrigger>
         <PopoverContent className="flex flex-col">
           <Button

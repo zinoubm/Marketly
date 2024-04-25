@@ -47,6 +47,7 @@ const DashboardLayout = () => {
               <SideBarLink to="/dashboard" label="Dashboard" />
               <SideBarLink to="/products" label="Products" />
               <SideBarLink to="/orders" label="Orders" />
+              <SideBarLink to="/account" label="Account" />
             </ul>
 
             <AccountManagement />
@@ -54,7 +55,7 @@ const DashboardLayout = () => {
         </>
       )}
 
-      <main className="flex-grow">
+      <main className="flex-grow flex-col flex">
         <div className="flex items-center justify-between p-2 ">
           <div className="flex items-center space-x-2">
             <Toggle
