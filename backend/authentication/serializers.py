@@ -144,26 +144,12 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
 
     class Meta(UserDetailsSerializer.Meta):
         extra_fields = UserDetailsSerializer.Meta.extra_fields + [
+            "phone",
+            "shipping_details",
+            "billing_details",
             "profile_image",
             "image",
         ]
 
         fields = ("pk", *extra_fields)
         read_only_fields = ["image"]
-
-    # def to_representation(self, instance):
-    #     representation = super().to_representation(instance)
-    #     print("representation", representation)
-
-    #     # if representation["profile_image"] is None:
-    #     #     representation["profile_image"] = representation["google_profile_image"]
-
-    #     return representation
-
-    # def update(self, instance, validated_data):
-    #     profile_image = validated_data.pop("profile_image", None)
-    #     user = super().update(instance, validated_data)
-    #     if profile_image:
-    #         user.profile_image = profile_image
-    #         user.save()
-    #     return user
