@@ -1,6 +1,6 @@
 import axios from "./axios";
 import useCookie from "./useCookie";
-
+import FormData from "form-data"
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -79,6 +79,7 @@ const useAuth = () => {
           Authorization: "Token " + token,
         },
       });
+      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log("Something went wrong!", err);
@@ -109,11 +110,40 @@ const useAuth = () => {
     }
   };
 
+
+  const updateUserInfo=async (user)=>{
+    //! this function sends the request in a multipart/form-data 
+    const form = new FormData();
+    for(let key in user){
+      form.set(key , user[key])
+    }
+    
+    const token = getToken();
+    const response = await axios.patch(
+      '/auth/user/',
+      form,
+      {
+        headers: {
+          Authorization: "Token " + token,
+          'accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'X-CSRFTOKEN': 'JyrG5RuoxfXcbuMSiOtLYHeszliqZ8Y5eeBIIopWG75r9yHUGbPfohOtanhfU9PQ'
+        }
+      }
+    );
+    
+    return response.data
+  }
+  
+
+
+
   return {
     signUp,
     signIn,
     getCurrentUser,
     googleSignIn,
+    updateUserInfo
   };
 };
 

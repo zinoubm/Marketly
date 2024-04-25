@@ -1,9 +1,14 @@
 import { create } from "zustand";
-export const useAuthStore = create((set)=>({
-    first_name:null, 
-    last_name:null, 
-    username:null , 
-    setFirstName:(first_name)=>set(()=>({first_name})),
-    setLastName:(last_name)=>set(()=>({last_name})),
-    setUsername:(username)=>set(()=>({username})) 
+import {persist , createJSONStorage} from "zustand/middleware"
+export const useAuthStore = create(
+    persist((set , get)=>({
+    first_name:get()?.first_name || "", 
+    last_name:get()?.last_name || "", 
+    username:get()?.username || "" , 
+    setFirstName:(first_name)=>set({first_name}),
+    setLastName:(last_name)=>set({last_name}),
+    setUsername:(username)=>set({username}) 
+}) , {
+    name:"authStore" , 
+    storage : createJSONStorage(()=>sessionStorage)
 }))
