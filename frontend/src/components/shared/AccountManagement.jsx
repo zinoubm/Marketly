@@ -4,7 +4,7 @@ import useCookie from "@/lib/api/useCookie";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-// import { AuthContext } from "@/context/authContext";
+import { clearStateStorage } from "@/context/clearStateStorage";
 import {
   Popover,
   PopoverContent,
@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/popover";
 import {useAuthStore} from "@/context/authStore"
 const AccountManagement = () => {
-  // const { user } = useContext(AuthContext);
   const {first_name , last_name} = useAuthStore()
   
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
 
   const logout = () => {
+    clearStateStorage()
     deleteToken();
     navigate("/");
   };
