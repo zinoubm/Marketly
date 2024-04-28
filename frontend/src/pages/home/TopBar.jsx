@@ -19,12 +19,15 @@ import {
 import useCookie from "@/lib/api/useCookie";
 import { useAuthStore } from "@/context/authStore";
 import { useNavigate } from "react-router-dom";
+import { clearStateStorage } from "@/context/clearStateStorage";
 const TopBar = () => {
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
 
   const logout = () => {
+    
     deleteToken();
+    clearStateStorage()
     navigate("/sign-in");
   };
   const { first_name, last_name } = useAuthStore();

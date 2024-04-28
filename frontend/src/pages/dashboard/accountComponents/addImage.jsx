@@ -5,9 +5,9 @@ import { useUserInfo } from "@/context/userStore";
 function AddImage() {
   const { image } = useUserInfo();
   return (
-    <section className="flex  flex-col gap-4 items-center pt-20">
+    <section className="flex flex-col gap-4 items-center pt-20">
       {image ? (
-        <img src={image} className=" w-full  rounded-full" />
+        <img src={image} className=" w-52  rounded-full" />
       ) : (
         <IoPersonCircleSharp size={230} className="m-1" />
       )}

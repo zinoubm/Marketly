@@ -32,8 +32,8 @@ const DashboardLayout = () => {
     <div className="flex">
       {isToggle && (
         <>
-          <div className="xl:hidden absolute inset-y-0 z-9999 bg-black opacity-60 h-screen w-screen"></div>
-          <div className="transition-all absolute xl:static flex flex-col items-center w-4/5 p-4 xl:w-1/5 inset-y-0 z-9999 bg-white h-screen">
+          <div className="xl:hidden fixed inset-y-0 z-9999 bg-black opacity-60 h-screen w-screen"></div>
+          <div className="transition-all fixed  xl:static flex flex-col items-center w-4/5 p-4 xl:w-1/5 inset-y-0 z-9999 bg-white h-screen">
             <span className="flex items-center gap-16">
               <Logo size={124} />
               <Button
@@ -55,7 +55,7 @@ const DashboardLayout = () => {
         </>
       )}
 
-      <main className="flex-grow flex-col flex">
+      <main className=" flex-grow w-10 flex-col flex">
         <div className="flex items-center justify-between p-2 ">
           <div className="flex items-center space-x-2">
             <Toggle

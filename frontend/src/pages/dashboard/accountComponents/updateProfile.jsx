@@ -56,17 +56,18 @@ function UpdateProfile() {
   }
 
   return (
-    <section className=" flex  w-96 flex-col ">
+    <section className=" flex  sm:w-96 w-full px-4 flex-col ">
       <h1 className="text-2xl font-bold">Update Profile</h1>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className=" flex flex-col  mt-8"
+          className=" flex flex-col w-full   mt-8"
         >
           <FormField
             control={form.control}
             name="firstName"
+            
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Frist Name</FormLabel>

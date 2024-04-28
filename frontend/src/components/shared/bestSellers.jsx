@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Sellers = ["lg_screen 1.png", "blue-t-shirt 1.png"];
 function BestSellers() {
   return (
-    <div className="  lg:w-[60%] w-full bg-[#fffee0]  rounded-2xl  p-4">
+    <div className="  lg:w-[60%] w-full bg-[#FFFEED]   rounded-2xl  p-4">
       <h1 className=" text-3xl font-extrabold mb-4">Best Sellers</h1>
       <div className="flex gap-x-28 gap-12  lg:gap-2 flex-wrap justify-around ">
         {Sellers.map((link) => (
