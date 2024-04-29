@@ -12,6 +12,12 @@ from .views import (
     OrderFromCartAPIView,
     CartListCreateAPIView,
     CartRemoveAPIView,
+    NotificationListCreateAPIView,
+    NotificationDetailAPIView,
+    ReviewListCreateAPIView,
+    ReviewDetailAPIView,
+    WithdrawRequestDetailAPIView,
+    WithdrawRequestListCreateAPIView,
 )
 
 # todo
@@ -47,5 +53,45 @@ urlpatterns = [
     path("api/cart/order", OrderFromCartAPIView.as_view(), name="order-from-cart-view"),
     path(
         "api/cart/<int:pk>/", CartRemoveAPIView.as_view(), name="remove-from-cart-view"
+    ),
+    path(
+        "api/notifications/",
+        NotificationListCreateAPIView.as_view(),
+        name="notification-list",
+    ),
+    path(
+        "api/notifications/<int:pk>/",
+        NotificationDetailAPIView.as_view(),
+        name="notification-detail",
+    ),
+    path(
+        "api/reviews/",
+        NotificationListCreateAPIView.as_view(),
+        name="review-list",
+    ),
+    path(
+        "api/reviews/<int:pk>/",
+        NotificationDetailAPIView.as_view(),
+        name="review-detail",
+    ),
+    path(
+        "api/reviews/",
+        ReviewListCreateAPIView.as_view(),
+        name="review-list",
+    ),
+    path(
+        "api/reviews/<int:pk>/",
+        ReviewDetailAPIView.as_view(),
+        name="review-detail",
+    ),
+    path(
+        "api/withdraw-requests/",
+        WithdrawRequestListCreateAPIView.as_view(),
+        name="withdraw-list",
+    ),
+    path(
+        "api/withdraw-requests/<int:pk>/",
+        WithdrawRequestDetailAPIView.as_view(),
+        name="withdraw-detail",
     ),
 ]
