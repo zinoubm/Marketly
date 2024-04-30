@@ -18,7 +18,7 @@ import { useUserInfo } from "@/context/userStore";
 const isPending = false;
 
 function UpdateProfile() {
-  const { first_name, last_name } = useAuthStore();
+  const { first_name, last_name, setFirstName, setLastName } = useAuthStore();
   const {
     billingDetails,
     shippingDetails,
@@ -49,10 +49,15 @@ function UpdateProfile() {
       shipping_details: values.shippingDetails,
       billing_details: values.billingDetails,
     });
+
     //! update the user state
-    updateBillingDetails(user.billing_details)
-    updatePhone(user.phone)
-    updateShippingDetails(user.shipping_details)
+    if (user) {
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
+      updateBillingDetails(user.billing_details);
+      updatePhone(user.phone);
+      updateShippingDetails(user.shipping_details);
+    }
   }
 
   return (
@@ -67,7 +72,6 @@ function UpdateProfile() {
           <FormField
             control={form.control}
             name="firstName"
-            
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Frist Name</FormLabel>

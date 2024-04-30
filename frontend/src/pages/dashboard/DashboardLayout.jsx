@@ -7,8 +7,14 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import Logo from "@/components/shared/Logo";
 import AccountManagement from "@/components/shared/AccountManagement";
-
+import useCookie from "@/lib/api/useCookie";
+import { useNavigate } from "react-router-dom";
 const SideBarLink = ({ to, label }) => {
+  const { getToken } = useCookie();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!getToken()) navigate("/sign-in");
+  }, [getToken()]);
   const pathName = useLocation();
   const isActive = pathName.pathname === to;
   return (

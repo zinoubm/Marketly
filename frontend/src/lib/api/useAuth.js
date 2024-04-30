@@ -82,12 +82,17 @@ const useAuth = () => {
       console.log(response.data);
       return response.data;
     } catch (err) {
+      if (err.response.status ===401) return null;
+
       console.log("Something went wrong!", err);
-      if (err.response.status === 401) navigate("/sign-in");
+      // if (err.response.status === 401) navigate("/sign-in");
+
     }
   };
 
   const googleSignIn = async (token) => {
+
+
     try {
       const response = await axios.post(
         "/auth/google/login/",
@@ -131,7 +136,8 @@ const useAuth = () => {
         }
       }
     );
-    
+    if(!response) toast.error("error")
+    if(response.status ===200) toast.success("updated your information" )
     return response.data
   }
   
