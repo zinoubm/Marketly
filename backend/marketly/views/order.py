@@ -12,6 +12,9 @@ class OrderCreateAPIView(generics.CreateAPIView):
 
     serializer_class = OrderSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(buyer=self.request.user)
+
 
 class BuyerOrderListAPIView(generics.ListAPIView):
     serializer_class = OrderSerializer

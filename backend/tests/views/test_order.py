@@ -5,6 +5,24 @@ from marketly.models import OrderStatus
 
 
 @pytest.mark.django_db
+def test_create_order(api_client):
+    url = "http://localhost:8000/api/orders/"
+    buyer = UserFactory()
+    product = ProductFactory()
+
+    data = {
+        'product': product.id,
+        'quantity': 2147483647,
+        'date': '2024-04-30',
+    }
+
+    api_client.force_authenticate(user=buyer)
+    response = api_client.post(url, data,format="json")
+
+    assert response.status_code == 201
+    assert response.data['buyer'] == buyer.id
+
+@pytest.mark.django_db
 class TestBuyerOrderListAPI:
     def setup_method(self, method):
         self.url = "http://localhost:8000/api/orders/buyer"
