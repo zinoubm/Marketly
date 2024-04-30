@@ -17,7 +17,7 @@ const Input = React.forwardRef(({ className, type, ...props }, ref) => {
 });
 Input.displayName = "Input";
 
-const IconInput = ({icon:Icon , className,...props }) => {
+const IconInput = ({icon:Icon ,className,...props } ) => {
   
 
   return (
@@ -26,6 +26,7 @@ const IconInput = ({icon:Icon , className,...props }) => {
       <Icon />
       </div>
       <Input
+        
         {...props}
         className={cn("pl-7" , className)}
       />

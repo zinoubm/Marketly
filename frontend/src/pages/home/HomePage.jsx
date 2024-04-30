@@ -1,46 +1,49 @@
 import React, { useEffect } from "react";
 import TopBar from "./TopBar";
-import { useGoogleOneTapLogin } from "@react-oauth/google";
 import useAuth from "@/lib/api/useAuth";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+
 import { useAuthStore } from "@/context/authStore";
 import { useUserInfo } from "@/context/userStore";
 import TopCategories from "@/components/shared/topCategories";
 import BestSellers from "@/components/shared/bestSellers";
 import ProductList from "@/components/shared/productList";
 import Footer from "./Footer";
+import useCookie from "@/lib/api/useCookie";
+import GoogleOneTapLogin from "./GoogleOneTapLogin";
 const HomePage = () => {
-  const { googleSignIn, getCurrentUser } = useAuth();
-  const navigate = useNavigate();
+  const { getCurrentUser } = useAuth();
+
   const { setFirstName, setLastName } = useAuthStore();
-  const { updatePhone, updateShippingDetails, updateBillingDetails  , updateImage} =useUserInfo();
-  useGoogleOneTapLogin({
-    onSuccess: (credentialResponse) => {
-      googleSignIn(credentialResponse.credential);
-    },
-    onError: () => {
-      toast.error("Something Went Wrong, Please Try Again!");
-    },
-  });
+  const {
+    updatePhone,
+    updateShippingDetails,
+    updateBillingDetails,
+    updateImage,
+  } = useUserInfo();
+  const { getToken } = useCookie();
+
+    
 
   useEffect(() => {
     (async () => {
       const currentUser = await getCurrentUser();
-      //todo create a function to handle all this 
-      setFirstName(currentUser?.first_name);
-      setLastName(currentUser?.last_name);
-      updateBillingDetails(currentUser?.billing_details)
-      updatePhone(currentUser?.phone)
-      updateShippingDetails(currentUser?.shipping_details)
-      updateImage(currentUser?.image)
+
+      if (currentUser) {
+        setFirstName(currentUser.first_name);
+        setLastName(currentUser.last_name);
+        updateBillingDetails(currentUser.billing_details);
+        updatePhone(currentUser.phone);
+        updateShippingDetails(currentUser.shipping_details);
+        updateImage(currentUser.image);
+      }
     })();
-  }, []);
+  }, [getToken()]);
 
   return (
     <>
       <TopBar />
-
+      {!getToken() && <GoogleOneTapLogin/>}
       <section className="h-full flex  justify-around gap-4 xl:gap-0 px-8 xl:px-0 flex-wrap lg:flex-nowrap">
         <TopCategories />
         <BestSellers />

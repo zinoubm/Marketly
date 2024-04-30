@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/popover";
 import {useAuthStore} from "@/context/authStore"
 const AccountManagement = () => {
-  const {first_name , last_name} = useAuthStore()
+  const {first_name , last_name , reset} = useAuthStore()
   
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
 
   const logout = () => {
     clearStateStorage()
+    reset()
     deleteToken();
     navigate("/");
   };
