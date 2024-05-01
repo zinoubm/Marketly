@@ -32,8 +32,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "cloudinary_storage",
     "django.contrib.staticfiles",
+    "cloudinary_storage",
+    "cloudinary",
     "authentication.apps.AuthenticationConfig",
     "rest_framework",
     "rest_framework.authtoken",
@@ -48,7 +49,6 @@ INSTALLED_APPS = [
     "marketly",
     "marketly.common",
     "corsheaders",
-    "cloudinary",
 ]
 
 MIDDLEWARE = [
@@ -178,13 +178,13 @@ CLOUDINARY_STORAGE = {
 
 MEDIA_URL = "/media/"
 
-# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-}
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+#     },
+#     "staticfiles": {
+#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+#     },
+# }
