@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "@/components/shared/Logo";
 import { IconInput } from "@/components/ui/input";
@@ -9,6 +8,7 @@ import { FaChartLine } from "react-icons/fa6";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
+import { MdPersonOutline } from "react-icons/md";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,8 +17,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useCookie from "@/lib/api/useCookie";
-import { useAuthStore } from "@/context/authStore";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/context/authStore";
 import { clearStateStorage } from "@/context/clearStateStorage";
 const TopBar = () => {
   const { deleteToken } = useCookie();
@@ -31,6 +31,7 @@ const TopBar = () => {
     navigate("/sign-in");
   };
   const { first_name, last_name } = useAuthStore();
+  
   return (
     <nav className="flex sm:justify-between justify-around items-center p-4 md:px-8 px-0  w-full">
       <Logo className={"ml-8"} size={100} />
@@ -41,24 +42,28 @@ const TopBar = () => {
           name="q"
           placeholder="search product "
           className=" lg:w-96   py-4"
+          
         />
         <Button
           type="submit"
+          
           className="bg-primary-light text-md    font-normal px-6"
         >
           Search
         </Button>
       </form>
       <div className="flex gap-4">
-        <button className="md:flex hidden items-center gap-1">
+        <button className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
           <LuShoppingCart />
           cart
         </button>
-        <button className="md:flex hidden items-center gap-1">
+        <button className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
           <FaChartLine />
           compare
         </button>
-        <DropdownMenu>
+        {first_name ?(
+
+          <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center">
             <IoPersonCircleSharp size={35} className="m-1" />
             <h1 className="hidden sm:flex">
@@ -89,6 +94,7 @@ const TopBar = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+    ):(<Link to={"/sign-in"} className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1"><MdPersonOutline size={24}/> Sign In</Link>)}
       </div>
     </nav>
   );

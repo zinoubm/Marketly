@@ -82,12 +82,17 @@ const useAuth = () => {
       console.log(response.data);
       return response.data;
     } catch (err) {
+      if (err.response.status ===401) return null;
+
       console.log("Something went wrong!", err);
-      if (err.response.status === 401) navigate("/sign-in");
+      // if (err.response.status === 401) navigate("/sign-in");
+
     }
   };
 
   const googleSignIn = async (token) => {
+
+
     try {
       const response = await axios.post(
         "/auth/google/login/",
@@ -117,22 +122,29 @@ const useAuth = () => {
     for(let key in user){
       form.set(key , user[key])
     }
-    
+      
     const token = getToken();
-    const response = await axios.patch(
-      '/auth/user/',
-      form,
-      {
-        headers: {
-          Authorization: "Token " + token,
-          'accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'X-CSRFTOKEN': 'JyrG5RuoxfXcbuMSiOtLYHeszliqZ8Y5eeBIIopWG75r9yHUGbPfohOtanhfU9PQ'
+    try{
+
+      const response = await axios.patch(
+        '/auth/user/',
+        form,
+        {
+          headers: {
+            Authorization: "Token " + token,
+            'accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFTOKEN': 'JyrG5RuoxfXcbuMSiOtLYHeszliqZ8Y5eeBIIopWG75r9yHUGbPfohOtanhfU9PQ'
+          }
         }
-      }
-    );
-    
-    return response.data
+      );
+      
+      if(response.status ===200) toast.success("updated your information" )
+      return response.data
+  }catch(err){
+   toast.error("error")
+    console.log(err);
+    }
   }
   
 
