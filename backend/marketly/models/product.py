@@ -8,6 +8,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
     price = models.PositiveIntegerField(default=5)
     is_approved = models.BooleanField(default=False)
     inventory = models.PositiveIntegerField(default=0)

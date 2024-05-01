@@ -16,7 +16,7 @@ class Order(models.Model):
         "Product", on_delete=models.CASCADE, related_name="orders", null=True
     )
     quantity = models.PositiveIntegerField(default=1)
-    date = models.DateField()
+    date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         max_length=20, choices=OrderStatus.choices, default=OrderStatus.PENDING
     )
