@@ -122,23 +122,29 @@ const useAuth = () => {
     for(let key in user){
       form.set(key , user[key])
     }
-    
+      
     const token = getToken();
-    const response = await axios.patch(
-      '/auth/user/',
-      form,
-      {
-        headers: {
-          Authorization: "Token " + token,
-          'accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'X-CSRFTOKEN': 'JyrG5RuoxfXcbuMSiOtLYHeszliqZ8Y5eeBIIopWG75r9yHUGbPfohOtanhfU9PQ'
+    try{
+
+      const response = await axios.patch(
+        '/auth/user/',
+        form,
+        {
+          headers: {
+            Authorization: "Token " + token,
+            'accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFTOKEN': 'JyrG5RuoxfXcbuMSiOtLYHeszliqZ8Y5eeBIIopWG75r9yHUGbPfohOtanhfU9PQ'
+          }
         }
-      }
-    );
-    if(!response) toast.error("error")
-    if(response.status ===200) toast.success("updated your information" )
-    return response.data
+      );
+      
+      if(response.status ===200) toast.success("updated your information" )
+      return response.data
+  }catch(err){
+   toast.error("error")
+    console.log(err);
+    }
   }
   
 
