@@ -40,7 +40,7 @@ class TestBuyerOrderListAPI:
         orders = response.data
 
         assert response.status_code == 200
-        assert orders, "orders is empty"
+        assert orders, "Orders list is empty!"
         assert self.buyer != self.other_buyer
         assert all(order["buyer"] == self.buyer.id for order in orders)
         assert all(order["status"] != OrderStatus.INCART for order in orders)

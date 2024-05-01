@@ -9,8 +9,10 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
 
-    queryset = Product.objects.all()
+    # queryset = Product.objects.filter(sel)
     serializer_class = ProductSerializer
+    def get_queryset(self):
+        return Product.objects.filter(seller=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(seller=self.request.user)
