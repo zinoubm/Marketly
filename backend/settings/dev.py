@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "cloudinary",
     "authentication.apps.AuthenticationConfig",
     "rest_framework",
+    "django_filters",
     "rest_framework.authtoken",
     "drf_spectacular",
     "allauth",
@@ -155,6 +156,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAdminUser",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    # "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
 }
 
 AUTH_USER_MODEL = "authentication.User"
@@ -179,12 +181,3 @@ CLOUDINARY_STORAGE = {
 MEDIA_URL = "/media/"
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-# STORAGES = {
-#     "default": {
-#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-#     },
-#     "staticfiles": {
-#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-#     },
-# }

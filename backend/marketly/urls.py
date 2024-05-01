@@ -5,6 +5,7 @@ from .views import (
     CategoryListAPIView,
     ProductListCreateAPIView,
     ProductRetrieveUpdateDestroyAPIView,
+    ProductSearchAPIView,
     BuyerOrderListAPIView,
     SellerOrderListAPIView,
     OrderRetrieveView,
@@ -32,6 +33,7 @@ urlpatterns = [
     ),
     path("api/categories/", CategoryListAPIView.as_view(), name="categories-list"),
     path("api/products/", ProductListCreateAPIView.as_view(), name="products-list"),
+    path("api/products/search", ProductSearchAPIView.as_view(), name="products-search"),
     path(
         "api/products/<int:pk>/",
         ProductRetrieveUpdateDestroyAPIView.as_view(),

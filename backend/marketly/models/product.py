@@ -13,5 +13,12 @@ class Product(models.Model):
     inventory = models.PositiveIntegerField(default=0)
     product_image = models.ImageField(upload_to="images/", blank=True)
 
+    @property
+    def in_stock(self):
+        if self.inventory > 0:
+            return True
+
+        return False
+
     def __str__(self):
         return self.title
