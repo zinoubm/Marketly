@@ -4,27 +4,31 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { useUserInfo } from "@/context/userStore";
 import useAuth from "@/lib/api/useAuth";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 function AddImage() {
   const { updateUserInfo } = useAuth();
   const { image, updateImage } = useUserInfo();
   const [isLoading, setLoading] = useState(false);
   const uploadImage = async (e) => {
-    setLoading(true)
+    setLoading(true);
     const file = e.target.files[0];
 
-    const data =await updateUserInfo({profile_image:file})
-    updateImage(data.image)
-    setLoading(false)
+    const data = await updateUserInfo({ profile_image: file });
+    updateImage(data.image);
+    setLoading(false);
   };
   return (
     <section className="flex flex-col gap-4 items-center pt-20">
       {isLoading ? (
         <ImageLoader />
       ) : image ? (
-        <div className=" size-52 ">
-
-        <img src={image} className=" w-52  rounded-full" />
-        </div>
+        <Avatar className="size-52">
+          <AvatarImage src={image} className=" object-cover" />
+          <AvatarFallback>
+            <ImageLoader />
+          </AvatarFallback>
+        </Avatar>
       ) : (
         <IoPersonCircleSharp size={230} className="m-1" />
       )}
