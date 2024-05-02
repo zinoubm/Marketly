@@ -7,13 +7,13 @@ from marketly.serializers import OrderSerializer
 
 
 class OrderCreateAPIView(generics.CreateAPIView):
-    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
 
-    def perform_create(self, serializer):
-        serializer.save(buyer=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(buyer=self.request.user)
 
 
 class BuyerOrderListAPIView(generics.ListAPIView):
@@ -37,8 +37,8 @@ class SellerOrderListAPIView(generics.ListAPIView):
 
 
 class OrderRetrieveView(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Order.objects.all()

@@ -5,22 +5,55 @@ from marketly.models import OrderStatus
 
 
 @pytest.mark.django_db
-def test_create_order(api_client):
-    url = "http://localhost:8000/api/orders/"
-    buyer = UserFactory()
-    product = ProductFactory()
+class TestOrderCreation:
+    def setup_method(self, method):
+        self.url = "http://localhost:8000/api/orders/"
+        self.inventory = 10
 
-    data = {
-        'product': product.id,
-        'quantity': 2147483647,
-        'date': '2024-04-30',
-    }
+        self.buyer = UserFactory()
+        self.product = ProductFactory(inventory=self.inventory)
 
-    api_client.force_authenticate(user=buyer)
-    response = api_client.post(url, data,format="json")
+    def test_create_order(self, api_client):
+        data = {
+            "product": self.product.id,
+            "quantity": self.inventory - 1,
+            "date": "2024-04-30",
+        }
 
-    assert response.status_code == 201
-    assert response.data['buyer'] == buyer.id
+        api_client.force_authenticate(user=self.buyer)
+        response = api_client.post(self.url, data, format="json")
+
+        assert response.status_code == 201
+        assert response.data["buyer"] == self.buyer.id
+
+    def test_decrease_Inventory_whith_order_create(self, api_client):
+        quantity = 1
+        data = {
+            "product": self.product.id,
+            "quantity": quantity,
+            "date": "2024-04-30",
+        }
+
+        api_client.force_authenticate(user=self.buyer)
+        response = api_client.post(self.url, data, format="json")
+
+        self.product.refresh_from_db()
+
+        assert response.status_code == 201
+        assert self.product.inventory == self.inventory - quantity
+
+    def test_not_allow_create_order_insufficient_inventory(self, api_client):
+        data = {
+            "product": self.product.id,
+            "quantity": self.inventory + 1,
+            "date": "2024-04-30",
+        }
+
+        api_client.force_authenticate(user=self.buyer)
+        response = api_client.post(self.url, data, format="json")
+
+        assert response.status_code == 400
+
 
 @pytest.mark.django_db
 class TestBuyerOrderListAPI:
