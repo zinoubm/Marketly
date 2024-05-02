@@ -7,6 +7,9 @@ class WithdrawRequestListCreateAPIView(generics.ListCreateAPIView):
     queryset = WithdrawRequest.objects.all()
     serializer_class = WithdrawRequestSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(buyer=self.request.user)
+
 
 class WithdrawRequestDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = WithdrawRequest.objects.all()

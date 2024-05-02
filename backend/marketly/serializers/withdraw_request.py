@@ -4,7 +4,7 @@ from authentication.models import User
 
 
 class WithdrawRequestSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = WithdrawRequest
