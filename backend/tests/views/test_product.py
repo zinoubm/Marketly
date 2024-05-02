@@ -16,6 +16,7 @@ class TestProductListCreateAPIView:
         self.other_seller = UserFactory()
         self.other_seller_product = ProductFactory(seller=self.other_seller)
 
+        self.approved_product = ProductFactory(is_approved=True)
 
     def test_create_product(self, api_client):
         category = CategoryFactory()
@@ -54,6 +55,17 @@ class TestProductListCreateAPIView:
         assert response.status_code == 200
         assert products, "Products list Is empty!"
         assert all(product["seller"] == self.seller.id for product in products)
+
+    def test_search_products(self, api_client):
+        url = self.url + "search/"
+        api_client.force_authenticate(user=self.seller)
+        response = api_client.get(url)
+
+        products = response.data
+
+        assert response.status_code == 200
+        assert products, "Products list Is empty!"
+        assert all(product["is_approved"] == True for product in products)
 
 
 @pytest.mark.django_db

@@ -38,4 +38,4 @@ class ProductSearchAPIView(generics.ListAPIView):
     search_fields = ["title", "description"]
     filterset_class = ProductFilter
 
-    queryset = Product.objects.all()
+    queryset = Product.objects.filter(is_approved=True)
