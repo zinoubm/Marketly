@@ -32,3 +32,13 @@ export const UpdateUserValidationSchema = z.object({
   billingDetails:z.string().min(2).max(50), 
 
 });
+export const AddProductValidationSchema= z.object({
+  title: z.string().min(2).max(50),
+  description: z.string().min(8).max(100),
+  category:z.string(),
+  price: z.coerce.number().min(1),
+  inventory: z.coerce.number().min(1),
+  product_image: z.any(),
+
+});
+
