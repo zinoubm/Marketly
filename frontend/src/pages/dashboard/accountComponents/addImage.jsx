@@ -23,8 +23,8 @@ function AddImage() {
       {isLoading ? (
         <ImageLoader />
       ) : image ? (
-        <Avatar className="size-52">
-          <AvatarImage src={image} className=" object-cover" />
+        <Avatar className="size-52 shadow-xl border">
+          <AvatarImage src={image} className="object-cover" />
           <AvatarFallback>
             <ImageLoader />
           </AvatarFallback>
