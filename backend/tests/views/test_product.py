@@ -12,22 +12,23 @@ class TestProductListCreateAPIView:
         self.url = "http://localhost:8000/api/products/"
         self.seller = UserFactory()
         self.seller_product = ProductFactory(seller=self.seller)
+        self.category = CategoryFactory()
 
         self.other_seller = UserFactory()
         self.other_seller_product = ProductFactory(seller=self.other_seller)
 
+        self.verified_seller = UserFactory(is_verified=True)
         self.approved_product = ProductFactory(is_approved=True)
 
     def test_create_product(self, api_client):
-        category = CategoryFactory()
-
         data = {
             "title": "gaming mouse",
             "description": "fast gaming mouse",
             "price": "25",
             "inventory": "24",
-            "category": category.id,
+            "category": self.category.id,
         }
+
         files = {
             "product_image": (
                 "mouse-2.jpg",
@@ -45,6 +46,35 @@ class TestProductListCreateAPIView:
         )
 
         assert response.status_code == 201
+        assert response.data["is_approved"] == False
+
+    def test_create_product_with_verified_seller(self, api_client):
+        data = {
+            "title": "gaming mouse",
+            "description": "fast gaming mouse",
+            "price": "25",
+            "inventory": "24",
+            "category": self.category.id,
+        }
+
+        files = {
+            "product_image": (
+                "mouse-2.jpg",
+                mouse_image,
+                "image/png",
+            ),
+        }
+
+        api_client.force_authenticate(user=self.verified_seller)
+        response = api_client.post(
+            self.url,
+            data,
+            files=files,
+            format="multipart",
+        )
+
+        assert response.status_code == 201
+        assert response.data["is_approved"] == True
 
     def test_list_products(self, api_client):
         api_client.force_authenticate(user=self.seller)

@@ -16,7 +16,7 @@ class TestCartListAPI:
         self.non_cart_order = OrderFactory(buyer=self.buyer, status=OrderStatus.PENDING)
 
         self.seller = UserFactory()
-        self.product = ProductFactory(seller=self.seller)
+        self.product = ProductFactory(seller=self.seller, inventory=999)
 
     def test_get_cart_content(self, api_client):
         api_client.force_authenticate(user=self.buyer)
