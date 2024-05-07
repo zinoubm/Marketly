@@ -59,7 +59,7 @@ const SignUpForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col align-middle space-y-4 w-3/5 xl:w-2/5"
+          className="flex flex-col align-middle md:space-y-4 w-3/5 xl:w-2/5"
         >
           <div className="flex flex-col xl:flex-row space-y-2 xl:space-x-2 xl:space-y-0">
             <FormField

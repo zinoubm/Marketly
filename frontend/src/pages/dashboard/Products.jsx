@@ -4,7 +4,7 @@ import AddProduct from "./productsComponents/AddProducts"
 const Products = () => {
 
   return (
-    <div className=" flex-1 flex lg:flex-row flex-col-reverse justify-around lg:pb-0 pb-4   lg:items-stretch items-center   lg:gap-16  gap-4 lg:px-32 sm:px-10">
+    <div className=" flex-1 flex h-full lg:flex-row px-2 flex-col-reverse justify-around lg:pb-0 pb-4   lg:items-stretch items-center     gap-4  ">
       <ProductsTable />
       <AddProduct/>
     </div>

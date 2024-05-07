@@ -1,3 +1,5 @@
+import React from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -26,31 +27,42 @@ import { Input } from "@/components/ui/input";
 import { AddProductValidationSchema } from "@/lib/validations";
 import useApi from "@/lib/api/useApi";
 import { useRefetchDataStore } from "@/context/productStore";
-export default function AddProduct() {
-  const {toggleRefetchData}=useRefetchDataStore()
+
+function UpdateProduct({
+  children,
+  id,
+  title,
+  inventory,
+  price,
+  category,
+  product_image,
+  description
+}) {
+  const { toggleRefetchData } = useRefetchDataStore();
+  
   const form = useForm({
     resolver: zodResolver(AddProductValidationSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      category: "",
-      price: "",
-      inventory: "",
-      product_image: "",
+      title,
+      description,
+      category:"",
+      price,
+      inventory,
+      product_image:""
     },
   });
-  const [image , setImage]= useState(null)
-  const { addProduct } = useApi();
-  const onSubmit = async (values ) => {
-    
-    values.product_image=image
-    const res = await addProduct(values);
-    toggleRefetchData()
+  const [image, setImage] = useState(null);
+  const { updateProduct } = useApi();
+  const onSubmit = async (values) => {
+    values.product_image = image;
+    const res = await updateProduct(values, id);
+    toggleRefetchData();
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Product</Button>
+        <button>{children}</button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] overflow-scroll h-screen">
         <DialogHeader>
@@ -139,7 +151,7 @@ export default function AddProduct() {
                       {...field}
                       accept="image/*"
                       type="file"
-                      onChange={(e)=>setImage(e.target.files[0])}
+                      onChange={(e) => setImage(e.target.files[0])}
                     />
                   </FormControl>
                   <FormMessage />
@@ -147,9 +159,9 @@ export default function AddProduct() {
               )}
             />
             {/* <DialogClose asChild> */}
-              <DialogFooter>
-                <Button type="submit">Save </Button>
-              </DialogFooter>
+            <DialogFooter>
+              <Button type="submit">Save </Button>
+            </DialogFooter>
             {/* </DialogClose> */}
           </form>
         </Form>
@@ -157,3 +169,5 @@ export default function AddProduct() {
     </Dialog>
   );
 }
+
+export default UpdateProduct;

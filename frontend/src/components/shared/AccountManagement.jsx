@@ -34,7 +34,7 @@ const AccountManagement = () => {
       <Popover>
         <PopoverTrigger className="w-full items-center justify-center bg-primary-dark text-white text-sm hover:bg-primary-semi-dark flex p-2 rounded-sm">
           <span>
-            <Avatar className="size-6 flex items-center justify-center mx-2">
+            <Avatar className="size-8 flex items-center justify-center mx-2">
               <AvatarImage src={image} className=" object-cover"/>
               <AvatarFallback className="text-primary-semi-dark text-xs font-light bg-primary-light">
                 
@@ -43,14 +43,21 @@ const AccountManagement = () => {
           </span>
 
           {first_name} {last_name}
-        </PopoverTrigger>
-        <PopoverContent className="flex flex-col">
+        </PopoverTrigger> 
+        <PopoverContent className="flex flex-col gap-2    ">
+          <Button
+            className="bg-primary-dark hover:bg-primary-semi-dark"
+            onClick={()=>navigate('/')}
+          >
+            Home
+          </Button>
           <Button
             className="bg-primary-dark hover:bg-primary-semi-dark"
             onClick={logout}
           >
             Logout
           </Button>
+
         </PopoverContent>
       </Popover>
     </div>
