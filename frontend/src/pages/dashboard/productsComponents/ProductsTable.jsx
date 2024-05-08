@@ -20,11 +20,11 @@ import { useRefetchDataStore } from "@/context/productStore";
 import { BsThreeDots } from "react-icons/bs";
 // import ProductDetails from "@/components/shared/productDetails";
 import UpdateProduct from "./UpdateProduct";
-import useApi from "@/lib/api/useApi";
+import useProductApi from "@/lib/api/useProductApi";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { BiLoaderAlt } from "react-icons/bi";
 function ProductsTable() {
-  const { getProducts, getCategories } = useApi();
+  const { getProducts, getCategories } = useProductApi();
   const [productList, setProductList] = useState([]);
   const { refetchData } = useRefetchDataStore();
   useEffect(() => {
@@ -73,7 +73,7 @@ const ProductRow = ({
   category,
   product_image,description
 }) => {
-  const { deleteProduct } = useApi();
+  const { deleteProduct } = useProductApi();
   const { toggleRefetchData } = useRefetchDataStore();
   const removeProduct = async (id) => {
     await deleteProduct(id);

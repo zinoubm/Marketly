@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useApi from "@/lib/api/useApi";
+import useProductApi from "@/lib/api/useProductApi";
 import {FormControl} from "@/components/ui/form"
 import {
   Select,
@@ -11,7 +11,7 @@ import {
 
 function SelectCategorie(field) {
   
-    const {getCategories}=useApi()
+    const {getCategories}=useProductApi()
     const [data , setData]= useState([])
   useEffect(() => {
     (async()=>{
