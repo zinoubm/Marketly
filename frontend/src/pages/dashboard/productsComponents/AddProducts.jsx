@@ -24,7 +24,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { AddProductValidationSchema } from "@/lib/validations";
-import useApi from "@/lib/api/useApi";
+import useProductApi from "@/lib/api/useProductApi";
 import { useRefetchDataStore } from "@/context/productStore";
 export default function AddProduct() {
   const {toggleRefetchData}=useRefetchDataStore()
@@ -40,7 +40,7 @@ export default function AddProduct() {
     },
   });
   const [image , setImage]= useState(null)
-  const { addProduct } = useApi();
+  const { addProduct } = useProductApi();
   const onSubmit = async (values ) => {
     
     values.product_image=image
