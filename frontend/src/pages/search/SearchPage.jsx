@@ -15,8 +15,8 @@ function SearchPage() {
         searchObject[key]=value
       }
       const data = await searchForProduct(searchObject);
-      setProducts(data)
-      
+      console.log(data);
+      setProducts(data)      
     })();
   }, []);
   return (

@@ -121,7 +121,22 @@ const useApi = () => {
       }
     }
   };
-
+  const searchForProduct=async ({search , max_price , min_price ,category })=>{
+    
+    
+    const response = await axios.get('/products/search/', {
+      params: {
+        category,
+        max_price,
+        min_price,
+        search
+      },
+      headers: {
+        'accept': 'application/json'
+      }
+    });
+    return response.data
+  }
   return {
     getProducts,
     getSingleProduct,
@@ -129,6 +144,7 @@ const useApi = () => {
     getCategories,
     deleteProduct,
     updateProduct,
+    searchForProduct
   };
 }
 

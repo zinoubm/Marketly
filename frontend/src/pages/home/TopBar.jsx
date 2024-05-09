@@ -38,11 +38,11 @@ const TopBar = () => {
   return (
     <nav className="flex sm:justify-between justify-around items-center p-4 md:px-8 px-0  w-full">
       <Logo className={"ml-8"} size={100} />
-      <form className="flex gap-4   ">
+      <form className="flex gap-4   " action="/search">
         <IconInput
           icon={() => <IoIosSearch size={20} />}
           type="search"
-          name="q"
+          name="search"
           placeholder="search product "
           className=" lg:w-96   py-4"
         />
@@ -89,7 +89,7 @@ const TopBar = () => {
               </DropdownMenuLabel>
               <hr className="sm:hidden flex" />
               <DropdownMenuItem>
-                <Link to={"dashboard"} className="flex w-full gap-2">
+                <Link to={"/dashboard"} className="flex w-full gap-2">
                   <MdOutlineDashboardCustomize size={20} />
                   dashboard
                 </Link>

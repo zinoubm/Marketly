@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 
 import HomePage from "./pages/home/HomePage";
-import AboutPage from "./pages/home/AboutPage";
+
 
 import AuthLayout from "./pages/auth/AuthLayout";
 import SigninForm from "./pages/auth/forms/SigninForm";
@@ -15,6 +15,7 @@ import Orders from "./pages/dashboard/Orders";
 import "./globals.css";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Account from "./pages/dashboard/Account";
+import SearchPage from "./pages/search/SearchPage";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
       <Routes>
         {/* public routes */}
         <Route index element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
+        <Route path="/search" element={<SearchPage />} />
 
         <Route element={<AuthLayout />}>
           <Route path="/sign-in" element={<SigninForm />} />
