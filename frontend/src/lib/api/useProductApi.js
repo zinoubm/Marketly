@@ -61,7 +61,7 @@ const useApi = () => {
 
   const getCategories = async () => {
     const token = getToken();
-
+    
     const response = await axios.get("/categories/", {
       headers: {
         accept: "application/json",

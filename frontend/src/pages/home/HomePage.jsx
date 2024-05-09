@@ -48,8 +48,8 @@ const HomePage = () => {
         <TopCategories />
         <BestSellers />
       </section>
-      <section className=" flex w-full flex-col lg:gap-4 gap-2 lg:px-8 justify-center">
-        <ProductList categorie={"Gaming"} theme={"bg-primary-light"} />
+      <section className=" flex w-full flex-col  gap-2 lg:px-5  justify-center">
+        <ProductList categorie={"Gaming"} theme={"bg-black"} />
         <ProductList categorie={"Baby"} theme={"bg-black"} />
         <ProductList categorie={"Clothing"} theme={"bg-black"} />
         <ProductList categorie={"Hobby"} theme={"bg-black"} />

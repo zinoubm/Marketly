@@ -1,15 +1,27 @@
 import { Link } from "react-router-dom";
-
-const CATEGORIES = ["Electronics", "Baby", "Clothing", "Hobby"];
-
+import { useEffect , useState } from "react";
+import useProductApi from "@/lib/api/useProductApi";
+// const CATEGORIES = ["Electronics", "Baby", "Clothing", "Hobby"];
 function TopCategories() {
+  const [categorieList , setCategorie]=useState([])
+  const {getCategories}=useProductApi()
+  useEffect(()=>{
+    (async()=>{
+      let data =await getCategories()
+      data =data.slice(0,4).map((obj)=>obj.title)
+      
+      setCategorie(data)
+
+    })()
+  } , [])
   return (
     <div className=" xl:w-[30%] lg:w-auto w-full   rounded-2xl   bg-[#E9F7FF] p-4">
       <h1 className=" self-center sm:text-3xl text-2xl   xl:pl-16 lg:pl-12 pl-4  sm:font-extrabold  font-semibold ">Top Categories</h1>
       <div className="sm:grid flex  flex-col  grid-cols-2 gap-2 mt-6 pl-8 p-2">
-        {CATEGORIES.map((cat) => (
+        {categorieList.map((cat) => (
           <button key={cat} className=" bg-black p-4 text-white  font-bold rounded-md">{cat}</button>
         ))}
+        
       </div>
       <div className="flex justify-center ">
 
