@@ -31,7 +31,7 @@ function SearchPage() {
     <div>
       <TopBar />
       <Filters />
-      <div className=" flex gap-4 px-2 flex-wrap ">
+      <div className=" flex gap-4 px-2 sm:justify-normal justify-around flex-wrap ">
         {products.length
           ? products.map((prod) => (
               <ProductDetails key={prod.id}>

@@ -34,10 +34,16 @@ function ProductsTable() {
 
       //! this code should be done in the server , and it might cause errors when there is too many products
       data.forEach((element) => {
-        const cat = categories.find((cat)=>cat.id==element.category);
-        element.category=cat.title
+        const cat = categories.find((cat) => cat.id == element.category);
+        element.category = cat.title;
         element.status = element.is_approved ? "approved" : "pending";
+        if (!element.product_image.includes("media/images"))
+          element.product_image = element.product_image.replace(
+            "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
+            ""
+          );
       });
+
       setProductList(data);
     })();
   }, [refetchData]);
@@ -71,7 +77,8 @@ const ProductRow = ({
   inventory,
   price,
   category,
-  product_image,description
+  product_image,
+  description,
 }) => {
   const { deleteProduct } = useProductApi();
   const { toggleRefetchData } = useRefetchDataStore();
@@ -87,7 +94,7 @@ const ProductRow = ({
           <Avatar>
             <AvatarImage
               src={product_image}
-              className=" size-16 object-cover  "
+              className="  max-h-24 max-w-24 object-cover   "
             />
             <AvatarFallback>
               <div className=" bg-gray-300 size-16 flex items-center justify-center rounded-full">
@@ -99,7 +106,7 @@ const ProductRow = ({
           <div className=" size-16 bg-gray-200 rounded-full"></div>
         )}
       </TableCell>
-      <TableCell className="font-medium">{title}</TableCell>
+      <TableCell className="font-medium w-52">{title}</TableCell>
       <TableCell>{status}</TableCell>
       <TableCell>{inventory}</TableCell>
 
@@ -123,7 +130,6 @@ const ProductRow = ({
             <UpdateProduct
               id={id}
               title={title}
-              
               inventory={inventory}
               price={price}
               category={category}

@@ -45,13 +45,13 @@ function Filters() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="m-4   cursor-pointer  bg-primary-dark flex-col p-2 rounded-xl pl-8 text-white flex">
+        <div className=" m-4    cursor-pointer  bg-primary-dark flex-col p-2 rounded-xl sm:pl-8 text-white flex">
           <h1 className="text-2xl font-bold ">Filters</h1>
-          <section className="flex md:gap-52  gap-10 mt-3 ">
+          <section className="flex md:gap-52  gap-8  mt-3 ">
             <div>
               <h2 className="text-md mb-2">Price</h2>
-              <div className="flex gap-2 flex-wrap">
-                <button className="text-sm border px-3 p-1 rounded-md">
+              <div className="flex gap-2  flex-wrap">
+                <button className="text-sm  border px-3  p-1 rounded-md">
                   min  {searchObject.min_price ? <span>: {searchObject.min_price} $</span>:null}
                 </button>
                 <button className="text-sm border px-3 p-1 rounded-md">

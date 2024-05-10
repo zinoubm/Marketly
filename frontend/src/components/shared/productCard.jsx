@@ -17,7 +17,7 @@ function Card({title , price , description  , product_image , inventory  }) {
     <div onClick={handleClick} className='bg-white flex flex-col shadow-xl  border-2   h-56  w-36 p-2 rounded-xl  overflow-hidden  ' >
       <div className=" flex-1 flex flex-col justify-center">
 
-      <img className='' src={product_image} alt={title}  />
+      <img className=' max-h-32' src={product_image} alt={title}  />
       </div>
       <h1 className=" text-sm  font-bold  ">
         {titleFourWords}
