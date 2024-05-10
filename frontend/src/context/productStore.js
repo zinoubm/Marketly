@@ -1,4 +1,6 @@
 import {create} from "zustand"
+import { toast } from "sonner";
+
 export const useRefetchDataStore =create(
     (set)=>({
         refetchData:false, 
@@ -13,6 +15,20 @@ export const useProductStore=create(
         price: "",
         inventory: "",
         product_image: "",
-        setProduct:(prod)=>set(state=>({...prod}) ) 
+        quantity:1,
+        incrementQuantity:()=>set(state=>{
+            if (state.inventory >state.quantity) {
+                
+                return{ quantity:state.quantity+1}
+            }
+            toast.error("this product has reached the limit")
+            return {state}
+        }),
+        decrementQuantity:()=>set(state=>{
+            if(state.quantity >1)
+            return {quantity:state.quantity-1}
+            return {state}
+        }),
+        setProduct:(prod)=>set({...prod}) 
     })
 ) 

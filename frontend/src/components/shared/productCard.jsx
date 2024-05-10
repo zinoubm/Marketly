@@ -1,8 +1,12 @@
-
+import { useProductStore } from "@/context/productStore"
 function Card({title , price , description  , product_image , inventory  }) {
-
+  const {setProduct  } = useProductStore()
+  const handleClick=()=>{
+    setProduct({title , price , description  , product_image , inventory})
+    
+  }
   return (<>
-    <div className='bg-white flex flex-col shadow-xl  border-2   h-56  w-36 p-2 rounded-xl  overflow-hidden  ' >
+    <div onClick={handleClick} className='bg-white flex flex-col shadow-xl  border-2   h-56  w-36 p-2 rounded-xl  overflow-hidden  ' >
       <div className=" flex-1 flex flex-col justify-center">
 
       <img className='' src={product_image} alt={title}  />
