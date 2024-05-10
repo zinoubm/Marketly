@@ -17,6 +17,13 @@ function SearchPage() {
       }
       const data = await searchForProduct(searchObject);
       
+      //! fixing the image 
+      data.forEach(element => {
+        if(!element.product_image.includes("media/images"))
+        element.product_image =element.product_image.replace("https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/", "");
+
+      });
+
       setProducts(data);
     })();
   }, []);

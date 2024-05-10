@@ -10,6 +10,7 @@ function AddImage() {
   const { updateUserInfo } = useAuth();
   const { image, updateImage } = useUserInfo();
   const [isLoading, setLoading] = useState(false);
+
   const uploadImage = async (e) => {
     setLoading(true);
     const file = e.target.files[0];

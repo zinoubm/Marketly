@@ -11,7 +11,12 @@ export const useUserInfo = create(
       updatePhone: (phone) => set({ phone }),
       updateShippingDetails: (shippingDetails) => set({ shippingDetails }),
       updateBillingDetails: (billingDetails) => set({ billingDetails }),
-      updateImage:(image)=>set({image})
+      updateImage:(image)=>set((state)=>{
+        
+        if(!image.includes("media/images"))
+        return {image:image.replace("https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/", "")}
+      return {image:image}
+      })
     }),
     {
       name: "userStore",

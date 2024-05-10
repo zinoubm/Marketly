@@ -19,7 +19,7 @@ const Orders = () => {
 
       setOrderList(data);
 
-      console.log(data);
+      
     })();
   }, []);
   return (
