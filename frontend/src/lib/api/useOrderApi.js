@@ -27,7 +27,7 @@ const useOrderApi = () => {
         return order;
       })
     );
-    console.log(Mydata);
+    
     return Mydata;
   };
 

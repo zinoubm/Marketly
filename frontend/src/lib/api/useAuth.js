@@ -79,7 +79,7 @@ const useAuth = () => {
           Authorization: "Token " + token,
         },
       });
-      console.log(response.data);
+      
       return response.data;
     } catch (err) {
       if (err.response.status ===401) return null;

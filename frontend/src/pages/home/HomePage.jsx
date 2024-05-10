@@ -49,10 +49,10 @@ const HomePage = () => {
         <BestSellers />
       </section>
       <section className=" flex w-full flex-col  gap-2 lg:px-5  justify-center">
-        <ProductList categorie={"Gaming"} theme={"bg-black"} />
-        <ProductList categorie={"Baby"} theme={"bg-black"} />
-        <ProductList categorie={"Clothing"} theme={"bg-black"} />
-        <ProductList categorie={"Hobby"} theme={"bg-black"} />
+        <ProductList category={"Electronics"} theme={"bg-black"} />
+        <ProductList category={"Jewelery"} theme={"bg-black"} />
+        <ProductList category={"Men's clothing"} theme={"bg-black"} />
+        <ProductList category={"Women's clothing"} theme={"bg-black"} />
       </section>
       <Footer />
     </>

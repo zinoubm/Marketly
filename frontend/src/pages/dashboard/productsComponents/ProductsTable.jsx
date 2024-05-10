@@ -34,8 +34,8 @@ function ProductsTable() {
 
       //! this code should be done in the server , and it might cause errors when there is too many products
       data.forEach((element) => {
-        element.category = categories[element.category - 1].title;
-
+        const cat = categories.find((cat)=>cat.id==element.category);
+        element.category=cat.title
         element.status = element.is_approved ? "approved" : "pending";
       });
       setProductList(data);

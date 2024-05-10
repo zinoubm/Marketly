@@ -1,6 +1,14 @@
 import { useProductStore } from "@/context/productStore"
+
 function Card({title , price , description  , product_image , inventory  }) {
   const {setProduct  } = useProductStore()
+
+  
+  const titleWords = title.split(" ")
+  let titleFourWords =titleWords.slice(0 ,4).join(' ')
+  if(titleWords.length>4){
+    titleFourWords=titleFourWords.concat(" ...")
+  }
   const handleClick=()=>{
     setProduct({title , price , description  , product_image , inventory})
     
@@ -11,10 +19,10 @@ function Card({title , price , description  , product_image , inventory  }) {
 
       <img className='' src={product_image} alt={title}  />
       </div>
-      <h1 className=" text-lg  font-bold  ">
-        {title}
+      <h1 className=" text-sm  font-bold  ">
+        {titleFourWords}
         </h1>
-      <h2 className="  text-gray-800 text-sm">{description}</h2>
+      {/* <h2 className="  text-gray-800 text-sm">{description}</h2> */}
         <div className=' text-center font-bold'>{price} $ </div>
     </div>
       

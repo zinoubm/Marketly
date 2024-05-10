@@ -1,14 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import { useEffect , useState } from "react";
 import useProductApi from "@/lib/api/useProductApi";
-// const CATEGORIES = ["Electronics", "Baby", "Clothing", "Hobby"];
+
 function TopCategories() {
   const [categorieList , setCategorie]=useState([])
   const {getCategories}=useProductApi()
+  const navigate=useNavigate()
   useEffect(()=>{
     (async()=>{
       let data =await getCategories()
-      data =data.slice(0,4).map((obj)=>obj.title)
+      data =data.slice(0,4)
       
       setCategorie(data)
 
@@ -19,7 +20,9 @@ function TopCategories() {
       <h1 className=" self-center sm:text-3xl text-2xl   xl:pl-16 lg:pl-12 pl-4  sm:font-extrabold  font-semibold ">Top Categories</h1>
       <div className="sm:grid flex  flex-col  grid-cols-2 gap-2 mt-6 pl-8 p-2">
         {categorieList.map((cat) => (
-          <button key={cat} className=" bg-black p-4 text-white  font-bold rounded-md">{cat}</button>
+          <button key={cat.id} onClick={()=>navigate(`/search?category=${cat.id}`)} className=" bg-black p-4 text-white  font-bold rounded-md">
+            {cat.title}
+            </button>
         ))}
         
       </div>

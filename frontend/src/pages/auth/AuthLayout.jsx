@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import Spline from '@splinetool/react-spline';
 const AuthLayout = () => {
   const location = useLocation()
-  console.log(location.pathname);
+  
   
   return (
     <>
