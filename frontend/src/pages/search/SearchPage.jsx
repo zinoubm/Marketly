@@ -4,19 +4,20 @@ import TopBar from "../home/TopBar";
 import { useSearchParams } from "react-router-dom";
 import useProductApi from "@/lib/api/useProductApi";
 import Card from "@/components/shared/productCard";
+import ProductDetails from "@/components/shared/productDetails";
 function SearchPage() {
   const { searchForProduct } = useProductApi();
   const [URLSearchParams, setSearchParams] = useSearchParams();
-  const [products , setProducts]=useState([])
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     (async () => {
-      const searchObject ={}
-      for(const [key , value]of URLSearchParams.entries()){
-        searchObject[key]=value
+      const searchObject = {};
+      for (const [key, value] of URLSearchParams.entries()) {
+        searchObject[key] = value;
       }
       const data = await searchForProduct(searchObject);
-      console.log(data);
-      setProducts(data)      
+      
+      setProducts(data);
     })();
   }, []);
   return (
@@ -24,8 +25,13 @@ function SearchPage() {
       <TopBar />
       <Filters />
       <div className=" flex gap-4 px-2 flex-wrap ">
-
-      {products.length ?products.map(prod=>(<Card {...prod} key={prod.id}/>)) : "there is no product here"}
+        {products.length
+          ? products.map((prod) => (
+              <ProductDetails key={prod.id}>
+                <Card {...prod}  />
+              </ProductDetails>
+            ))
+          : "there is no product here"}
       </div>
     </div>
   );
