@@ -11,6 +11,7 @@ from .views import (
     OrderRetrieveView,
     OrderCreateAPIView,
     OrderFromCartAPIView,
+    OrderUpdateAPIView,
     CartListCreateAPIView,
     CartRemoveAPIView,
     NotificationListCreateAPIView,
@@ -27,21 +28,41 @@ from .views import (
 urlpatterns = [
     path("api/auth/", include("authentication.urls")),
     path("admin/", admin.site.urls),
-    path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="documentation"
+        "schema/",
+        SpectacularAPIView.as_view(),
+        name="schema",
     ),
-    path("api/categories/", CategoryListAPIView.as_view(), name="categories-list"),
-    path("api/products/", ProductListCreateAPIView.as_view(), name="products-list"),
     path(
-        "api/products/search/", ProductSearchAPIView.as_view(), name="products-search"
+        "docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="documentation",
+    ),
+    path(
+        "api/categories/",
+        CategoryListAPIView.as_view(),
+        name="categories-list",
+    ),
+    path(
+        "api/products/",
+        ProductListCreateAPIView.as_view(),
+        name="products-list",
+    ),
+    path(
+        "api/products/search/",
+        ProductSearchAPIView.as_view(),
+        name="products-search",
     ),
     path(
         "api/products/<int:pk>/",
         ProductRetrieveUpdateDestroyAPIView.as_view(),
         name="products-view",
     ),
-    path("api/orders/", OrderCreateAPIView.as_view(), name="orders-create"),
+    path(
+        "api/orders/",
+        OrderCreateAPIView.as_view(),
+        name="orders-create",
+    ),
     path(
         "api/orders/buyer",
         BuyerOrderListAPIView.as_view(),
@@ -52,11 +73,30 @@ urlpatterns = [
         SellerOrderListAPIView.as_view(),
         name="seller-orders-list",
     ),
-    path("api/orders/<int:pk>/", OrderRetrieveView.as_view(), name="orders-list"),
-    path("api/cart/", CartListCreateAPIView.as_view(), name="cart-view"),
-    path("api/cart/order", OrderFromCartAPIView.as_view(), name="order-from-cart-view"),
     path(
-        "api/cart/<int:pk>/", CartRemoveAPIView.as_view(), name="remove-from-cart-view"
+        "api/orders/<int:pk>/",
+        OrderRetrieveView.as_view(),
+        name="orders-list",
+    ),
+    path(
+        "api/orders/status",
+        OrderUpdateAPIView.as_view(),
+        name="orders-update",
+    ),
+    path(
+        "api/cart/",
+        CartListCreateAPIView.as_view(),
+        name="cart-view",
+    ),
+    path(
+        "api/cart/order",
+        OrderFromCartAPIView.as_view(),
+        name="order-from-cart-view",
+    ),
+    path(
+        "api/cart/<int:pk>/",
+        CartRemoveAPIView.as_view(),
+        name="remove-from-cart-view",
     ),
     path(
         "api/notifications/",

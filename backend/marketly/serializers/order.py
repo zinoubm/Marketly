@@ -11,7 +11,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
-        read_only_fields = ["status"]
+        # read_only_fields = ["status"]
 
     def create(self, validated_data):
         request = self.context.get("request")
@@ -39,3 +39,9 @@ class OrderSerializer(serializers.ModelSerializer):
             product_instance.save()
 
         return order
+
+    # def update(self, instance, validated_data):
+    #     instance.status = validated_data.get("status", instance.status)
+
+    #     instance.save()
+    #     return instance

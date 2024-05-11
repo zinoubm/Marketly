@@ -12,8 +12,16 @@ class OrderCreateAPIView(generics.CreateAPIView):
 
     queryset = Order.objects.all()
 
-    # def perform_create(self, serializer):
-    #     serializer.save(buyer=self.request.user)
+
+# don't allow anyone to update orders
+class OrderUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(product__seller=self.request.user).exclude(
+            status=OrderStatus.INCART
+        )
 
 
 class BuyerOrderListAPIView(generics.ListAPIView):
