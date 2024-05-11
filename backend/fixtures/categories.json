@@ -1,0 +1,1 @@
+[{"model": "marketly.category", "pk": 5, "fields": {"title": "Electronics"}}, {"model": "marketly.category", "pk": 6, "fields": {"title": "Jewelery"}}, {"model": "marketly.category", "pk": 7, "fields": {"title": "Men's clothing"}}, {"model": "marketly.category", "pk": 8, "fields": {"title": "Women's clothing"}}]

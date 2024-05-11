@@ -12,9 +12,8 @@ from .order import (
     OrderCreateAPIView,
     OrderUpdateAPIView,
 )
-from .notification import NotificationDetailAPIView, NotificationListCreateAPIView
-from .review import ReviewDetailAPIView, ReviewListCreateAPIView
+from .notification import NotificationMarkIsSeenView, NotificationListCreateAPIView
+from .review import ReviewListCreateAPIView
 from .withdraw_request import (
     WithdrawRequestListCreateAPIView,
-    WithdrawRequestDetailAPIView,
 )

@@ -10,6 +10,7 @@ function AddImage() {
   const { updateUserInfo } = useAuth();
   const { image, updateImage } = useUserInfo();
   const [isLoading, setLoading] = useState(false);
+
   const uploadImage = async (e) => {
     setLoading(true);
     const file = e.target.files[0];
@@ -23,8 +24,8 @@ function AddImage() {
       {isLoading ? (
         <ImageLoader />
       ) : image ? (
-        <Avatar className="size-52">
-          <AvatarImage src={image} className=" object-cover" />
+        <Avatar className="size-52 shadow-xl border">
+          <AvatarImage src={image} className="object-cover" />
           <AvatarFallback>
             <ImageLoader />
           </AvatarFallback>

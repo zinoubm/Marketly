@@ -15,10 +15,8 @@ from .views import (
     CartListCreateAPIView,
     CartRemoveAPIView,
     NotificationListCreateAPIView,
-    NotificationDetailAPIView,
+    NotificationMarkIsSeenView,
     ReviewListCreateAPIView,
-    ReviewDetailAPIView,
-    WithdrawRequestDetailAPIView,
     WithdrawRequestListCreateAPIView,
 )
 
@@ -104,19 +102,9 @@ urlpatterns = [
         name="notification-list",
     ),
     path(
-        "api/notifications/<int:pk>/",
-        NotificationDetailAPIView.as_view(),
-        name="notification-detail",
-    ),
-    path(
-        "api/reviews/",
-        NotificationListCreateAPIView.as_view(),
-        name="review-list",
-    ),
-    path(
-        "api/reviews/<int:pk>/",
-        NotificationDetailAPIView.as_view(),
-        name="review-detail",
+        "api/notifications/is-seen/",
+        NotificationMarkIsSeenView.as_view(),
+        name="notification-is-seen",
     ),
     path(
         "api/reviews/",
@@ -124,18 +112,8 @@ urlpatterns = [
         name="review-list",
     ),
     path(
-        "api/reviews/<int:pk>/",
-        ReviewDetailAPIView.as_view(),
-        name="review-detail",
-    ),
-    path(
         "api/withdraw-requests/",
         WithdrawRequestListCreateAPIView.as_view(),
         name="withdraw-list",
-    ),
-    path(
-        "api/withdraw-requests/<int:pk>/",
-        WithdrawRequestDetailAPIView.as_view(),
-        name="withdraw-detail",
     ),
 ]

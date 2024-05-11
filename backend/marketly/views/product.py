@@ -32,8 +32,8 @@ class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
 
 
 class ProductSearchAPIView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = ProductSerializer
+    permission_classes = []
     filter_backends = [drf_django_filters.DjangoFilterBackend, filters.SearchFilter]
     search_fields = ["title", "description"]
     filterset_class = ProductFilter

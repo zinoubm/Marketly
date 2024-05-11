@@ -4,7 +4,9 @@ from authentication.managers import UserManager
 
 
 class User(AbstractUser):
+    username = None
     is_verified = models.BooleanField(default=False)
+    is_seller = models.BooleanField(default=False)
     shipping_details = models.TextField(max_length=255, blank=True)
     phone = models.TextField(max_length=255, blank=True)
     balance = models.PositiveIntegerField(default=0)

@@ -27,21 +27,22 @@ const TopBar = () => {
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
 
+  const { first_name, last_name , reset} = useAuthStore();
   const logout = () => {
-    deleteToken();
     clearStateStorage();
+    reset()
+    deleteToken();
     navigate("/sign-in");
   };
-  const { first_name, last_name } = useAuthStore();
   const { image } = useUserInfo();
   return (
     <nav className="flex sm:justify-between justify-around items-center p-4 md:px-8 px-0  w-full">
       <Logo className={"ml-8"} size={100} />
-      <form className="flex gap-4   ">
+      <form className="flex gap-4   " action="/search">
         <IconInput
           icon={() => <IoIosSearch size={20} />}
           type="search"
-          name="q"
+          name="search"
           placeholder="search product "
           className=" lg:w-96   py-4"
         />
@@ -68,7 +69,7 @@ const TopBar = () => {
                 // <img src={image} className="h-10 rounded-full mr-2"  alt="profile Image" />
                 <Avatar className="size-8 mx-1">
                   <AvatarImage  src={image}  className="object-cover" />
-                <AvatarFallback className="text-primary-semi-dark text-xs font-light bg-primary-light">
+                <AvatarFallback className="  font-light ">
                   
                 <IoPersonCircleSharp size={35} className="m-1" />
                 </AvatarFallback>
@@ -88,19 +89,19 @@ const TopBar = () => {
               </DropdownMenuLabel>
               <hr className="sm:hidden flex" />
               <DropdownMenuItem>
-                <Link to={"dashboard"} className="flex gap-2">
+                <Link to={"/dashboard"} className="flex w-full gap-2">
                   <MdOutlineDashboardCustomize size={20} />
                   dashboard
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="md:hidden flex  gap-2">
+              <DropdownMenuItem className="md:hidden flex  w-full gap-2">
                 <LuShoppingCart size={20} />
                 cart
               </DropdownMenuItem>
-              <DropdownMenuItem className="md:hidden flex gap-2">
+              <DropdownMenuItem className="md:hidden flex w-full gap-2">
                 <FaChartLine size={15} /> compare
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={logout} className="flex gap-2">
+              <DropdownMenuItem onClick={logout} className="flex w-full gap-2">
                 <BiLogOut size={20} />
                 logout
               </DropdownMenuItem>
@@ -109,7 +110,7 @@ const TopBar = () => {
         ) : (
           <Link
             to={"/sign-in"}
-            className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1"
+            className="md:flex hover:bg-gray-100 p-2 rounded-lg  items-center gap-1"
           >
             <MdPersonOutline size={24} /> Sign In
           </Link>

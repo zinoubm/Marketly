@@ -1,5 +1,4 @@
-import React from "react";
-// import { Card } from '../products'
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   Carousel,
@@ -8,49 +7,48 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import ProductCard from "./productCard"
-function ProductList({ categorie, products, theme }) {
-  return (
-    // <div className={`w-full rounded-lg p-2  ${theme}`}>
-    //     <h1 className='  text-secondary text-2xl font-bold ml-8'>{categorie}</h1>
-    //     <div className='flex   overflow-x-scroll    gap-2'>
+import ProductCard from "./productCard";
+import ProductDetails from "./productDetails";
+import useProductApi from "@/lib/api/useProductApi";
+function ProductList({ category, theme }) {
+  const [data, setData] = useState([]);
+  const { searchForProduct, getCategories } = useProductApi();
+  useEffect(() => {
+    (async () => {
+      let cat = await getCategories();
 
-    //     {products.map((prod , i)=><Card name={prod} price='' rating={0} key={`${prod}${i}`}/>)}
-    //     </div>
-    // </div>
-    
-    <Carousel className={cn(" p-4 lg:px-8 lg:m-4 m-1  w-full rounded-lg  " , theme)}>
-       <h1 className="text-3xl ml-4 text-white font-bold mb-4">
-         {categorie}
-        </h1>
-      <CarouselContent  className="gap-6">
-        {PRODUCT_LIST.map((prod , i)=>(
-            <ProductCard name={prod} key={i}/>
+      cat = cat.find((c) => c.title == category);
+
+      const products = await searchForProduct({ category: cat.id });
+      //! fixing the image
+      products.forEach((element) => {
+        if (!element.product_image.includes("media/images"))
+          element.product_image = element.product_image.replace(
+            "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
+            ""
+          );
+      });
+
+      setData(products);
+      
+    })();
+  }, []);
+  return (
+    <Carousel
+      className={cn(" p-4 lg:px-12 lg:m-4   w-full rounded-lg  ", theme)}
+    >
+      <h1 className="text-3xl ml-4 text-white font-bold mb-4">{category}</h1>
+      <CarouselContent className="gap-6 px-8">
+        {data.map((prod) => (
+          <ProductDetails>
+            <ProductCard {...prod} key={prod.id} />
+          </ProductDetails>
         ))}
       </CarouselContent>
-      {/* <CarouselPrevious  className=" "/>
-      <CarouselNext /> */}
+      <CarouselPrevious className="  translate-x-14" />
+      <CarouselNext className="  -translate-x-14" />
     </Carousel>
-    
   );
 }
-const PRODUCT_LIST = [
-    "pc",
-    "tv",
-    "mouse",
-    "pc",
-    "tv",
-    "mouse",
-    "pc",
-    "tv",
-    "mouse",
-    "pc",
-    "tv",
-    "mouse",
-    "pc",
-    "tv",
-    "mouse",
-  ];
-  
 
 export default ProductList;

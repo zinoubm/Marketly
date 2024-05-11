@@ -61,7 +61,7 @@ const DashboardLayout = () => {
         </>
       )}
 
-      <main className=" flex-grow w-10 flex-col flex">
+      <main className=" flex-grow max-h-[calc(100vh-60px)] w-10 flex-col flex">
         <div className="flex items-center justify-between p-2 ">
           <div className="flex items-center space-x-2">
             <Toggle
@@ -71,7 +71,7 @@ const DashboardLayout = () => {
             >
               <HamburgerMenuIcon width="24" height="24" />
             </Toggle>
-            <Logo className="xl:hidden" size={162} />
+            <Logo className="xl:hidden " size={162} />
           </div>
         </div>
         <Outlet />
