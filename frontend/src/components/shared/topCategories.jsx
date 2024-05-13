@@ -28,7 +28,7 @@ function TopCategories() {
       </div>
       <div className="flex justify-center ">
 
-      <Link href="" className="mt-10  underline">view more</Link>
+      <Link to={'/search'} className="mt-10  underline">view more</Link>
       </div>
     </div>
   );

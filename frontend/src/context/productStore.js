@@ -9,6 +9,7 @@ export const useRefetchDataStore =create(
 )
 export const useProductStore=create(
     (set)=>({
+        id:0,
         title: "",
         description: "",
         category: "",

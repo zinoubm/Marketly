@@ -1,8 +1,8 @@
 import useCookie from "./useCookie";
 import axios from "./axios";
 import FormData from "form-data";
-import { toast } from "sonner";
-const useApi = () => {
+import { toast } from "sonner"; 
+const useProductApi = () => {
   const { getToken } = useCookie();
 
   const getProducts = async () => {
@@ -146,4 +146,4 @@ const useApi = () => {
   };
 }
 
-export default useApi;
+export default useProductApi;

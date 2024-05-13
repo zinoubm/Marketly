@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/popover";
 import { useRefetchDataStore } from "@/context/productStore";
 import { BsThreeDots } from "react-icons/bs";
-// import ProductDetails from "@/components/shared/productDetails";
 import UpdateProduct from "./UpdateProduct";
 import useProductApi from "@/lib/api/useProductApi";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";

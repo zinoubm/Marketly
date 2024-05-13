@@ -40,8 +40,8 @@ function ProductList({ category, theme }) {
       <h1 className="text-3xl ml-4 text-white font-bold mb-4">{category}</h1>
       <CarouselContent className="gap-6 px-8">
         {data.map((prod) => (
-          <ProductDetails>
-            <ProductCard {...prod} key={prod.id} />
+          <ProductDetails key={prod.id}>
+            <ProductCard {...prod}  />
           </ProductDetails>
         ))}
       </CarouselContent>
