@@ -6,10 +6,11 @@ from marketly.serializers import OrderSerializer
 
 
 class CartListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Order.objects.filter(status=OrderStatus.INCART)
     serializer_class = OrderSerializer
-
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(status=OrderStatus.INCART, buyer=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(status=OrderStatus.INCART)
@@ -18,7 +19,6 @@ class CartListCreateAPIView(generics.ListCreateAPIView):
 class CartRemoveAPIView(generics.DestroyAPIView):
     queryset = Order.objects.filter(status=OrderStatus.INCART)
     serializer_class = OrderSerializer
-
     permission_classes = [permissions.IsAuthenticated]
 
 

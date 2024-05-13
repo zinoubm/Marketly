@@ -165,6 +165,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Marketly",
     "SCHEMA_PATH_PREFIX": "/api",
     "COMPONENT_SPLIT_REQUEST": True,
+    "persistAuthorization": True,
 }
 
 # Google Auth settings
