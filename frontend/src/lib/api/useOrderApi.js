@@ -27,7 +27,7 @@ const useOrderApi = () => {
         return order;
       })
     );
-    
+
     return Mydata;
   };
 
@@ -40,7 +40,16 @@ const useOrderApi = () => {
         Authorization: "Token " + token,
       },
     });
-    return response.data;
+    const data = response.data;
+    const Mydata = await Promise.all(
+      data.map(async (order) => {
+        const prod = await getSingleProduct(order.product);
+        order.product = prod.title;
+        return order;
+      })
+    );
+
+    return Mydata;
   };
 
   return { getBuyerOrders, getSellerOrders };

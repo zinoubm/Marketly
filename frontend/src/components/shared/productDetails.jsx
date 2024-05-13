@@ -3,9 +3,9 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "../ui/button";
 import { useProductStore } from "@/context/productStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
+import useCartAPi from "@/lib/api/useCartApi";
 function ProductDetails({ children }) {
-  const {
+  const {id,
     title,
     description,
     price,
@@ -15,7 +15,11 @@ function ProductDetails({ children }) {
     incrementQuantity,
     decrementQuantity,
   } = useProductStore();
-
+  const {addProductToCart}=useCartAPi()
+  const addProduct=async ()=>{
+    console.log(id, quantity);
+  await addProductToCart(id , quantity)
+  }
   return (
     <Drawer>
       <DrawerTrigger>{children}</DrawerTrigger>
@@ -58,8 +62,8 @@ function ProductDetails({ children }) {
                 +
               </Button>
             </div>
-            <Button className=" bg-black block w-full mt-8">
-              add to cart{" "}
+            <Button onClick={addProduct} className=" bg-black block w-full mt-8">
+              add to cart
             </Button>
             <Button className=" block w-full " variant={"outline"}>
               add to compare
