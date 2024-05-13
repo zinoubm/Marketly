@@ -1,6 +1,6 @@
 import { useProductStore } from "@/context/productStore"
 
-function Card({title , price , description  , product_image , inventory  }) {
+function Card({id,title , price , description  , product_image , inventory  }) {
   const {setProduct  } = useProductStore()
 
   
@@ -10,7 +10,7 @@ function Card({title , price , description  , product_image , inventory  }) {
     titleFourWords=titleFourWords.concat(" ...")
   }
   const handleClick=()=>{
-    setProduct({title , price , description  , product_image , inventory})
+    setProduct({id, title , price , description  , product_image , inventory})
     
   }
   return (<>

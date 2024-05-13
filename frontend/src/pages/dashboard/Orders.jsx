@@ -15,10 +15,8 @@ const Orders = () => {
   const [orderList, setOrderList] = useState([]);
   useEffect(() => {
     (async () => {
-      const data = await getBuyerOrders();
-
+      const data = await getSellerOrders()
       setOrderList(data);
-
       
     })();
   }, []);
@@ -49,7 +47,7 @@ const OrderRow = ({ id, date, status, product, quantity }) => {
   const time = T.toLocaleTimeString();
   return (
     <TableRow key={id}>
-      <TableCell className="font-medium">{product}</TableCell>
+      <TableCell className="font-medium  w-52">{product}</TableCell>
       <TableCell>{status}</TableCell>
 
       <TableCell>{day}</TableCell>
