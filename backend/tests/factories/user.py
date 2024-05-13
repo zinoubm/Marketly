@@ -6,6 +6,6 @@ from authentication.models import User
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
-        django_get_or_create = ("username",)
+        django_get_or_create = ("email",)
 
-    username = factory.Faker("email")
+    email = factory.Faker("email")

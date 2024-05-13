@@ -36,7 +36,10 @@ class TestCartListAPI:
         api_client.force_authenticate(user=self.buyer)
         response = api_client.post(self.url, data)
 
+        print("data", response.data)
+
         assert response.status_code == 201
+        assert response.data["status"] == OrderStatus.INCART
 
     def test_remove_from_cart(self, api_client):
         url = f"{self.url}{self.order.id}/"

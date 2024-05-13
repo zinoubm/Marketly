@@ -1,7 +1,6 @@
+from django.core import exceptions
 from rest_framework import serializers
 from marketly.models import Order, OrderStatus, Product
-from authentication.models import User
-from marketly.serializers import ProductSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -11,31 +10,19 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
-        read_only_fields = ["status"]
 
-    def create(self, validated_data):
-        request = self.context.get("request")
+    def update(self, instance, validated_data):
+        status = validated_data.get("status", None)
 
-        product = validated_data.get("product")
-        quantity = validated_data.get("quantity")
-
-        if product.inventory < quantity:
-            raise serializers.ValidationError(
-                "Not enough items available for this product!"
+        if status == OrderStatus.PENDING:
+            raise exceptions.PermissionDenied(
+                "Cannot update order with status 'Incart'"
             )
 
-        order = Order.objects.create(
-            buyer=request.user,
-            product=product,
-            quantity=quantity,
-        )
+        if status == OrderStatus.INCART:
+            raise exceptions.PermissionDenied(
+                "Cannot update order with status 'Incart'"
+            )
 
-        # decrese Inventory
-        if order.status != OrderStatus.INCART:
-            product_instance = Product.objects.get(pk=product.id)
-            inventory = product_instance.inventory
-            product_instance.inventory = inventory - quantity
-
-            product_instance.save()
-
-        return order
+        instance = super().update(instance, validated_data)
+        return instance

@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, serializers, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -12,8 +12,16 @@ class OrderCreateAPIView(generics.CreateAPIView):
 
     queryset = Order.objects.all()
 
-    # def perform_create(self, serializer):
-    #     serializer.save(buyer=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(buyer=self.request.user, status=OrderStatus.PENDING)
+
+        if serializer.instance.product.inventory < serializer.instance.quantity:
+            raise serializers.ValidationError(
+                "Not enough items available for this product!"
+            )
+
+        serializer.instance.product.inventory -= serializer.instance.quantity
+        serializer.instance.product.save()
 
 
 class BuyerOrderListAPIView(generics.ListAPIView):
@@ -54,3 +62,14 @@ class OrderRetrieveView(generics.RetrieveAPIView):
             return obj
 
         self.permission_denied(self.request)
+
+
+# don't allow everyone to update orders
+class OrderUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(product__seller=self.request.user).exclude(
+            status=OrderStatus.INCART
+        )

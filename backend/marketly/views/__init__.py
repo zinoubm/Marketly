@@ -10,6 +10,7 @@ from .order import (
     BuyerOrderListAPIView,
     SellerOrderListAPIView,
     OrderCreateAPIView,
+    OrderUpdateAPIView,
 )
 from .notification import NotificationMarkIsSeenView, NotificationListCreateAPIView
 from .review import ReviewListCreateAPIView

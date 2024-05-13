@@ -18,6 +18,7 @@ class TestOrderCreation:
             "product": self.product.id,
             "quantity": self.inventory - 1,
             "date": "2024-04-30",
+            "status": OrderStatus.COMPLETED,
         }
 
         api_client.force_authenticate(user=self.buyer)
@@ -25,6 +26,9 @@ class TestOrderCreation:
 
         assert response.status_code == 201
         assert response.data["buyer"] == self.buyer.id
+        assert (
+            response.data["status"] == OrderStatus.PENDING
+        )  # order status on creation must be ignored
 
     def test_decrease_Inventory_whith_order_create(self, api_client):
         quantity = 1
@@ -147,5 +151,55 @@ class TestOrderRetrieveAPI:
 
         api_client.force_authenticate(user=self.seller)
         response = api_client.get(url)
+
+        assert response.status_code == 403
+
+
+@pytest.mark.django_db
+class TestOrderUpdateAPI:
+    def setup_method(self, method):
+        self.base_url = "http://localhost:8000/api/orders"
+        self.buyer = UserFactory()
+        self.seller = UserFactory()
+        self.product = ProductFactory(seller=self.seller)
+        self.order = OrderFactory(buyer=self.buyer, product=self.product)
+
+    def test_update_order(self, api_client, get_seller_id):
+        url = f"{self.base_url}/status/{self.order.id}/"
+        data = {
+            "product": self.product.id,
+            "quantity": 12,
+            "status": OrderStatus.SHIPPING,
+        }
+
+        api_client.force_authenticate(user=self.seller)
+        response = api_client.patch(url, data, format="json")
+
+        assert response.status_code == 200
+        assert self.order.status == OrderStatus.SHIPPING
+
+    def test_not_allow_incart_update(self, api_client, get_seller_id):
+        url = f"{self.base_url}/status/{self.order.id}/"
+        data = {
+            "product": self.product.id,
+            "quantity": 12,
+            "status": "InCart",
+        }
+
+        api_client.force_authenticate(user=self.seller)
+        response = api_client.patch(url, data, format="json")
+
+        assert response.status_code == 403
+
+    def test_not_allow_pending_update(self, api_client, get_seller_id):
+        url = f"{self.base_url}/status/{self.order.id}/"
+        data = {
+            "product": self.product.id,
+            "quantity": 12,
+            "status": OrderStatus.PENDING,
+        }
+
+        api_client.force_authenticate(user=self.seller)
+        response = api_client.patch(url, data, format="json")
 
         assert response.status_code == 403
