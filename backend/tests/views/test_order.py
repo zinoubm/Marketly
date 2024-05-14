@@ -11,7 +11,7 @@ class TestOrderCreation:
         self.inventory = 10
 
         self.buyer = UserFactory()
-        self.product = ProductFactory(inventory=self.inventory)
+        self.product = ProductFactory(inventory=self.inventory, price=12)
 
     def test_create_order(self, api_client):
         data = {
@@ -24,10 +24,12 @@ class TestOrderCreation:
         api_client.force_authenticate(user=self.buyer)
         response = api_client.post(self.url, data, format="json")
 
-        assert response.status_code == 201
-        assert response.data["buyer"] == self.buyer.id
+        # assert response.status_code == 201
+        assert response.status_code == 202
+
+        assert response.data["order"]["buyer"] == self.buyer.id
         assert (
-            response.data["status"] == OrderStatus.PENDING
+            response.data["order"]["status"] == OrderStatus.PENDING
         )  # order status on creation must be ignored
 
     def test_decrease_Inventory_whith_order_create(self, api_client):

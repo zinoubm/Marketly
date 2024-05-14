@@ -1,9 +1,10 @@
 from rest_framework import generics, permissions, serializers, status
-from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from django.conf import settings
 from marketly.models import Order, OrderStatus
 from marketly.serializers import OrderSerializer
+
+import stripe
 
 
 class OrderCreateAPIView(generics.CreateAPIView):
@@ -13,15 +14,51 @@ class OrderCreateAPIView(generics.CreateAPIView):
     queryset = Order.objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(buyer=self.request.user, status=OrderStatus.PENDING)
+        self.order_instance = serializer.save(
+            buyer=self.request.user, status=OrderStatus.PENDING
+        )
 
-        if serializer.instance.product.inventory < serializer.instance.quantity:
+        if self.order_instance.product.inventory < self.order_instance.quantity:
             raise serializers.ValidationError(
                 "Not enough items available for this product!"
             )
 
-        serializer.instance.product.inventory -= serializer.instance.quantity
-        serializer.instance.product.save()
+        self.order_instance.product.inventory -= self.order_instance.quantity
+        self.order_instance.product.save()
+
+    def post(self, *args, **kwargs):
+        super().post(*args, **kwargs)
+        try:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        "price": self.order_instance.product.stripe_price_id,
+                        "quantity": self.order_instance.quantity,
+                    },
+                ],
+                mode="payment",
+                success_url=settings.FRONTEND_DOMAIN + "/payment-succeded",
+                cancel_url=settings.FRONTEND_DOMAIN + "/payment-failed",
+            )
+
+            serialized_order = OrderSerializer(self.order_instance).data
+            return Response(
+                {
+                    "status": "succeeded",
+                    "checkout_session_url": checkout_session.url,
+                    "order": serialized_order,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        except Exception as e:
+            print(e)
+            self.order_instance.delete()
+            return Response(
+                {"status": "failed"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 class BuyerOrderListAPIView(generics.ListAPIView):

@@ -69,6 +69,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
 ]
 
+BACKEND_DOMAIN = "http://localhost:8000"
+FRONTEND_DOMAIN = "http://localhost:8080"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ROOT_URLCONF = "marketly.urls"
@@ -177,6 +180,9 @@ CLOUDINARY_STORAGE = {
     "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
     "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
 }
+
+STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
