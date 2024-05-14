@@ -38,7 +38,7 @@ function SearchPage() {
                 <Card {...prod}  />
               </ProductDetails>
             ))
-          : "there is no product here"}
+          : <div className=" flex justify-center items-center flex-grow mt-8 text-3xl font-black text-gray-600 ">there is no product here ! </div>}
       </div>
     </div>
   );

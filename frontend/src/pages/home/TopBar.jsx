@@ -53,26 +53,26 @@ const TopBar = () => {
   };
   const { image } = useUserInfo();
   return (
-    <nav className="flex sm:justify-between justify-around items-center p-4 md:px-8 px-0  w-full">
-      <Logo className={"ml-8"} size={100} />
-      <form className="flex gap-4   " action="/search">
+    <nav className="flex sm:justify-between justify-around items-center p-4 md:px-8 px-1  w-full">
+      <Logo className={"sm:ml-8"} size={100} />
+      <form className="flex md:gap-4  gap-1   " action="/search">
         <IconInput
           icon={() => <IoIosSearch size={20} />}
           type="search"
           name="search"
           placeholder="search product "
-          className=" lg:w-96   py-4"
+          className=" lg:w-96 sm:w-32 w-24 py-4"
           value={searchValue}
           onChange={(e) => setSearchValue(e.value)}
         />
         <Button
           type="submit"
-          className="bg-primary-light text-md    font-normal px-6"
+          className="bg-primary-light text-md     font-normal  hidden sm:block sm:px-6"
         >
           Search
         </Button>
       </form>
-      <div className="flex gap-4">
+      <div className="flex md:gap-4 ">
         <CartDrawer>
           <button className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
             <LuShoppingCart />
@@ -129,11 +129,13 @@ const TopBar = () => {
               </PopoverContent>
           </Popover>
         ) : (
+            
           <Link
             to={"/sign-in"}
-            className="md:flex hover:bg-gray-100 p-2 rounded-lg  items-center gap-1"
+            className="flex md:min-w-8 py-2 p-1 hover:bg-gray-100 sm:p-2 ml-2 rounded-lg text-md  sm:text-lg   items-center justify-center sm:gap-1"
           >
-            <MdPersonOutline size={24} /> Sign In
+             Sign In
+            <MdPersonOutline size={24} />
           </Link>
         )}
       </div>

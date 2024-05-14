@@ -91,11 +91,15 @@ const useProductApi = () => {
   };
   const updateProduct = async (prod, id) => {
     const token = getToken();
+    if(prod.category =="")
+    delete prod.category
+    if(prod.product_image==null)
+    delete prod.product_image
+
     const form = new FormData();
     for (let key in prod) {
       form.set(key, prod[key]);
     }
-
     try {
       const response = await axios.patch(`/products/${id}/`, form, {
         headers: {
