@@ -44,7 +44,8 @@ const SignUpForm = () => {
 
   return (
     <>
-      <h1 className="font-bold text-2xl m-4 ">Sign Up</h1>
+      <h1 className="font-bold text-2xl m-4 sm:mt-4  mt-24">Sign Up</h1>
+      
       <GoogleLogin
         onSuccess={async (credentialResponse) => {
           googleSignIn(credentialResponse.credential);

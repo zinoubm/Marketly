@@ -22,9 +22,9 @@ const IconInput = ({icon:Icon ,className,...props } ) => {
 
   return (
     <div className="flex flex-1 pl-1 items-center">
-      <div  className=" absolute ml-1">
+      <button type="submit"  className=" absolute ml-1">
       <Icon />
-      </div>
+      </button>
       <Input
         
         {...props}

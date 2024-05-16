@@ -8,29 +8,34 @@ const useCartAPi = () => {
 
   const getCartProducts = async () => {
     const token = getToken();
-    const response = await axios.get("/cart/", {
-      headers: {
-        accept: "application/json",
-        Authorization: "Token " + token,
-      },
-    });
-    const data = response.data;
-    const MyData = await Promise.all(
-      data.map(async (InCart) => {
-        const productDetails = await getSingleProduct(InCart.product);
-        //! fixing the image
-        if (!productDetails.product_image.includes("media/images")) {
-          productDetails.product_image = productDetails.product_image.replace(
-            "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
-            ""
-          );
-        }
+    try {
+      
+      const response = await axios.get("/cart/", {
+        headers: {
+          accept: "application/json",
+          Authorization: "Token " + token,
+        },
+      });
+      const data = response.data;
+      const MyData = await Promise.all(
+        data.map(async (InCart) => {
+          const productDetails = await getSingleProduct(InCart.product);
+          //! fixing the image
+          if (!productDetails.product_image.includes("media/images")) {
+            productDetails.product_image = productDetails.product_image.replace(
+              "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
+              ""
+            );
+          }
+  
+          return { ...InCart, product: productDetails };
+        })
+      );
+      return MyData;
+    } catch (error) {
+      return null
+    }
 
-        return { ...InCart, product: productDetails };
-      })
-    );
-
-    return MyData;
   };
 
 
