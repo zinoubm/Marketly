@@ -22,6 +22,8 @@ class CartRemoveAPIView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 
+# todo
+# implement stripe checkout flow
 class OrderFromCartAPIView(APIView):
     """
     Converts Orders with status eqaul to INCART to status equal to PENDING which Semantically match
