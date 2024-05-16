@@ -9,7 +9,6 @@ const useCartAPi = () => {
   const getCartProducts = async () => {
     const token = getToken();
     try {
-      
       const response = await axios.get("/cart/", {
         headers: {
           accept: "application/json",
@@ -27,49 +26,75 @@ const useCartAPi = () => {
               ""
             );
           }
-  
+
           return { ...InCart, product: productDetails };
         })
       );
       return MyData;
     } catch (error) {
-      return null
+      return null;
     }
-
   };
 
-
-  const deleteCartProduct=async(id)=>{
-    
-      const token = getToken();
-      const response = await axios.delete(`/cart/${id}`, {
-        headers: {
-          accept: "application/json",
-          Authorization: "Token " + token,
-        },
-      });
-      if (response.status ==204) {
-          toast.warning("deleted ")
-      }
-  }
-
-
-  const addProductToCart=async(product, quantity)=>{
+  const deleteCartProduct = async (id) => {
     const token = getToken();
-    const response = await axios.post("/cart/",{
-      product ,quantity
-    }, {
+    const response = await axios.delete(`/cart/${id}`, {
       headers: {
         accept: "application/json",
         Authorization: "Token " + token,
       },
     });
+    if (response.status == 204) {
+      toast.warning("deleted ");
+    }
+  };
+
+  const addProductToCart = async (product, quantity) => {
+    const token = getToken();
+    try {
+      const response = await axios.post(
+        "/cart/",
+        {
+          product,
+          quantity,
+        },
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: "Token " + token,
+          },
+        }
+      );
+      if (response.status == 201) toast.success("product added to the cart ");
+    } catch (error) {
+      if (error.response.status == 401) {
+        toast.error("you must login to add product to your cart ", {
+          style: { scale: 30 },
+        });
+      }
+    }
+  };
+
+  const orderAllCartProducts = async () => {
+    const token = getToken();
+
+    const response = await axios.post(
+      "/cart/order",
+      {},
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: "Token " + token,
+        },
+      }
+    );
     console.log(response);
-  }
+  };
   return {
     getCartProducts,
     addProductToCart,
     deleteCartProduct,
+    orderAllCartProducts,
   };
 };
 

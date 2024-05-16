@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { useProductStore } from "@/context/productStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useCartAPi from "@/lib/api/useCartApi";
+import { useRefetchDataStore } from "@/context/productStore";
 function ProductDetails({ children }) {
   const {id,
     title,
@@ -15,10 +16,12 @@ function ProductDetails({ children }) {
     incrementQuantity,
     decrementQuantity,
   } = useProductStore();
+  const {toggleRefetchData}=useRefetchDataStore()
   const {addProductToCart}=useCartAPi()
   const addProduct=async ()=>{
-    console.log(id, quantity);
+    // console.log(id, quantity);
   await addProductToCart(id , quantity)
+  toggleRefetchData()
   }
   return (
     <Drawer>
@@ -63,7 +66,7 @@ function ProductDetails({ children }) {
               </Button>
             </div>
             <Button onClick={addProduct} className=" bg-black block w-full mt-8">
-              add to cart
+              add to cart 
             </Button>
             <Button className=" block w-full " variant={"outline"}>
               add to compare
