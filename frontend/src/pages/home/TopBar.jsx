@@ -16,13 +16,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import useCookie from "@/lib/api/useCookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "@/context/authStore";
@@ -61,7 +54,7 @@ const TopBar = () => {
           type="search"
           name="search"
           placeholder="search product "
-          className=" lg:w-96 sm:w-32 w-24 py-4"
+          className=" lg:w-96 sm:w-52 w-40 py-4"
           value={searchValue}
           onChange={(e) => setSearchValue(e.value)}
         />
@@ -73,6 +66,7 @@ const TopBar = () => {
         </Button>
       </form>
       <div className="flex md:gap-4 ">
+        
         <CartDrawer>
           <button className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
             <LuShoppingCart />
@@ -85,56 +79,57 @@ const TopBar = () => {
         </button>
         {first_name ? (
           <Popover>
-              <PopoverTrigger className="flex items-center">
-                {image ? (
-                  // <img src={image} className="h-10 rounded-full mr-2"  alt="profile Image" />
-                  <Avatar className="size-8 mx-1">
-                    <AvatarImage src={image} className="object-cover" />
-                    <AvatarFallback className="  font-light ">
-                      <IoPersonCircleSharp size={35} className="m-1" />
-                    </AvatarFallback>
-                  </Avatar>
-                ) : (
-                  <IoPersonCircleSharp size={35} className="m-1" />
-                )}
-                <h1 className="hidden sm:flex ">
-                  {first_name} {last_name}
-                </h1>
-              </PopoverTrigger>
-              <PopoverContent className="flex items-start  p-1 flex-col  w-36 ">
-                <div className="sm:hidden flex  ">
-                  {first_name} {last_name}
-                </div>
-                <Separator className="sm:hidden"/>
-                <div className="mt-1 w-full hover:bg-blue-200 rounded-lg p-1">
-
+            <PopoverTrigger className="flex items-center">
+              {image ? (
+                // <img src={image} className="h-10 rounded-full mr-2"  alt="profile Image" />
+                <Avatar className="size-8 mx-1">
+                  <AvatarImage src={image} className="object-cover" />
+                  <AvatarFallback className="  font-light ">
+                    <IoPersonCircleSharp size={35} className="m-1" />
+                  </AvatarFallback>
+                </Avatar>
+              ) : (
+                <IoPersonCircleSharp size={35} className="m-1" />
+              )}
+              <h1 className="hidden sm:flex ">
+                {first_name} {last_name}
+              </h1>
+            </PopoverTrigger>
+            <PopoverContent className="flex items-start  p-1 flex-col  w-36 ">
+              <div className="sm:hidden flex  ">
+                {first_name} {last_name}
+              </div>
+              <Separator className="sm:hidden" />
+              <div className="mt-1 w-full hover:bg-blue-200 rounded-lg p-1">
                 <Link to={"/dashboard"} className="flex w-full gap-2">
                   <MdOutlineDashboardCustomize size={20} />
                   dashboard
                 </Link>
-                </div>
-                <div  className="md:hidden flex w-full hover:bg-blue-200 rounded-lg p-1">
+              </div>
+              <div className="md:hidden flex w-full hover:bg-blue-200 rounded-lg p-1">
                 <CartDrawer className="w-full flex gap-2">
                   <LuShoppingCart size={20} />
                   cart
                 </CartDrawer>
-                </div>
-                <div className="md:hidden flex items-center w-full gap-2 hover:bg-blue-200 rounded-lg p-1">
+              </div>
+              <div className="md:hidden flex items-center w-full gap-2 hover:bg-blue-200 rounded-lg p-1">
                 <FaChartLine size={15} /> compare
-                </div>
-                <div onClick={logout} className="flex w-full gap-2 hover:bg-blue-200 rounded-lg p-1">
+              </div>
+              <div
+                onClick={logout}
+                className="flex w-full gap-2 hover:bg-blue-200 rounded-lg p-1"
+              >
                 <BiLogOut size={20} />
                 logout
-                </div>
-              </PopoverContent>
+              </div>
+            </PopoverContent>
           </Popover>
         ) : (
-            
           <Link
             to={"/sign-in"}
             className="flex md:min-w-8 py-2 p-1 hover:bg-gray-100 sm:p-2 ml-2 rounded-lg text-md  sm:text-lg   items-center justify-center sm:gap-1"
           >
-             Sign In
+            Sign In
             <MdPersonOutline size={24} />
           </Link>
         )}
