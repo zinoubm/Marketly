@@ -53,7 +53,6 @@ class OrderCreateAPIView(generics.CreateAPIView):
             )
 
         except Exception as e:
-            print(e)
             self.order_instance.delete()
             return Response(
                 {"status": "failed"},

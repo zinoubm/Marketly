@@ -74,5 +74,5 @@ class TestCartListAPI:
 
         self.order.refresh_from_db()
 
-        assert response.status_code == 200
+        assert response.status_code == 201
         assert self.order.status == OrderStatus.PENDING
