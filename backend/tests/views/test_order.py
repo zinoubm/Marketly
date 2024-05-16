@@ -1,6 +1,7 @@
 import pytest
 from tests.fixtures import api_client, get_seller_id
 from tests.factories import UserFactory, ProductFactory, OrderFactory
+from tests.utils import is_valid_url
 from marketly.models import OrderStatus
 
 
@@ -24,13 +25,12 @@ class TestOrderCreation:
         api_client.force_authenticate(user=self.buyer)
         response = api_client.post(self.url, data, format="json")
 
-        # assert response.status_code == 201
-        assert response.status_code == 202
-
+        assert response.status_code == 201
         assert response.data["order"]["buyer"] == self.buyer.id
         assert (
             response.data["order"]["status"] == OrderStatus.PENDING
         )  # order status on creation must be ignored
+        assert is_valid_url(response.data["checkout_session_url"])
 
     def test_decrease_Inventory_whith_order_create(self, api_client):
         quantity = 1
