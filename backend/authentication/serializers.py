@@ -82,7 +82,9 @@ class GoogleLoginSerializer(serializers.Serializer):
 
             except UserModel.DoesNotExist:
                 user = UserModel.objects.create_user(
-                    username=email, email=email, google_profile_image=user_picture_url
+                    email=email,
+                    google_profile_image=user_picture_url,
+                    password=UserModel.objects.make_random_password(),
                 )
                 if full_name:
                     # assuming last names are single words at the end,
