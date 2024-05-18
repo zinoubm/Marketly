@@ -38,9 +38,23 @@ class OrderFromCartAPIView(APIView):
             buyer=request.user, status=OrderStatus.INCART
         )
 
+        if len(in_cart_orders) == 0:
+            return Response(
+                {
+                    "status": "failed",
+                    "message": "you have no items in cart",
+                    "checkout_session_url": None,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         line_items = []
 
         for order in in_cart_orders:
+            # make sure a product has a stripe id and price
+            if order.product.stripe_price_id is None:
+                order.product.save()
+
             line_items.append(
                 {
                     "price": order.product.stripe_price_id,

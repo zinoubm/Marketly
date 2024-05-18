@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MaxValueValidator
 from authentication.models import User
 from marketly.models import Category
 import stripe
@@ -19,6 +20,7 @@ class Product(models.Model):
     is_approved = models.BooleanField(default=False)
     inventory = models.PositiveIntegerField(default=0)
     product_image = models.ImageField(upload_to="images/", blank=True)
+    rating = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
 
     @property
     def in_stock(self):

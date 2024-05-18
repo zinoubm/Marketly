@@ -25,3 +25,6 @@ class ReviewListCreateAPIView(generics.ListCreateAPIView):
             return Review.objects.filter(product_id=int(product_id))
         else:
             return Review.objects.all()
+
+    def perform_create(self, serializer):
+        self.order_instance = serializer.save(user=self.request.user)
