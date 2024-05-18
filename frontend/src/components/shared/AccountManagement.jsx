@@ -41,12 +41,23 @@ const AccountManagement = () => {
           {first_name} {last_name}
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-2    ">
+          {last_name == "Admin" && first_name == "Marketly" && (
+            <Button
+              className="bg-primary-dark hover:bg-primary-semi-dark"
+              onClick={() => {
+                window.location.href = "http://localhost:8000/admin/";
+              }}
+            >
+              Admin Panel
+            </Button>
+          )}
           <Button
             className="bg-primary-dark hover:bg-primary-semi-dark"
             onClick={() => navigate("/")}
           >
             Home
           </Button>
+
           <Button
             className="bg-primary-dark hover:bg-primary-semi-dark"
             onClick={logout}
