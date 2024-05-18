@@ -17,6 +17,8 @@ const Orders = () => {
     (async () => {
       const data = await getSellerOrders()
       setOrderList(data);
+      // const d= await getBuyerOrders()
+      // console.log(d);
       
     })();
   }, []);

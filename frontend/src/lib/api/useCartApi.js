@@ -88,7 +88,7 @@ const useCartAPi = () => {
         },
       }
     );
-    console.log(response);
+    return response.data
   };
   return {
     getCartProducts,

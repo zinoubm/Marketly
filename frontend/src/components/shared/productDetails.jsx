@@ -6,7 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import useCartAPi from "@/lib/api/useCartApi";
 import { useRefetchDataStore } from "@/context/productStore";
 function ProductDetails({ children }) {
-  const {id,
+  const {
+    id,
     title,
     description,
     price,
@@ -16,13 +17,12 @@ function ProductDetails({ children }) {
     incrementQuantity,
     decrementQuantity,
   } = useProductStore();
-  const {toggleRefetchData}=useRefetchDataStore()
-  const {addProductToCart}=useCartAPi()
-  const addProduct=async ()=>{
-    // console.log(id, quantity);
-  await addProductToCart(id , quantity)
-  toggleRefetchData()
-  }
+  const { toggleRefetchData } = useRefetchDataStore();
+  const { addProductToCart } = useCartAPi();
+  const addProduct = async () => {
+    await addProductToCart(id, quantity);
+    toggleRefetchData();
+  };
   return (
     <Drawer>
       <DrawerTrigger>{children}</DrawerTrigger>
@@ -36,16 +36,14 @@ function ProductDetails({ children }) {
             />
           </section>
           <section className=" w-72   mr-8">
-            <h1 className=" text-2xl font-extrabold  ">
-              {title}
-            </h1>
+            <h1 className=" text-2xl font-extrabold  ">{title}</h1>
             <h2 className=" text-green-600 font-bold">{inventory} in stock </h2>
             <h2 className="text-xl font-extrabold text-right ">{price} $</h2>
             <h2 className="text-lg font-bold mb-2">Description :</h2>
-            
-              <ScrollArea className="h-[200px]  border  rounded-md p-4">
-                {description}
-              </ScrollArea>
+
+            <ScrollArea className="h-[200px]  border  rounded-md p-4">
+              {description}
+            </ScrollArea>
           </section>
           <section className=" flex  flex-col gap-2">
             <h1 className=" text-2xl font-bold text-center   ">Quantity </h1>
@@ -65,8 +63,11 @@ function ProductDetails({ children }) {
                 +
               </Button>
             </div>
-            <Button onClick={addProduct} className=" bg-black block w-full mt-8">
-              add to cart 
+            <Button
+              onClick={addProduct}
+              className=" bg-black block w-full mt-8"
+            >
+              add to cart
             </Button>
             <Button className=" block w-full " variant={"outline"}>
               add to compare
