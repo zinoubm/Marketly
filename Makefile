@@ -26,7 +26,7 @@ schema:
 	python manage.py spectacular --file schema.yml
 
 test:
-	docker compose run backend python -m pytest --reuse-db -k test_review
+	docker compose run backend python -m pytest --reuse-db
 
 .PHONY: dev-image up bash down test rm build push
 
