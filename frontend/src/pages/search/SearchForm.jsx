@@ -1,18 +1,17 @@
-import React, { useEffect } from "react";
 import { IconInput } from "@/components/ui/input";
 import { IoIosSearch } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "react-router-dom";
 function SearchForm() {
   const [URLSearchParams, setSearchParams] = useSearchParams();
-  
-      const searchValues={}
-  for (const [key , value] of URLSearchParams.entries()){
-    searchValues[key]=value
+
+  const searchValues = {};
+  for (const [key, value] of URLSearchParams.entries()) {
+    searchValues[key] = value;
   }
-  const handleChange=(e)=>{
-    setSearchParams({search:e.target.value})
-  }
+  const handleChange = (e) => {
+    setSearchParams({ search: e.target.value });
+  };
   return (
     <div>
       <form className="flex gap-4   " action="/search">

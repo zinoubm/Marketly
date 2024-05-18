@@ -25,21 +25,23 @@ import { Label } from "@/components/ui/label";
 function Filters() {
   const { getCategories } = useProductApi();
   const [categories, setCategories] = useState([]);
-  const [searchObject , setSearchObject]=useState({})
+  const [searchObject, setSearchObject] = useState({});
   const [URLSearchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     (async () => {
       const data = await getCategories();
       setCategories(data);
-      
-      const searchParamsObject={}
-      for(const [key , value]of URLSearchParams.entries()){
-        searchParamsObject[key]=value
+
+      const searchParamsObject = {};
+      for (const [key, value] of URLSearchParams.entries()) {
+        searchParamsObject[key] = value;
       }
-      
-      const categoryObject = data.find(cat=>cat.id==searchParamsObject.category)
-      setSearchObject(searchParamsObject)
-      setSearchObject((prev)=>({...prev , category:categoryObject?.title}))
+
+      const categoryObject = data.find(
+        (cat) => cat.id == searchParamsObject.category
+      );
+      setSearchObject(searchParamsObject);
+      setSearchObject((prev) => ({ ...prev, category: categoryObject?.title }));
     })();
   }, []);
   return (
@@ -52,17 +54,23 @@ function Filters() {
               <h2 className="text-md mb-2">Price</h2>
               <div className="flex gap-2  flex-wrap">
                 <button className="text-sm  border px-3  p-1 rounded-md">
-                  min  {searchObject.min_price ? <span>: {searchObject.min_price} $</span>:null}
+                  min{" "}
+                  {searchObject.min_price ? (
+                    <span>: {searchObject.min_price} $</span>
+                  ) : null}
                 </button>
                 <button className="text-sm border px-3 p-1 rounded-md">
-                  max {searchObject.max_price ? <span>: {searchObject.max_price} $</span>:null}
+                  max{" "}
+                  {searchObject.max_price ? (
+                    <span>: {searchObject.max_price} $</span>
+                  ) : null}
                 </button>
               </div>
             </div>
             <div>
               <h2 className="text-md mb-2">Categorie</h2>
               <button className="text-sm border px-3 p-1 rounded-md">
-              {searchObject.category || "category"}
+                {searchObject.category || "category"}
               </button>
             </div>
             <div>
@@ -89,7 +97,14 @@ function Filters() {
             <Label htmlFor="name" className="text-right">
               price
             </Label>
-            <Input  className="hidden" name="search" value={searchObject.search} onChange={(value)=>setSearchObject((prev)=>({...prev , value}))}/>
+            <Input
+              className="hidden"
+              name="search"
+              value={searchObject.search}
+              onChange={(value) =>
+                setSearchObject((prev) => ({ ...prev, value }))
+              }
+            />
             <Input
               id="min_price"
               defaultValue="0"
@@ -112,7 +127,7 @@ function Filters() {
               category
             </Label>
 
-            <Select  name="category">
+            <Select name="category">
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="categorie" />
               </SelectTrigger>
@@ -126,9 +141,9 @@ function Filters() {
               </SelectContent>
             </Select>
           </div>
-        <DialogFooter>
-          <Button type="submit">Save</Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="submit">Save</Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

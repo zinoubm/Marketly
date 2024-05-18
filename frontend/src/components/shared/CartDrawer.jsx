@@ -1,39 +1,66 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import useCartAPi from "@/lib/api/useCartApi";
 import { useRefetchDataStore } from "@/context/productStore";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 function CartDrawer({ children, className }) {
-  const { getCartProducts , orderAllCartProducts } = useCartAPi();
+  const { getCartProducts, orderAllCartProducts } = useCartAPi();
   const [cartProducts, setCartProducts] = useState([]);
-  const [userLoggedIn,setUserLoggedIn]=useState(false) 
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [loadingOrder, setLoadingOrder] = useState(false);
+
   const { refetchData } = useRefetchDataStore();
   useEffect(() => {
     (async () => {
       const data = await getCartProducts();
       if (data) {
         setCartProducts(data);
-        setUserLoggedIn(true)
-      } 
-      
+        setUserLoggedIn(true);
+      }
     })();
   }, [refetchData]);
-  const makeOrder=async ()=>{
-   await orderAllCartProducts() 
-  }
+  const makeOrder = async () => {
+    setLoadingOrder(true);
+    const data =await orderAllCartProducts();
+    window.location.href=data.checkout_session_url
+    setLoadingOrder(false); 
+  };
   return (
     <Drawer>
       <DrawerTrigger className={className}>{children}</DrawerTrigger>
       <DrawerContent>
         <div className="flex w-full flex-wrap md:gap-6 gap-2 h-[85vh] overflow-auto md:justify-start   justify-around px-4   py-2 pt-8 ">
-          {userLoggedIn ? 
-          (cartProducts.length ?
-            cartProducts.map((prod) => (
-              <InCartProduct {...prod} key={prod.id} />
-            )):<div className="flex w-full h-full justify-center items-center text-3xl text-gray-700 font-black">your cart is empty !</div>):<Link to={"/sign-in"} className="flex w-full h-full justify-center items-center text-4xl  font-black cursor-pointer text-primary-light ">you must login to see your cart !</Link>}
-        </div> 
-        <Button onClick={makeOrder} className=" absolute top-0 right-0 m-2 bg-primary-light shadow-lg   ">Order</Button>
+          {userLoggedIn ? (
+            cartProducts.length ? (
+              cartProducts.map((prod) => (
+                <InCartProduct {...prod} key={prod.id} />
+              ))
+            ) : (
+              <div className="flex w-full h-full justify-center items-center text-3xl text-gray-700 font-black">
+                your cart is empty !
+              </div>
+            )
+          ) : (
+            <Link
+              to={"/sign-in"}
+              className="flex w-full h-full justify-center items-center text-4xl  font-black cursor-pointer text-primary-light "
+            >
+              you must login to see your cart !
+            </Link>
+          )}
+        </div>
+
+        <Button
+          disabled={loadingOrder}
+          onClick={makeOrder}
+          className={cn(
+            " absolute top-0 right-0 m-2 bg-primary-light shadow-lg   "
+          )}
+        >
+          {loadingOrder ? "loading ...":"Order"}
+        </Button>
       </DrawerContent>
     </Drawer>
   );
