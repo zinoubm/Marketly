@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from marketly.models import Review, Product
+from authentication.serializers import CustomUserDetailsSerializer
 from django.db.models import Sum
 import math
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = CustomUserDetailsSerializer(read_only=True)
     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
 
     class Meta:
@@ -18,7 +19,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
         product = Product.objects.get(id=product_id)
         reviews = Review.objects.filter(product=product)
-        total_rating = Review.objects.aggregate(Sum("rating"))["rating__sum"]
+        total_rating = reviews.aggregate(Sum("rating"))["rating__sum"]
         num_reviews = reviews.count()
 
         if num_reviews > 0:

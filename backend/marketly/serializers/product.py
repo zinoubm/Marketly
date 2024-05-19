@@ -4,7 +4,6 @@ from marketly.models import Product, Review
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    # reviews = ReviewSerializer(many=True, read_only=True)
     reviews = serializers.SerializerMethodField(read_only=True)
 
     class Meta:

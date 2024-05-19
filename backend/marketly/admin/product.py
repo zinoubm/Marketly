@@ -4,4 +4,4 @@ from marketly.models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ["is_approved"]
