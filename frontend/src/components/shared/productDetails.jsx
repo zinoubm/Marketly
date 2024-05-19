@@ -1,5 +1,7 @@
+import { MdOutlineStar } from "react-icons/md";
 import React from "react";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import ReviewsDrawer from "./reviewsDrawer";
 import { Button } from "../ui/button";
 import { useProductStore } from "@/context/productStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -14,9 +16,12 @@ function ProductDetails({ children }) {
     product_image,
     inventory,
     quantity,
+    rating,
+    reviews,
     incrementQuantity,
     decrementQuantity,
   } = useProductStore();
+  
   const { toggleRefetchData } = useRefetchDataStore();
   const { addProductToCart } = useCartAPi();
   const addProduct = async () => {
@@ -39,6 +44,15 @@ function ProductDetails({ children }) {
             <h1 className=" text-2xl font-extrabold  ">{title}</h1>
             <h2 className=" text-green-600 font-bold">{inventory} in stock </h2>
             <h2 className="text-xl font-extrabold text-right ">{price} $</h2>
+
+            <ReviewsDrawer reviews={reviews} product={id}>
+              <div className="flex items-center ">
+                <Stars rating={rating} />{" "}
+                <div className=" flex  text-xs w-16 ml-1 text-gray-600">
+                  {reviews.length} reviews
+                </div>
+              </div>
+            </ReviewsDrawer>
             <h2 className="text-lg font-bold mb-2">Description :</h2>
 
             <ScrollArea className="h-[200px]  border  rounded-md p-4">
@@ -78,5 +92,23 @@ function ProductDetails({ children }) {
     </Drawer>
   );
 }
+const Stars = ({ rating }) => {
+  const arr = [];
+  for (let i = 0; i < 5; i++) {
+    if (arr.length < rating) {
+      arr.push(1);
+    } else {
+      arr.push(0);
+    }
+  }
+
+  return arr.map((value, index) => (
+    <MdOutlineStar
+      key={index}
+      size={20}
+      color={value ? "#FFA620" : "#D7D7D7"}
+    />
+  ));
+};
 
 export default ProductDetails;
