@@ -10,6 +10,8 @@ import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 import { MdPersonOutline } from "react-icons/md";
 import CartDrawer from "@/components/shared/CartDrawer";
+import { BsFillCartCheckFill } from "react-icons/bs";
+import BuyerOrdersDrawer from "@/components/shared/BuyerOrdersDrawer";
 import {
   Popover,
   PopoverContent,
@@ -47,7 +49,7 @@ const TopBar = () => {
   const { image } = useUserInfo();
   return (
     <nav className="flex sm:justify-between justify-around items-center p-4 md:px-8 px-1  w-full">
-      <Logo className={"sm:ml-8"} size={100} />
+      <Logo className={" min-w-24"} size={100}  />
       <form className="flex md:gap-4  gap-1   " action="/search">
         <IconInput
           icon={() => <IoIosSearch size={20} />}
@@ -66,7 +68,6 @@ const TopBar = () => {
         </Button>
       </form>
       <div className="flex md:gap-4 ">
-        
         <CartDrawer>
           <button className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
             <LuShoppingCart />
@@ -77,6 +78,12 @@ const TopBar = () => {
           <FaChartLine />
           compare
         </button>
+        <BuyerOrdersDrawer>
+          <button className="lg:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
+            <BsFillCartCheckFill size={20} />
+            orders
+          </button>
+        </BuyerOrdersDrawer>
         {first_name ? (
           <Popover>
             <PopoverTrigger className="flex items-center">
@@ -92,7 +99,7 @@ const TopBar = () => {
                 <IoPersonCircleSharp size={35} className="m-1" />
               )}
               <h1 className="hidden sm:flex ">
-                {first_name} {last_name}
+                {first_name} 
               </h1>
             </PopoverTrigger>
             <PopoverContent className="flex items-start  p-1 flex-col  w-36 ">
@@ -106,6 +113,14 @@ const TopBar = () => {
                   dashboard
                 </Link>
               </div>
+              <div className="lg:hidden w-full hover:bg-blue-200 rounded-lg p-1">
+
+              <BuyerOrdersDrawer className="w-full flex gap-2 items-center">
+                  <BsFillCartCheckFill size={20} />
+                  my orders
+              </BuyerOrdersDrawer>
+              </div>
+
               <div className="md:hidden flex w-full hover:bg-blue-200 rounded-lg p-1">
                 <CartDrawer className="w-full flex gap-2">
                   <LuShoppingCart size={20} />

@@ -51,7 +51,21 @@ const useOrderApi = () => {
 
     return Mydata;
   };
+  const updateOrderStatus = async (id, status) => {
+    const token = getToken();
 
-  return { getBuyerOrders, getSellerOrders };
+    const response = await axios.patch(`/orders/status/${id}`, {
+      headers: {
+        accept: "application/json",
+        Authorization: "Token " + token,
+      },
+    });
+    console.log(response);
+    // const data = response.data;
+    // console.log(data);
+    // return data
+  }
+  
+  return { getBuyerOrders, getSellerOrders  , updateOrderStatus};
 };
 export default useOrderApi;
