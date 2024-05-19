@@ -16,6 +16,7 @@ const SideBarLink = ({ to, label }) => {
     if (!getToken()) navigate("/sign-in");
   }, [getToken()]);
   const pathName = useLocation();
+  
   const isActive = pathName.pathname === to;
   return (
     <li>
@@ -50,7 +51,7 @@ const DashboardLayout = () => {
               </Button>
             </span>
             <ul className="flex flex-col items-center gap-6 mt-12">
-              <SideBarLink to="/dashboard" label="Dashboard" />
+              {/* <SideBarLink to="/dashboard" label="Dashboard" /> */}
               <SideBarLink to="/products" label="Products" />
               <SideBarLink to="/orders" label="Orders" />
               <SideBarLink to="/account" label="Account" />

@@ -8,7 +8,7 @@ import AuthLayout from "./pages/auth/AuthLayout";
 import SigninForm from "./pages/auth/forms/SigninForm";
 import SignupForm from "./pages/auth/forms/SignupForm";
 import VerifyEmail from "./pages/auth/VerifyEmail";
-import Dashboard from "./pages/dashboard/Dashboard";
+// import Dashboard from "./pages/dashboard/Dashboard";
 import Products from "./pages/dashboard/Products";
 import Orders from "./pages/dashboard/Orders";
 
@@ -34,7 +34,7 @@ const App = () => {
 
         {/* private routes */}
         <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/products" element={<Products />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/account" element={<Account />} />
