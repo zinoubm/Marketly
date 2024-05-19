@@ -78,13 +78,13 @@ const TopBar = () => {
           <FaChartLine />
           compare
         </button>
+        {first_name ? (<>
         <BuyerOrdersDrawer>
           <button className="lg:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
             <BsFillCartCheckFill size={20} />
             orders
           </button>
         </BuyerOrdersDrawer>
-        {first_name ? (
           <Popover>
             <PopoverTrigger className="flex items-center">
               {image ? (
@@ -108,7 +108,7 @@ const TopBar = () => {
               </div>
               <Separator className="sm:hidden" />
               <div className="mt-1 w-full hover:bg-blue-200 rounded-lg p-1">
-                <Link to={"/dashboard"} className="flex w-full gap-2">
+                <Link to={"/account"} className="flex w-full gap-2">
                   <MdOutlineDashboardCustomize size={20} />
                   dashboard
                 </Link>
@@ -133,12 +133,13 @@ const TopBar = () => {
               <div
                 onClick={logout}
                 className="flex w-full gap-2 hover:bg-blue-200 rounded-lg p-1"
-              >
+                >
                 <BiLogOut size={20} />
                 logout
               </div>
             </PopoverContent>
           </Popover>
+                </>
         ) : (
           <Link
             to={"/sign-in"}
