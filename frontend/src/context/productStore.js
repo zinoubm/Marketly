@@ -17,6 +17,8 @@ export const useProductStore=create(
         inventory: "",
         product_image: "",
         quantity:1,
+        reviews:[], 
+        rating:0,
         incrementQuantity:()=>set(state=>{
             if (state.inventory >state.quantity) {
                 
