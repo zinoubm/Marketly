@@ -22,7 +22,9 @@ function ProductList({ category, theme }) {
       const products = await searchForProduct({ category: cat.id });
       //! fixing the image
       products.forEach((element) => {
-        if (!element.product_image.includes("media/images"))
+        // if (!element.product_image.includes("media/images"))
+        if(element.product_image.indexOf("https" , 5) !=-1 )
+
           element.product_image = element.product_image.replace(
             "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
             ""

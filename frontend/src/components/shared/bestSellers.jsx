@@ -12,13 +12,13 @@ function BestSellers() {
 
       let res =await  searchForProduct({search: "best seller"}) 
       res =res.slice(0 , 2)
+      console.log(res);
       //! fixing the image 
       res.forEach((element) => {
-        if (!element.product_image.includes("media/images"))
+         if(element.product_image.indexOf("https" , 5) !=-1 )
           element.product_image = element.product_image.replace(
             "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
-            ""
-          );
+            "")
       });
       
       setData(res)

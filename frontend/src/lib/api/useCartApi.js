@@ -20,7 +20,9 @@ const useCartAPi = () => {
         data.map(async (InCart) => {
           const productDetails = await getSingleProduct(InCart.product);
           //! fixing the image
-          if (!productDetails.product_image.includes("media/images")) {
+          // if (!productDetails.product_image.includes("media/images"))
+         if(productDetails.product_image.indexOf("https" , 5) !=-1 )
+         {
             productDetails.product_image = productDetails.product_image.replace(
               "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
               ""
@@ -33,6 +35,7 @@ const useCartAPi = () => {
       return MyData;
     } catch (error) {
       return null;
+      
     }
   };
 
