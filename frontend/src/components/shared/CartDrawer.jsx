@@ -15,7 +15,6 @@ function CartDrawer({ children, className }) {
   useEffect(() => {
     (async () => {
       const data = await getCartProducts();
-      console.log(data);
       if (data) {
         setCartProducts(data);
         setUserLoggedIn(true);
