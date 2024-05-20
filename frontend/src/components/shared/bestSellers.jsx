@@ -12,7 +12,6 @@ function BestSellers() {
 
       let res =await  searchForProduct({search: "best seller"}) 
       res =res.slice(0 , 2)
-      console.log(res);
       //! fixing the image 
       res.forEach((element) => {
          if(element.product_image.indexOf("https" , 5) !=-1 )
@@ -32,9 +31,9 @@ function BestSellers() {
       <h1 className=" text-3xl font-extrabold mb-4">Best Sellers</h1>
       <div className="flex gap-x-28 gap-12  lg:gap-2 flex-wrap justify-around ">
         {data.map((prod) => (
-          <ProductDetails>
+          <ProductDetails key={prod.id}>
 
-          <div onClick={()=>handleClick(prod)} key={prod.id} className=" bg-primary-light rounded-xl w-32 h-52 relative">
+          <div onClick={()=>handleClick(prod)}  className=" bg-primary-light rounded-xl w-32 h-52 relative">
             <img className="absolute -left-12 top-1/2 -translate-y-1/2  w-96 scale-110 scale-x-[250%] h-full "  src={prod.product_image} alt={prod.title} />
           </div>
           </ProductDetails>

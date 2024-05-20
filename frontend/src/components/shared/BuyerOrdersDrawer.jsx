@@ -20,6 +20,8 @@ const BuyerOrdersDrawer = ({ children , className }) => {
   useEffect(() => {
     (async () => {
       const data = await getBuyerOrders();
+      
+      
       setOrderList(data);
     })();
   }, []);

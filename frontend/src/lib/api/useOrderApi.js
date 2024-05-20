@@ -48,22 +48,40 @@ const useOrderApi = () => {
         return order;
       })
     );
-
+    
     return Mydata;
   };
   const updateOrderStatus = async (id, status) => {
     const token = getToken();
-
-    const response = await axios.patch(`/orders/status/${id}`, {
-      headers: {
-        accept: "application/json",
-        Authorization: "Token " + token,
+    try {
+      
+      const response = await axios.patch(
+        `http://localhost:8000/api/orders/status/${id}/`,
+        
+        {
+      status,
       },
-    });
-    console.log(response);
+      {
+        headers: {
+          'accept': 'application/json',
+          'Authorization': 'Token '+token,
+          'Content-Type': 'application/json',
+          'X-CSRFTOKEN': '2jZ5TO8BDfALuK42vala79FJpzg6FxG2eTlOS4Poz8n6rQh8roWu9xthvYjEaq2i'
+        }
+      }
+    );
+    toast.success("updated ")
     const data = response.data;
+    return data
+  } catch (error) {
+
+    toast.error('error')
+    console.log(error);
+  }
   }
   
   return { getBuyerOrders, getSellerOrders  , updateOrderStatus};
 };
 export default useOrderApi;
+
+
