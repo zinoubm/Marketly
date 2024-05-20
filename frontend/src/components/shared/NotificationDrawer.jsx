@@ -15,12 +15,14 @@ function NotificationDrawer({ data }) {
   const [noteCounter  , setNoteCounter ]=useState(data.length)  
   
   useEffect(()=>{
+  
+    
     let counter=0
     data.forEach(({is_seen})=>{
         if(!is_seen)
         counter++
 })
-
+  
     setNoteCounter(counter)
   } , [])
   const handleClick=async (id)=>{
@@ -51,8 +53,8 @@ function NotificationDrawer({ data }) {
               const time = new Date(date).toLocaleTimeString();
 
             return (
-                <>
-              <div key={id} onClick={()=>handleClick(id)} className={cn("flex   hover:bg-blue-100  relative items-center justify-between w-full p-1 rounded" , is_seen?"":"bg-gray-50")}>
+                <div key={id}>
+              <div onClick={()=>handleClick(id)} className={cn("flex   hover:bg-blue-100  relative items-center justify-between w-full p-1 rounded" , is_seen?"":"bg-gray-50")}>
                 {!is_seen &&<span className=" absolute  size-2  bg-primary-light rounded-full right-0 top-0"> </span>}
                 <div>
 
@@ -65,7 +67,7 @@ function NotificationDrawer({ data }) {
                 </div>
               </div>
                 <Separator/>
-                </>
+                </div>
             );
         })}
         
