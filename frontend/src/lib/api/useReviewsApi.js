@@ -3,17 +3,17 @@ import axios from "./axios";
 import { toast } from "sonner";
 const useReviewsApi = () => {
   const { getToken } = useCookie();
-  const getReviews = async () => {
-    const token = getToken();
-    const response = await axios.get("/reviews/?product=101" , {
-      headers:{
-        accept: "application/json",
-        Authorization: "Token " + token,
+  // const getReviews = async () => {
+  //   const token = getToken();
+  //   const response = await axios.get("/reviews/?product=101" , {
+  //     headers:{
+  //       accept: "application/json",
+  //       Authorization: "Token " + token,
 
-      }
-    })
+  //     }
+  //   })
     
-  };
+  // };
   const addReview = async ({ product, details, rating }) => {
     const token = getToken();
     try{
@@ -44,6 +44,6 @@ const useReviewsApi = () => {
     
   };
 
-  return { addReview  , getReviews};
+  return { addReview  };
 };
 export default useReviewsApi;
