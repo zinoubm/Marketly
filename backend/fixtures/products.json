@@ -298,5 +298,36 @@
             "inventory": 27,
             "product_image": "https://res.cloudinary.com/diqljjjbp/image/upload/v1715823296/fbkq5maingx31f1s4web.jpg"
         }
+    } , 
+    {
+        "model": "marketly.product",
+        "pk": 21,
+        "fields": {
+            "seller": 128,
+            "category": 7,
+            "title": "blue t-shirt",
+            "description": "blue t-shirt for men , best seller",
+            "date": "2024-05-09T23:13:55.348Z",
+            "price": 20,
+            "is_approved": true,
+            "inventory": 5,
+            "product_image": "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/images/blue-t-shirt_1_yjyxvk"
+        }
+    },    {
+        "model": "marketly.product",
+        "pk": 22,
+        "fields": {
+            "seller": 128,
+            "category": 5,
+            "title": "tv lg screen",
+            "description": "tv lg screen , best seller",
+            "date": "2024-05-09T23:13:55.348Z",
+            "price": 2000,
+            "is_approved": true,
+            "inventory": 2,
+            "product_image": "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/images/lg_screen_1_tmhgs1"
+        }
     }
+
+
 ]
