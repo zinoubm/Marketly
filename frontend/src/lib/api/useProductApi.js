@@ -1,7 +1,7 @@
 import useCookie from "./useCookie";
 import axios from "./axios";
 import FormData from "form-data";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
 const useProductApi = () => {
   const { getToken } = useCookie();
 
@@ -13,14 +13,11 @@ const useProductApi = () => {
         Authorization: "Token " + token,
       },
     });
+    
     return response.data;
   };
 
-
   const getSingleProduct = async (id) => {
-
-  
-
     const token = getToken();
     const response = await axios.get(`/products/${id}/`, {
       headers: {
@@ -29,7 +26,7 @@ const useProductApi = () => {
       },
     });
     return response.data;
-  }
+  };
   const addProduct = async (prod) => {
     const token = getToken();
     const form = new FormData();
@@ -60,7 +57,6 @@ const useProductApi = () => {
   };
 
   const getCategories = async () => {
-    
     const response = await axios.get("/categories/", {
       headers: {
         accept: "application/json",
@@ -91,10 +87,8 @@ const useProductApi = () => {
   };
   const updateProduct = async (prod, id) => {
     const token = getToken();
-    if(prod.category =="")
-    delete prod.category
-    if(prod.product_image==null)
-    delete prod.product_image
+    if (prod.category == "") delete prod.category;
+    if (prod.product_image == null) delete prod.product_image;
 
     const form = new FormData();
     for (let key in prod) {
@@ -123,22 +117,26 @@ const useProductApi = () => {
       }
     }
   };
-  const searchForProduct=async ({search , max_price , min_price ,category })=>{
-    
-    
-    const response = await axios.get('/products/search/', {
+  const searchForProduct = async ({
+    search,
+    max_price,
+    min_price,
+    category,
+  }) => {
+    const response = await axios.get("/products/search/", {
       params: {
         category,
         max_price,
         min_price,
-        search
+        search,
       },
       headers: {
-        'accept': 'application/json'
-      }
+        accept: "application/json",
+      },
     });
-    return response.data
-  }
+    
+    return response.data;
+  };
   return {
     getProducts,
     getSingleProduct,
@@ -146,8 +144,8 @@ const useProductApi = () => {
     getCategories,
     deleteProduct,
     updateProduct,
-    searchForProduct
+    searchForProduct,
   };
-}
+};
 
 export default useProductApi;
