@@ -11,6 +11,8 @@ import useCookie from "@/lib/api/useCookie";
 import { useNavigate } from "react-router-dom";
 import useNotificationApi from "@/lib/api/useNotificationApi";
 import NotificationDrawer from "@/components/shared/NotificationDrawer";
+import { useAuthStore } from "@/context/authStore";
+
 const SideBarLink = ({ to, label }) => {
   const pathName = useLocation();
 
@@ -34,12 +36,16 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const { getNotification , seenNotification} = useNotificationApi();
   const [notificationList , setNotificationList]=useState([])
+  const {id}=useAuthStore()
+
   useEffect(() => {
     if (!getToken()) navigate("/sign-in");
     
     (async ()=>{
 
-      const data =await getNotification()
+      let data =await getNotification()
+       data =data.filter((note)=>note.user ==id)
+
       setNotificationList(data)
     })()
   }, [getToken()]);

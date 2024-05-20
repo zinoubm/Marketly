@@ -14,7 +14,7 @@ import GoogleOneTapLogin from "./GoogleOneTapLogin";
 const HomePage = () => {
   const { getCurrentUser } = useAuth();
 
-  const { setFirstName, setLastName } = useAuthStore();
+  const { setFirstName, setLastName , setId } = useAuthStore();
   const {
     updatePhone,
     updateShippingDetails,
@@ -30,6 +30,7 @@ const HomePage = () => {
       const currentUser = await getCurrentUser();
 
       if (currentUser) {
+        setId(currentUser.pk);
         setFirstName(currentUser.first_name);
         setLastName(currentUser.last_name);
         updateBillingDetails(currentUser.billing_details);
