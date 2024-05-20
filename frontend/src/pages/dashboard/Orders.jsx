@@ -85,7 +85,7 @@ const OrderRow = ({ id, date, status, product, quantity }) => {
           {
             status =="Pending" &&(
 
-              <button onClick={()=>updateOrder( "Shipping")} className=" flex  justify-around gap-1 w-full  text-green-600">
+              <button onClick={()=>updateOrder( "Shipping")} className=" flex   gap-1 w-full  text-green-600">
               <FcPaid size={20}/>
               Shipping
             </button>
@@ -93,7 +93,7 @@ const OrderRow = ({ id, date, status, product, quantity }) => {
           } 
             <Separator />
 
-            <button onClick={()=>updateOrder( "Completed")} className=" flex mt-2  justify-around gap-1 w-full  ">
+            <button onClick={()=>updateOrder( "Completed")} className=" flex mt-2   gap-1 w-full  ">
               <FcOk size={20}/>
               Completed
             </button>

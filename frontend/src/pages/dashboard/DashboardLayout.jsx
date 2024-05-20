@@ -9,14 +9,11 @@ import Logo from "@/components/shared/Logo";
 import AccountManagement from "@/components/shared/AccountManagement";
 import useCookie from "@/lib/api/useCookie";
 import { useNavigate } from "react-router-dom";
+import useNotificationApi from "@/lib/api/useNotificationApi";
+import NotificationDrawer from "@/components/shared/NotificationDrawer";
 const SideBarLink = ({ to, label }) => {
-  const { getToken } = useCookie();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!getToken()) navigate("/sign-in");
-  }, [getToken()]);
   const pathName = useLocation();
-  
+
   const isActive = pathName.pathname === to;
   return (
     <li>
@@ -33,6 +30,19 @@ const SideBarLink = ({ to, label }) => {
 };
 
 const DashboardLayout = () => {
+  const { getToken } = useCookie();
+  const navigate = useNavigate();
+  const { getNotification , seenNotification} = useNotificationApi();
+  const [notificationList , setNotificationList]=useState([])
+  useEffect(() => {
+    if (!getToken()) navigate("/sign-in");
+    
+    (async ()=>{
+
+      const data =await getNotification()
+      setNotificationList(data)
+    })()
+  }, [getToken()]);
   const [isToggle, setisToggle] = useState(!isMobile);
 
   return (
@@ -74,6 +84,7 @@ const DashboardLayout = () => {
             </Toggle>
             <Logo className="xl:hidden " size={162} />
           </div>
+          <NotificationDrawer data={notificationList}/>
         </div>
         <Outlet />
       </main>
