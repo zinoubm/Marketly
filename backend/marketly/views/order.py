@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, serializers, status
 from rest_framework.response import Response
 from django.conf import settings
-from marketly.models import Order, OrderStatus
+from marketly.models import Order, OrderStatus, Notification
 from marketly.serializers import OrderSerializer
 
 import stripe
@@ -41,6 +41,13 @@ class OrderCreateAPIView(generics.CreateAPIView):
                 success_url=settings.FRONTEND_DOMAIN + "/payment-succeded",
                 cancel_url=settings.FRONTEND_DOMAIN + "/payment-failed",
             )
+
+            notification = Notification.objects.create(
+                title="You have a new Order",
+                user=self.order_instance.product.seller,
+                details=f"Congratulation 🎉!\nYou have a new Order for your product '{self.order_instance.product.__str__()}'.",
+            )
+            notification.save()
 
             serialized_order = OrderSerializer(self.order_instance).data
             return Response(

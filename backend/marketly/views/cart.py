@@ -2,7 +2,7 @@ from django.conf import settings
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from marketly.models import Order, OrderStatus
+from marketly.models import Order, OrderStatus, Notification
 from marketly.serializers import OrderSerializer
 
 import stripe
@@ -51,9 +51,8 @@ class OrderFromCartAPIView(APIView):
         line_items = []
 
         for order in in_cart_orders:
-            # make sure a product has a stripe id and price
             if order.product.stripe_price_id is None:
-                order.product.save()
+                order.product.save()  # make sure a product has a stripe id and price
 
             line_items.append(
                 {
@@ -63,6 +62,13 @@ class OrderFromCartAPIView(APIView):
             )
             order.status = OrderStatus.PENDING
             order.save()
+
+            notification = Notification.objects.create(
+                title="You have a new Order",
+                user=order.product.seller,
+                details=f"Congratulation 🎉!\nYou have a new Order for your product '{order.product.__str__()}'.",
+            )
+            notification.save()
 
         try:
             stripe.api_key = settings.STRIPE_SECRET_KEY
