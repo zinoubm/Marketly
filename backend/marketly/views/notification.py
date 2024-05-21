@@ -9,9 +9,11 @@ from drf_spectacular.utils import extend_schema
 
 
 class NotificationListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user)
 
 
 class NotificationMarkIsSeenView(APIView):

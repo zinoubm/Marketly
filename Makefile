@@ -28,5 +28,8 @@ schema:
 test:
 	docker compose run backend python -m pytest --reuse-db
 
+unit_test:
+	docker compose run backend python -m pytest --reuse-db -k test_notification.py
+
 .PHONY: dev-image up bash down test rm build push
 
