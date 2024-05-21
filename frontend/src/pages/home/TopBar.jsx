@@ -17,7 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
+import useCompareApi from "@/lib/api/useCompareApi";
 import useCookie from "@/lib/api/useCookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "@/context/authStore";
@@ -26,13 +26,14 @@ import { clearStateStorage } from "@/context/clearStateStorage";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
+import CompareListsDrawer from "@/components/shared/CompareListsDrawer";
 
 const TopBar = () => {
   const { deleteToken } = useCookie();
   const navigate = useNavigate();
-  const [URLparams, setSearchParams] = useSearchParams();
+  const [URLparams] = useSearchParams();
   const { first_name, last_name, reset } = useAuthStore();
-
+  const {getCompareLists , createCompareList}=useCompareApi()
   const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
     for (const [key, value] of URLparams.entries()) {
@@ -74,10 +75,13 @@ const TopBar = () => {
             cart
           </button>
         </CartDrawer>
+        <CompareListsDrawer>
+
         <button className="md:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">
           <FaChartLine />
           compare
         </button>
+        </CompareListsDrawer>
         {first_name ? (<>
         <BuyerOrdersDrawer>
           <button className="lg:flex hover:bg-gray-100 p-2 rounded-lg hidden items-center gap-1">

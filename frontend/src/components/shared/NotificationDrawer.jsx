@@ -47,11 +47,12 @@ function NotificationDrawer({ data }) {
         <DrawerContent>
             
             <ScrollArea className="h-[70vh] border-b-2 border-gray-400 rounded-b-xl">
-
-          {data.map(({ id, title, date , details  ,  is_seen}) => {
-              const day = new Date(date).toLocaleDateString();
-              const time = new Date(date).toLocaleTimeString();
-
+            {data.length ? (
+              <>
+              {data.map(({ id, title, date , details  ,  is_seen}) => {
+                const day = new Date(date).toLocaleDateString();
+                const time = new Date(date).toLocaleTimeString();
+                
             return (
                 <div key={id}>
               <div onClick={()=>handleClick(id)} className={cn("flex   hover:bg-blue-100  relative items-center justify-between w-full p-1 rounded" , is_seen?"":"bg-gray-50")}>
@@ -69,7 +70,9 @@ function NotificationDrawer({ data }) {
                 <Separator/>
                 </div>
             );
-        })}
+          })}
+          </>
+        ): <div className="text-xl text-gray-700 font-bold flex justify-center items-center mt-8">you dont have any notifications !</div>}
         
         </ScrollArea>
           

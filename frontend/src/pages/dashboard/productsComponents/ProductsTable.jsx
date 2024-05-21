@@ -118,7 +118,7 @@ const ProductRow = ({
               <BsThreeDots className="  text-xl  " />
             </div>
           </PopoverTrigger>
-          <PopoverContent className=" w-26 p-2  translate-x-6 ">
+          <PopoverContent className=" w-26 p-2  sm:translate-x-6 ">
             <button
               className=" flex  justify-around gap-1 w-full text-primary-light"
               onClick={() => removeProduct(id)}
