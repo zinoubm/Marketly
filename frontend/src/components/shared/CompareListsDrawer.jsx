@@ -1,4 +1,4 @@
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -53,12 +53,13 @@ function CompareListsDrawer({ children, className }) {
     <Drawer>
       <DrawerTrigger className={className}>{children}</DrawerTrigger>
       <DrawerContent>
-        <div className="flex w-full  flex-wrap md:gap-6 gap-2 h-[85vh] overflow-y-auto overflow-x-hidden     justify-center px-4   py-2 pt-8 ">
+        <h1 className="font-semibold ml-1 text-xl">Compare</h1>
+        <div className="flex w-full  flex-wrap md:gap-6 gap-2 h-[80vh] overflow-y-auto overflow-x-hidden     justify-center px-4   py-2 pt-8 ">
           {userLoggedIn ? (
             <>
               <Dialog>
                 <DialogTrigger>
-                  <Button className=" absolute  right-1 top-1 z-20 bg-primary-light text-white ">
+                  <Button className=" absolute  right-1 top-1 z-20 bg-primary-light text-white font-semibold">
                     Create New List
                   </Button>
                 </DialogTrigger>

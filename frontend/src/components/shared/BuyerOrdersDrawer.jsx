@@ -30,7 +30,8 @@ const BuyerOrdersDrawer = ({ children , className }) => {
     <Drawer>
       <DrawerTrigger className={className}>{children}</DrawerTrigger>
       <DrawerContent>
-      <div className="flex w-full flex-wrap md:gap-6 gap-2 h-[85vh] overflow-auto md:justify-start   justify-around px-4   py-2 pt-8 ">
+        <h1 className="font-semibold ml-1 text-xl">Orders</h1>
+      <div className="flex w-full flex-wrap md:gap-6 gap-2 h-[80vh] overflow-auto md:justify-start   justify-around px-4   py-2 pt-8 ">
 
         <Table>
           <TableCaption>List of your orders </TableCaption>

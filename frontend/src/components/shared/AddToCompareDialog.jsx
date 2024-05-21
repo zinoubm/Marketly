@@ -66,7 +66,7 @@ function AddToCompareDialog({ children, productId }) {
             <SelectContent>
               {CompareLists.map(({id, title}) => (
                 
-                  <SelectItem value={id}>{title}</SelectItem>
+                  <SelectItem value={id} key={id}>{title}</SelectItem>
                 
               ))}
             </SelectContent>
