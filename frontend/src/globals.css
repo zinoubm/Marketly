@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -84,3 +82,5 @@
     @apply text-[72px] font-bold leading-[140%] tracking-tighter;
   }
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
