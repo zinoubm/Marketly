@@ -7,6 +7,8 @@ import { useProductStore } from "@/context/productStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useCartAPi from "@/lib/api/useCartApi";
 import { useRefetchDataStore } from "@/context/productStore";
+import useCompareApi from "@/lib/api/useCompareApi";
+import AddToCompareDialog from "./AddToCompareDialog";
 function ProductDetails({ children }) {
   const {
     id,
@@ -83,9 +85,12 @@ function ProductDetails({ children }) {
             >
               add to cart
             </Button>
+            <AddToCompareDialog productId={id}>
+
             <Button className=" block w-full " variant={"outline"}>
               add to compare
             </Button>
+            </AddToCompareDialog>
           </section>
         </div>
       </DrawerContent>
