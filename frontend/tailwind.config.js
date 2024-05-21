@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      // fontFamily: {
+      //   customFont: ["Inter", "sans-serif"],
+      // },
       colors: {
         "primary-dark": "#000000",
         "primary-semi-dark": "#303030",

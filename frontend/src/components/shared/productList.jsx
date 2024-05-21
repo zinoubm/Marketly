@@ -23,8 +23,7 @@ function ProductList({ category, theme }) {
       //! fixing the image
       products.forEach((element) => {
         // if (!element.product_image.includes("media/images"))
-        if(element.product_image.indexOf("https" , 5) !=-1 )
-
+        if (element.product_image.indexOf("https", 5) != -1)
           element.product_image = element.product_image.replace(
             "https://res.cloudinary.com/diqljjjbp/image/upload/v1/media/",
             ""
@@ -32,18 +31,15 @@ function ProductList({ category, theme }) {
       });
 
       setData(products);
-      
     })();
   }, []);
   return (
-    <Carousel
-      className={cn(" p-4 lg:px-12 lg:m-4   w-full rounded-lg  ", theme)}
-    >
+    <Carousel className={cn("mt-6 p-4 lg:px-12 w-full rounded-2xl", theme)}>
       <h1 className="text-3xl ml-4 text-white font-bold mb-4">{category}</h1>
       <CarouselContent className="gap-6 px-8">
         {data.map((prod) => (
           <ProductDetails key={prod.id}>
-            <ProductCard {...prod}  />
+            <ProductCard {...prod} />
           </ProductDetails>
         ))}
       </CarouselContent>
