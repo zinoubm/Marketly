@@ -131,9 +131,12 @@ const TopBar = () => {
                   cart
                 </CartDrawer>
               </div>
+
+              <CompareListsDrawer className="w-full flex gap-2">
               <div className="md:hidden flex items-center w-full gap-2 hover:bg-blue-200 rounded-lg p-1">
                 <FaChartLine size={15} /> compare
               </div>
+              </CompareListsDrawer>
               <div
                 onClick={logout}
                 className="flex w-full gap-2 hover:bg-blue-200 rounded-lg p-1"
