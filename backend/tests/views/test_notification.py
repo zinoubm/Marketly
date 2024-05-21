@@ -19,7 +19,6 @@ class TestReviewListCreateAPI:
         api_client.force_authenticate(user=self.user)
         response = api_client.get(self.url, format="json")
         notifications = response.data
-        print("Notifications:", notifications)
 
         assert response.status_code == 200
         assert all(
