@@ -1,5 +1,5 @@
 import { useProductStore } from "@/context/productStore";
-import { MdOutlineStar } from "react-icons/md"; 
+import { MdOutlineStar } from "react-icons/md";
 function Card({
   id,
   title,
@@ -10,7 +10,6 @@ function Card({
   rating,
   reviews,
 }) {
-  
   const { setProduct } = useProductStore();
   const titleWords = title.split(" ");
   let titleThreeWords = titleWords.slice(0, 3).join(" ");
@@ -33,15 +32,15 @@ function Card({
     <>
       <div
         onClick={handleClick}
-        className="bg-white flex flex-col shadow-xl  border-2   h-56   w-40 p-2 rounded-xl  overflow-hidden  "
+        className="bg-white flex flex-col shadow-md h-64 w-40 p-2 rounded-2xl overflow-hidden"
       >
         <div className=" flex-1 flex flex-col justify-center">
           <img className=" max-h-32" src={product_image} alt={title} />
         </div>
-        <h1 className=" text-sm  font-bold  ">{titleThreeWords}</h1>
-        <div className="flex items-center ">
+        <h1 className="text-xs">{titleThreeWords}</h1>
+        <div className="flex items-center pt-1">
           <Stars rating={rating} />{" "}
-          <div className=" flex  text-xs w-16 ml-1 text-gray-600">
+          <div className=" flex text-xs w-16 ml-1 text-gray-400">
             {reviews.length} reviews
           </div>
         </div>
@@ -52,7 +51,6 @@ function Card({
 }
 
 const Stars = ({ rating }) => {
-  
   const arr = [];
   for (let i = 0; i < 5; i++) {
     if (arr.length < rating) {

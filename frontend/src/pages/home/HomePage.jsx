@@ -14,7 +14,7 @@ import GoogleOneTapLogin from "./GoogleOneTapLogin";
 const HomePage = () => {
   const { getCurrentUser } = useAuth();
 
-  const { setFirstName, setLastName , setId } = useAuthStore();
+  const { setFirstName, setLastName, setId } = useAuthStore();
   const {
     updatePhone,
     updateShippingDetails,
@@ -22,8 +22,6 @@ const HomePage = () => {
     updateImage,
   } = useUserInfo();
   const { getToken } = useCookie();
-
-    
 
   useEffect(() => {
     (async () => {
@@ -44,12 +42,12 @@ const HomePage = () => {
   return (
     <>
       <TopBar />
-      {!getToken() && <GoogleOneTapLogin/>}
-      <section className="h-full flex  justify-around gap-4 xl:gap-0 px-8 xl:px-0 flex-wrap lg:flex-nowrap">
+      {!getToken() && <GoogleOneTapLogin />}
+      <section className="my-2 h-full flex justify-around gap-4 xl:gap-0 px-8 xl:px-0 flex-wrap lg:flex-nowrap">
         <TopCategories />
         <BestSellers />
       </section>
-      <section className=" flex w-full flex-col  gap-2 lg:px-5  justify-center">
+      <section className="flex w-full flex-col gap-2 lg:px-5 justify-center">
         <ProductList category={"Electronics"} theme={"bg-black"} />
         <ProductList category={"Jewelery"} theme={"bg-black"} />
         <ProductList category={"Men's clothing"} theme={"bg-black"} />

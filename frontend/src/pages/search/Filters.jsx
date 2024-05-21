@@ -47,19 +47,19 @@ function Filters() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className=" m-4    cursor-pointer  bg-primary-dark flex-col p-2 rounded-xl sm:pl-8 text-white flex">
+        <div className="m-4 cursor-pointer bg-primary-dark flex-col p-6 rounded-2xl sm:pl-8 text-white flex">
           <h1 className="text-2xl font-bold ">Filters</h1>
           <section className="flex md:gap-52  gap-8  mt-3 ">
             <div>
               <h2 className="text-md mb-2">Price</h2>
-              <div className="flex gap-2  flex-wrap">
-                <button className="text-sm  border px-3  p-1 rounded-md">
+              <div className="flex gap-2 flex-wrap">
+                <button className="text-sm px-3 p-1 rounded-md border border-gray-400">
                   min{" "}
                   {searchObject.min_price ? (
                     <span>: {searchObject.min_price} $</span>
                   ) : null}
                 </button>
-                <button className="text-sm border px-3 p-1 rounded-md">
+                <button className="text-sm px-3 p-1 rounded-md border border-gray-400">
                   max{" "}
                   {searchObject.max_price ? (
                     <span>: {searchObject.max_price} $</span>
@@ -69,17 +69,17 @@ function Filters() {
             </div>
             <div>
               <h2 className="text-md mb-2">Categorie</h2>
-              <button className="text-sm border px-3 p-1 rounded-md">
+              <button className="text-sm px-3 p-1 rounded-md border border-gray-400">
                 {searchObject.category || "category"}
               </button>
             </div>
             <div>
               <h2 className="text-md mb-2">Rating</h2>
               <div className="flex gap-2 flex-wrap">
-                <button className=" text-sm border px-3 p-1 rounded-md">
+                <button className=" text-sm px-3 p-1 rounded-md border border-gray-400">
                   max
                 </button>
-                <button className=" text-sm border px-3 p-1 rounded-md">
+                <button className=" text-sm px-3 p-1 rounded-md border border-gray-400">
                   min
                 </button>
               </div>
