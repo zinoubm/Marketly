@@ -17,3 +17,5 @@ from .review import ReviewListCreateAPIView
 from .withdraw_request import (
     WithdrawRequestListCreateAPIView,
 )
+from .compare_list import CompareListListCreateAPIView
+from .compare_item import CompareItemCreateAPIView

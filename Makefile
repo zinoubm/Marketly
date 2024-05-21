@@ -29,7 +29,7 @@ test:
 	docker compose run backend python -m pytest --reuse-db
 
 unit_test:
-	docker compose run backend python -m pytest --reuse-db -k test_notification.py
+	docker compose run backend python -m pytest --reuse-db -k test_compare_item.py
 
 .PHONY: dev-image up bash down test rm build push
 

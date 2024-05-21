@@ -18,6 +18,8 @@ from .views import (
     NotificationMarkIsSeenView,
     ReviewListCreateAPIView,
     WithdrawRequestListCreateAPIView,
+    CompareListListCreateAPIView,
+    CompareItemCreateAPIView,
 )
 
 # todo
@@ -115,5 +117,15 @@ urlpatterns = [
         "api/withdraw-requests/",
         WithdrawRequestListCreateAPIView.as_view(),
         name="withdraw-list",
+    ),
+    path(
+        "api/compare-lists/",
+        CompareListListCreateAPIView.as_view(),
+        name="compare-list",
+    ),
+    path(
+        "api/compare-items/",
+        CompareItemCreateAPIView.as_view(),
+        name="compare-item",
     ),
 ]
