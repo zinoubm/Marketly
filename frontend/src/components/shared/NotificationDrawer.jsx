@@ -15,14 +15,14 @@ function NotificationDrawer({ data }) {
   const [noteCounter, setNoteCounter] = useState(data.length);
 
   useEffect(() => {
-    console.log(data);
-
+    
     let counter = 0;
     data.forEach(({ is_seen }) => {
       if (!is_seen) counter++;
     });
+    
     setNoteCounter(counter);
-  }, []);
+  }, [data]);
   const handleClick = async (id) => {
     await seenNotification(id);
   };
