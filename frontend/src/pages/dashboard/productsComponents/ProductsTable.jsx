@@ -31,7 +31,7 @@ function ProductsTable() {
       const data = await getProducts();
       const categories = await getCategories();
 
-      //! this code should be done in the server , and it might cause errors when there is too many products
+      // this code should be done in the server , and it might cause errors when there is too many products
       data.forEach((element) => {
         const cat = categories.find((cat) => cat.id == element.category);
         element.category = cat.title;
