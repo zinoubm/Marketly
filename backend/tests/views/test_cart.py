@@ -10,13 +10,13 @@ from django.core.exceptions import ObjectDoesNotExist
 class TestCartListAPI:
     def setup_method(self, method):
         self.url = "http://localhost:8000/api/cart/"
-        self.buyer = UserFactory()
-        self.order = OrderFactory(buyer=self.buyer, status=OrderStatus.INCART)
-
-        self.non_cart_order = OrderFactory(buyer=self.buyer, status=OrderStatus.PENDING)
-
+        self.inventory = 999
         self.seller = UserFactory()
-        self.product = ProductFactory(seller=self.seller, inventory=999)
+        self.product = ProductFactory(seller=self.seller, inventory=self.inventory)
+
+        self.buyer = UserFactory()
+        self.order = OrderFactory(buyer=self.buyer, product=self.product, status=OrderStatus.INCART, quantity=1)
+        self.non_cart_order = OrderFactory(buyer=self.buyer, status=OrderStatus.PENDING)
 
     def test_get_cart_content(self, api_client):
         api_client.force_authenticate(user=self.buyer)
@@ -73,6 +73,8 @@ class TestCartListAPI:
         response = api_client.post(url)
 
         self.order.refresh_from_db()
+        self.product.refresh_from_db()
 
         assert response.status_code == 201
         assert self.order.status == OrderStatus.PENDING
+        assert self.product.inventory == self.inventory - 1
