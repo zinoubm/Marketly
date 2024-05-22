@@ -1,5 +1,5 @@
 from django.conf import settings
-from rest_framework import generics, permissions, status
+from rest_framework import serializers, generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from marketly.models import Order, OrderStatus, Notification
@@ -51,6 +51,14 @@ class OrderFromCartAPIView(APIView):
         line_items = []
 
         for order in in_cart_orders:
+            if order.product.inventory < order.quantity:
+                raise serializers.ValidationError(
+                    "Not enough items available for this product!"
+                )
+
+            order.product.inventory -= order.quantity
+            order.product.save()
+
             if order.product.stripe_price_id is None:
                 order.product.save()  # make sure a product has a stripe id and price
 
